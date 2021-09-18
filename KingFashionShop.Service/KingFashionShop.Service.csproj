@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\KingFashionShop.Commons\KingFashionShop.Commons.csproj" />
+    <ProjectReference Include="..\KingFashionShop.Domain\KingFashionShop.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
