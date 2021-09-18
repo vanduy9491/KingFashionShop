@@ -27,5 +27,8 @@ namespace KingFashionShop.Domain.Models
         public string Content { get; set; }
         public Category Category { get; set; }
         public IEnumerable<ProductMeta> ProductMetas { get; set; }
+        public IEnumerable<CartItem> CartItems { get; set; }
+        public IEnumerable<OrderItem> OrderItems { get; set; }
+
     }
 }
