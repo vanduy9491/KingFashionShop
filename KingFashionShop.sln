@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KingFashionShop.Domain", "KingFashionShop.Domain\KingFashionShop.Domain.csproj", "{33A45173-823E-4BC2-BFE3-D9E8BD3FB823}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KingFashionShop.Domain", "KingFashionShop.Domain\KingFashionShop.Domain.csproj", "{33A45173-823E-4BC2-BFE3-D9E8BD3FB823}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KingFashionShop.Service", "KingFashionShop.Service\KingFashionShop.Service.csproj", "{AA594529-962E-4714-B619-600F520CD1D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KingFashionShop.Service", "KingFashionShop.Service\KingFashionShop.Service.csproj", "{AA594529-962E-4714-B619-600F520CD1D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KingFashionShop.API", "KingFashionShop.API\KingFashionShop.API.csproj", "{72DD39EB-E47C-4596-935B-B2A646144822}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KingFashionShop.API", "KingFashionShop.API\KingFashionShop.API.csproj", "{72DD39EB-E47C-4596-935B-B2A646144822}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KingFashionShop.Commons", "KingFashionShop.Commons\KingFashionShop.Commons.csproj", "{F5629093-DFF8-4C79-8E53-FD38C6DA10AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KingFashionShop.Commons", "KingFashionShop.Commons\KingFashionShop.Commons.csproj", "{F5629093-DFF8-4C79-8E53-FD38C6DA10AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

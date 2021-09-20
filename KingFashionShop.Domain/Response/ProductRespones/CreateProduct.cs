@@ -2,14 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace KingFashionShop.Domain.Models
+namespace KingFashionShop.Domain.Response.ProductRespones
 {
-    public class Product
+    public class CreateProduct
     {
-        public int Id { get; set; }
         public int UserId { get; set; }
-        public int CategoryId { get; set; }
-        public string Photo { get; set; }
         public string Title { get; set; }
         public string MetaTitle { get; set; }
         public string Slug { get; set; }
@@ -26,10 +23,7 @@ namespace KingFashionShop.Domain.Models
         public DateTime StartsAt { get; set; }
         public DateTime EndsAt { get; set; }
         public string Content { get; set; }
-        public Category Category { get; set; }
-        public IEnumerable<ProductMeta> ProductMetas { get; set; }
-        public IEnumerable<CartItem> CartItems { get; set; }
-        public IEnumerable<OrderItem> OrderItems { get; set; }
-
+        public int CategoryId { get; set; }
+        public string Photo { get; set; }
     }
 }
