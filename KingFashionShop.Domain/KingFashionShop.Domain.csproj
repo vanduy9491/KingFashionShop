@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Response\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\KingFashionShop.Commons\KingFashionShop.Commons.csproj" />
   </ItemGroup>
 

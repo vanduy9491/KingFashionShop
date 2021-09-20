@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.90" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="3.1.17" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\KingFashionShop.Commons\KingFashionShop.Commons.csproj" />
     <ProjectReference Include="..\KingFashionShop.Domain\KingFashionShop.Domain.csproj" />
   </ItemGroup>
