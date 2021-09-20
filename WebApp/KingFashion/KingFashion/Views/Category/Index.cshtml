@@ -1,0 +1,23 @@
+﻿@model IEnumerable<Category>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<span id="create"></span>
+<div class="card-block table-border-style">
+    <div class="table-responsive">
+        <table class="table table-hover" id="tbCategory">
+            <thead style="background:black;color:white">
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section scripts {
+
+    <script src="~/js/category.js" asp-append-version="true"></script>
+   
+}
