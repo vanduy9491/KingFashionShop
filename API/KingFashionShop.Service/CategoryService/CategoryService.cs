@@ -51,6 +51,7 @@ namespace KingFashionShop.Service.CategoryService
                     parameters.Add("@slug", create.Slug);
                     parameters.Add("@content", create.Content);
                     parameters.Add("@parentId", create.ParentId);
+                    parameters.Add("@status", create.Status);
                     var category = await SqlMapper.QueryFirstOrDefaultAsync<Category>(
                                             cnn: connection,
                                             sql: "sp_CreateCategory",
@@ -89,6 +90,85 @@ namespace KingFashionShop.Service.CategoryService
                                 param: parameters,
                                 commandType: CommandType.StoredProcedure);
             return category;
+        }
+
+        public async Task<UpdateCategoryResult> Update(UpdateCategory update)
+        {
+            try
+            {
+                var foundCategory = await GetCategoryByName(update.Title, update.ParentId);
+
+                if (foundCategory == null)
+                {
+                    DynamicParameters parameters = new DynamicParameters();
+                    parameters.Add("@parentId", update.ParentId);
+                    parameters.Add("@title", update.Title);
+                    parameters.Add("@slug", update.Slug);
+                    parameters.Add("@metaTitle", update.MetaTitle);
+                    parameters.Add("@content", update.Content);
+                    parameters.Add("@status", update.Status);
+                    var category = await SqlMapper.QueryFirstOrDefaultAsync<Category>(
+                                            cnn: connection,
+                                            sql: "sp_UpdateCategory",
+                                            param: parameters,
+                                            commandType: CommandType.StoredProcedure
+                                        );
+                    return new UpdateCategoryResult()
+                    {
+                        IsExist = false,
+                        Category = category
+                    };
+                }
+                return new UpdateCategoryResult()
+                {
+                    Category = foundCategory,
+                    IsExist = true
+                };
+            }
+            catch (Exception ex)
+            {
+                return new UpdateCategoryResult()
+                {
+                    Category = new Category()
+                };
+            }
+        }
+
+        public async Task<ChangeStatusCategoryResult> ChangeStatus(ChangeStatusCategory changeStatus)
+        {
+            try
+            {
+                var foundCategory = await GetByParentId(changeStatus.ParentId);
+
+                if (foundCategory != null)
+                {
+                    DynamicParameters parameters = new DynamicParameters();
+                    parameters.Add("@catParentId", changeStatus.ParentId);
+                    parameters.Add("@status", changeStatus.Status);
+
+                    var categoryId = await SqlMapper.QueryFirstOrDefaultAsync<int>(
+                                            cnn: connection,
+                                            sql: "sp_ChangeStatusCategory",
+                                            param: parameters,
+                                            commandType: CommandType.StoredProcedure
+                                        );
+                    return new ChangeStatusCategoryResult()
+                    {
+                        Success = categoryId > 0
+                    };
+                }
+                return new ChangeStatusCategoryResult()
+                {
+                    Success = false
+                };
+            }
+            catch (Exception)
+            {
+                return new ChangeStatusCategoryResult()
+                {
+                    Success = false
+                };
+            }
         }
     }
 }

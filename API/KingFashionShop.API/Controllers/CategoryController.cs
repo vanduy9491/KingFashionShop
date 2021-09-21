@@ -36,5 +36,16 @@ namespace KingFashionShop.API.Controllers
         {
             return await categoryService.Create(create);
         }
+        [HttpPut]
+        public async Task<UpdateCategoryResult> Update(UpdateCategory update)
+        {
+            return await categoryService.Update(update);
+        }
+        [HttpPut]
+        [Route("ChangeStatus")]
+        public async Task<ChangeStatusCategoryResult> ChangeStatus(ChangeStatusCategory changeStatus)
+        {
+            return await categoryService.ChangeStatus(changeStatus);
+        }
     }
 }

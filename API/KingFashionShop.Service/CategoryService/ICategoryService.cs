@@ -13,6 +13,7 @@ namespace KingFashionShop.Service.CategoryService
         Task<IEnumerable<CategoryRespone>> Get();
         Task<IEnumerable<CategoryRespone>> GetByParentId(int CatId);
         Task<CreateCategoryResult> Create(CreateCategory create);
-
+        Task<UpdateCategoryResult> Update(UpdateCategory update);
+        Task<ChangeStatusCategoryResult> ChangeStatus(ChangeStatusCategory changeStatus);
     }
 }
