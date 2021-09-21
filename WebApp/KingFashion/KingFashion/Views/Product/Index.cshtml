@@ -16,9 +16,6 @@
                 @Html.DisplayNameFor(model => model.Id)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UserId)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Title)
             </th>
 
@@ -63,9 +60,6 @@
                     @Html.DisplayFor(modelItem => item.Id)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.UserId)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.Title)
                 </td>
                 <td>
@@ -97,14 +91,11 @@
                 </td>
                 <td>
                     <img class="img-fluid img-thumbnail img-lg" src="~/images/@item.Photo.Split(" ")[0]">
-                    @*@foreach (var img in item.Photo.Split(" "))
-                    {
-                        <img class="img-fluid img-thumbnail img-sm" src="~/images/@img">
-                    }*@
+                    
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    <a asp-controller="Product" asp-action="ViewDetails" asp-route-proId="@item.Id">content</a> |
                     @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
                 </td>
             </tr>

@@ -5,6 +5,9 @@ category.showData = function () {
         method: "GET",
         success: function (data) {
             $('#tbCategory tbody').empty();
+            $('#tbCategory thead').empty();
+            $('#back').empty();
+            $('#create').empty();
             $('#tbCategory thead').append(
                 `<tr id="trr">
                     <th>
@@ -54,9 +57,13 @@ category.showCatByParentId = function (id) {
         url: `https://localhost:44368/Category/Get/${id} `,
         method: "GET",
         success: function (data) {
+            $('#create').empty();
             $('#create').append(
                 `<p id="pCreate">
-                    <a href="javascript:;" class="btn btn-out-dashed btn-success btn-square" onclick="category.openModel()"><i class="ti-plus"></i>Thêm Mới</a>
+                    <a id="create" href="javascript:;" class="btn btn-out-dashed btn-success btn-square" onclick="category.openModel()"><i class="ti-plus"></i>Thêm Mới</a>
+                </p>
+                <p id="pCreate">
+                    <a id="back" href="javascript:;" class="btn btn-out-dashed btn-info btn-square" onclick="category.showData()"><i class="ti-plus"></i>Quay lại</a>
                 </p>
                 <div class="modal fade" id="categoryModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -155,31 +162,31 @@ category.save = function (id) {
         /*let Id = parseInt($('input[name="CategoryId"]').val());*/
         //create new category
         /*if (Id == 0) {*/
-            var createCategoryObj = {};
-            createCategoryObj.Title = $('input[name="Title"]').val();
-            createCategoryObj.MetaTitle = $('input[name="MetaTitle"]').val();
-            createCategoryObj.Slug = $('input[name="Slug"]').val();
-            createCategoryObj.Content = $('textarea[name="Content"]').val();
-            createCategoryObj.ParentId = id;
-            $.ajax({
-                url: "https://localhost:44368/Category/Create",
-                method: "POST",
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(createCategoryObj),
-                success: function (data) {
-                    if (data.success) {
-                        $('#categoryModel').modal('hide');
-                        $('#pCreate').empty();
-                        category.showCatByParentId(id);
-                        $.notify(data.message, "success");
-                    }
-                    else {
-                        $.notify(data.message, "error");
-                    }
+        var createCategoryObj = {};
+        createCategoryObj.Title = $('input[name="Title"]').val();
+        createCategoryObj.MetaTitle = $('input[name="MetaTitle"]').val();
+        createCategoryObj.Slug = $('input[name="Slug"]').val();
+        createCategoryObj.Content = $('textarea[name="Content"]').val();
+        createCategoryObj.ParentId = id;
+        $.ajax({
+            url: "https://localhost:44368/Category/Create",
+            method: "POST",
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(createCategoryObj),
+            success: function (data) {
+                if (data.success) {
+                    $('#categoryModel').modal('hide');
+                    $('#pCreate').empty();
+                    category.showCatByParentId(id);
+                    $.notify(data.message, "success");
                 }
-            });
-       /* }*/
+                else {
+                    $.notify(data.message, "error");
+                }
+            }
+        });
+        /* }*/
         //update category
         //else {
         //    var updateCategoryObj = {};

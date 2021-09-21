@@ -92,5 +92,17 @@ namespace KingFashionShop.Service.ProductService
                 };
             }
         }
+
+        public async Task<Product> GetProduct(int proId)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@proId", proId);
+            var product = await SqlMapper.QueryFirstOrDefaultAsync<Product>(
+                                cnn: connection,
+                                sql: "sp_GetProductById",
+                                param: parameters,
+                                commandType: CommandType.StoredProcedure);
+            return product;
+        }
     }
 }
