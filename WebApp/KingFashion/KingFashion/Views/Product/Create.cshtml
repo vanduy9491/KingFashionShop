@@ -94,7 +94,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Content" class="control-label"></label>
-                <input asp-for="Content" class="form-control" />
+                <textarea asp-for="Content" class="form-control"></textarea>
                 <span asp-validation-for="Content" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -121,6 +121,7 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+<script>CKEDITOR.replace("Content");</script>
 @section scripts{
     <script asp-append-version="true">
         $(".custom-file-input").on("change", function () {
@@ -128,18 +129,22 @@
             $('.no-photo').attr('src', window.URL.createObjectURL($(this)[0].files[0]));
             $(".custom-file-label").addClass("selected").html(fileName);
         });
+
+
         $(document).ready(function () {
-        $(".custom-file-input").on("change", function () {
-            var fileLabel = $(this).next('.custom-file-label');
-            var files = $(this)[0].files;
-            if (files.length > 1) {
-                fileLabel.html(files.length + " files selected");
-            }
-            else if (files.length == 1) {
-                fileLabel.html(files[0].fileName);
-            }
+            $(".custom-file-input").on("change", function () {
+                var fileLabel = $(this).next('.custom-file-label');
+                var files = $(this)[0].files;
+                if (files.length > 1) {
+                    fileLabel.html(files.length + " files selected");
+                }
+                else if (files.length == 1) {
+                    fileLabel.html(files[0].fileName);
+                }
+            });
         });
-    });
+
     </script>
+
 }
 

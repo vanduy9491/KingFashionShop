@@ -1,4 +1,5 @@
-﻿using KingFashionShop.Domain.Response.ProductRespones;
+﻿using KingFashionShop.Domain.Models;
+using KingFashionShop.Domain.Response.ProductRespones;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,6 +11,7 @@ namespace KingFashionShop.Service.ProductService
     {
         Task<IEnumerable<ProductRespone>> Get(int catId);
         Task<CreateProductResult> Create(CreateProduct create);
+        Task<Product> GetProduct(int proId);
 
     }
 }
