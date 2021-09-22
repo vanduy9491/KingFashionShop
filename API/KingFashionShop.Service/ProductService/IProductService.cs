@@ -14,11 +14,7 @@ namespace KingFashionShop.Service.ProductService
         Task<IEnumerable<ProductRespone>> Get(int catId);
         Task<CreateProductResult> Create(CreateProduct create);
         Task<Product> GetProduct(int proId);
-<<<<<<< HEAD
         Task<IEnumerable<ProductResult>> GetProductsTopCategory(int limit);
-=======
         Task<IEnumerable<ProductRespone>> GetAllProduct();
-
->>>>>>> duydev
     }
 }
