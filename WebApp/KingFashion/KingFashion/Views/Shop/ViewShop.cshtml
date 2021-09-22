@@ -1,13 +1,12 @@
 ﻿@model ShopAll
 @*@{ int idProduct = Model.IdProduct; }
-@{ ViewBag.Title = "Sản Phẩm";
-    Layout = "~/Views/Shared/_ShopLayout.cshtml"; }*@
+    @{ ViewBag.Title = "Sản Phẩm";
+        Layout = "~/Views/Shared/_ShopLayout.cshtml"; }*@
 
 <br>
 <br>
 <br>
 <!-- Cart -->
-
 <!-- breadcrumb -->
 <div class="container">
     <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
@@ -117,7 +116,7 @@
 
                 @foreach (var item in Model.Categories)
                 {
-    <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".@Html.DisplayFor(modelItem => item.Title)">
+    <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".@Html.DisplayFor(modelItem => item.Slug)">
         @Html.DisplayFor(modelItem => item.Title)
     </button>}
             </div>
@@ -338,13 +337,11 @@
         </div>
 
         <div class="row isotope-grid">
-            @foreach (var cate in Model.Categories)
+
+            @foreach (var product in Model.Products)
             {
-@foreach (var product in Model.Products)
-{
-    if (product.CategoryId == cate.Id)
-    {
-<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item @Html.DisplayFor(modelItem => cate.Title)">
+
+<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item @Html.DisplayFor(modelItem => product.CategorySlug)">
     <!-- Block2 -->
     <div class="block2">
         <div class="block2-pic hov-img0">
@@ -374,13 +371,13 @@
             </div>
         </div>
     </div>
-</div>      }
-}}
+</div>            }
+
         </div>
 
 
     </div>
-    </section>
+
 
 
     <!-- Pagination -->

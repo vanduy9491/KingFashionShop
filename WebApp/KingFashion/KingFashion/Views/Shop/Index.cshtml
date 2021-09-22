@@ -1,10 +1,6 @@
 ﻿@model ShopAll
 @{
 }
-
-
-
-
 <!-- Slider -->
 <section class="section-slide">
     <div class="wrap-slick1">
@@ -191,7 +187,7 @@
 
                 @foreach (var item in Model.Categories)
                 {
-                    <button data-item="@item.Id" class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".@Html.DisplayFor(modelItem => item.Title)">
+                    <button data-item="@item.Id" class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".@Html.DisplayFor(modelItem => item.Slug)">
                         @Html.DisplayFor(modelItem => item.Title)
                     </button>
                 }
@@ -414,46 +410,42 @@
         </div>
 
         <div class="row isotope-grid">
-            @foreach (var cate in Model.Categories)
+
+            @foreach (var product in Model.Products)
             {
-                @foreach (var product in Model.Products)
-                {
-                    if (product.CategoryId == cate.Id)
-                    {
+                <div class="col-sm-6 col-md-4 col-lg-3 p-b-35  isotope-item  @Html.DisplayFor(modelItem => product.CategorySlug)">
+                    <div class="block2">
+                        <div class="block2-pic hov-img0">
+                            <img src="../images/product-01.jpg" alt="IMG-PRODUCT">
 
-                        <div class="col-sm-6 col-md-4 col-lg-3 p-b-35  isotope-item  @Html.DisplayFor(modelItem => cate.Title)">
-                            <div class="block2">
-                                <div class="block2-pic hov-img0">
-                                    <img src="../images/product-01.jpg" alt="IMG-PRODUCT">
+                            <a href="#" data-item="@product.Id" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+                                Quick View
+                            </a>
+                        </div>
 
-                                    <a href="#" data-item="@product.Id" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-                                        Quick View
-                                    </a>
-                                </div>
+                        <div class="block2-txt flex-w flex-t p-t-14">
+                            <div class="block2-txt-child1 flex-col-l ">
+                                <a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+                                    @Html.DisplayFor(modelItem => product.Title)
+                                </a>
 
-                                <div class="block2-txt flex-w flex-t p-t-14">
-                                    <div class="block2-txt-child1 flex-col-l ">
-                                        <a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-                                            @Html.DisplayFor(modelItem => product.Title)
-                                        </a>
+                                <span class="stext-105 cl3">
+                                    @Html.DisplayFor(modelItem => product.Price)
+                                </span>
+                            </div>
 
-                                        <span class="stext-105 cl3">
-                                            @Html.DisplayFor(modelItem => product.Price)
-                                        </span>
-                                    </div>
-
-                                    <div class="block2-txt-child2 flex-r p-t-3">
-                                        <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-                                            <img class="icon-heart1 dis-block trans-04" src="../images/icons/icon-heart-01.png" alt="ICON">
-                                            <img class="icon-heart2 dis-block trans-04 ab-t-l" src="../images/icons/icon-heart-02.png" alt="ICON">
-                                        </a>
-                                    </div>
-                                </div>
+                            <div class="block2-txt-child2 flex-r p-t-3">
+                                <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+                                    <img class="icon-heart1 dis-block trans-04" src="../images/icons/icon-heart-01.png" alt="ICON">
+                                    <img class="icon-heart2 dis-block trans-04 ab-t-l" src="../images/icons/icon-heart-02.png" alt="ICON">
+                                </a>
                             </div>
                         </div>
-                    }
-                }
+                    </div>
+                </div>
+
             }
+
         </div>
 
         <!-- Load more -->

@@ -25,8 +25,9 @@ namespace KingFashionWeb.Controllers
         {
            
             ShopAll shopAll = new ShopAll();
-            shopAll.Categories = await ApiHelper.HttpGet<List<Category>>(@$"{Common.ApiUrl}Category");
-            shopAll.Products = await ApiHelper.HttpGet<List<Product>>(@$"{Common.ApiUrl}Product");
+            shopAll.Categories = await ApiHelper.HttpGet<List<CategoryResult>>(@$"{Common.ApiUrl}Category");
+            shopAll.Products = await ApiHelper.HttpGet<List<ProductResult>>(@$"{Common.ApiUrl}Product/GetProductsTopCategory?limit=16");
+           
             return View(shopAll);
         }
         [HttpPost]
@@ -34,8 +35,8 @@ namespace KingFashionWeb.Controllers
         public async Task<IActionResult> Index(int productId)
         {
             ShopAll shopAll = new ShopAll();
-            shopAll.Categories = await ApiHelper.HttpGet<List<Category>>(@$"{Common.ApiUrl}Category");
-            shopAll.Products = await ApiHelper.HttpGet<List<Product>>(@$"{Common.ApiUrl}Product");
+            shopAll.Categories = await ApiHelper.HttpGet<List<CategoryResult>>(@$"{Common.ApiUrl}Category");
+            shopAll.Products = await ApiHelper.HttpGet<List<ProductResult>>(@$"{Common.ApiUrl}Product");
             return View(shopAll);
         }
 
@@ -49,8 +50,8 @@ namespace KingFashionWeb.Controllers
         public async Task<IActionResult> ShoppingCart()
         {
             ShopAll shopAll = new ShopAll();
-            shopAll.Categories = await ApiHelper.HttpGet<List<Category>>(@$"{Common.ApiUrl}Category");
-            shopAll.Products = await ApiHelper.HttpGet<List<Product>>(@$"{Common.ApiUrl}Product");
+            shopAll.Categories = await ApiHelper.HttpGet<List<CategoryResult>>(@$"{Common.ApiUrl}Category");
+            shopAll.Products = await ApiHelper.HttpGet<List<ProductResult>>(@$"{Common.ApiUrl}Product");
             return View(shopAll);
 
         }
@@ -58,16 +59,16 @@ namespace KingFashionWeb.Controllers
         public async Task<IActionResult> ViewShop()
         {
             ShopAll shopAll = new ShopAll();
-            shopAll.Categories = await ApiHelper.HttpGet<List<Category>>(@$"{Common.ApiUrl}Category");
-            shopAll.Products = await ApiHelper.HttpGet<List<Product>>(@$"{Common.ApiUrl}Product");
+            shopAll.Categories = await ApiHelper.HttpGet<List<CategoryResult>>(@$"{Common.ApiUrl}Category");
+            shopAll.Products = await ApiHelper.HttpGet<List<ProductResult>>(@$"{Common.ApiUrl}Product");
             return View(shopAll);
 
         }
         public async Task<IActionResult> Contact()
         {
             ShopAll shopAll = new ShopAll();
-            shopAll.Categories = await ApiHelper.HttpGet<List<Category>>(@$"{Common.ApiUrl}Category");
-            shopAll.Products = await ApiHelper.HttpGet<List<Product>>(@$"{Common.ApiUrl}Product");
+            shopAll.Categories = await ApiHelper.HttpGet<List<CategoryResult>>(@$"{Common.ApiUrl}Category");
+            shopAll.Products = await ApiHelper.HttpGet<List<ProductResult>>(@$"{Common.ApiUrl}Product");
             return View(shopAll);
 
         }

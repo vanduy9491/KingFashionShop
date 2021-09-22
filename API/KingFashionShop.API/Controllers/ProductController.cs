@@ -1,4 +1,5 @@
-﻿using KingFashionShop.Domain.Models;
+﻿using KingFashion.Models.Products;
+using KingFashionShop.Domain.Models;
 using KingFashionShop.Domain.Response.ProductRespones;
 using KingFashionShop.Service.ProductService;
 using Microsoft.AspNetCore.Http;
@@ -21,6 +22,12 @@ namespace KingFashionShop.API.Controllers
             this.productService = productService;
         }
 
+        [HttpGet]
+        public async Task<IEnumerable<ProductRespone>> Get()
+        {
+            return await productService.Get();
+        }
+
         [HttpGet("{catId}")]
         public async Task<IEnumerable<ProductRespone>> Get(int catId)
         {
@@ -36,6 +43,13 @@ namespace KingFashionShop.API.Controllers
         public async Task<Product> GetProduct(int proId)
         {
             return await productService.GetProduct(proId);
+        }
+        [HttpGet("GetProductsTopCategory")]
+        public async Task<IEnumerable<ProductResult>> GetProductsTopCategory([FromQuery] int? limit)
+        {
+            if (!limit.HasValue)
+                limit = -1;
+            return await productService.GetProductsTopCategory(limit.Value);
         }
     }
 }

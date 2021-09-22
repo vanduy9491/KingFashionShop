@@ -10,8 +10,8 @@ namespace KingFashion.Models
 {
     public class ShopAll
     {
-        public List<Category> Categories { get; set; }
-        public List<Product> Products { get; set; }
+        public List<CategoryResult> Categories { get; set; }
+        public List<ProductResult> Products { get; set; }
 
     }
 }
