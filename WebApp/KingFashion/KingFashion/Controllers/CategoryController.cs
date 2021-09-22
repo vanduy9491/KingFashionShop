@@ -39,7 +39,7 @@ namespace KingFashion.Controllers
         [Route("/Category/Update")]
         public async Task<IActionResult> Update([FromBody] UpdateCategory model)
         {
-            return  Ok(await ApiHelper.HttpPost<UpdateCategoryResult>(@$"{Common.ApiUrl}Category", "PUT", model));
+            return Ok(await ApiHelper.HttpPost<UpdateCategoryResult>(@$"{Common.ApiUrl}Category", "PUT", model));
         }
     }
 }
