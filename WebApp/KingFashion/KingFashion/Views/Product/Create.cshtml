@@ -129,8 +129,6 @@
             $('.no-photo').attr('src', window.URL.createObjectURL($(this)[0].files[0]));
             $(".custom-file-label").addClass("selected").html(fileName);
         });
-
-
         $(document).ready(function () {
             $(".custom-file-input").on("change", function () {
                 var fileLabel = $(this).next('.custom-file-label');

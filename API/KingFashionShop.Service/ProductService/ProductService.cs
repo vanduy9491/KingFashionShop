@@ -17,12 +17,21 @@ namespace KingFashionShop.Service.ProductService
         {
 
         }
+<<<<<<< HEAD
         public async Task<IEnumerable<ProductRespone>> Get()
         {
             var products = await SqlMapper.QueryAsync<ProductRespone>(
                                  cnn: connection,
                                  sql: "sp_GetAllProduct",
                                  commandType: CommandType.StoredProcedure);
+=======
+        public async Task<IEnumerable<ProductRespone>> GetAllProduct()
+        {
+            
+            var products = await SqlMapper.QueryAsync<ProductRespone>(
+                cnn: connection, sql: "sp_GetAllProduct", commandType: CommandType.StoredProcedure
+                );
+>>>>>>> duydev
             return products;
         }
         public async Task<IEnumerable<ProductRespone>> Get(int catId)
