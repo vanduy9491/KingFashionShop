@@ -1,4 +1,5 @@
-﻿using KingFashionShop.Domain.Response.ProductRespones;
+﻿using KingFashionShop.Domain.Models;
+using KingFashionShop.Domain.Response.ProductRespones;
 using KingFashionShop.Service.ProductService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -30,6 +31,11 @@ namespace KingFashionShop.API.Controllers
         public async Task<CreateProductResult> Create(CreateProduct create)
         {
             return await productService.Create(create);
+        }
+        [HttpGet("GetProduct/{proId}")]
+        public async Task<Product> GetProduct(int proId)
+        {
+            return await productService.GetProduct(proId);
         }
     }
 }

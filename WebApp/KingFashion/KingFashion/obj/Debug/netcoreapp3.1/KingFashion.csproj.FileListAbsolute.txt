@@ -1827,6 +1827,9 @@ E:\Module6\KingFashionShop\WebApp\KingFashion\KingFashion\obj\Debug\netcoreapp3.
 E:\Module6\KingFashionShop\WebApp\KingFashion\KingFashion\obj\Debug\netcoreapp3.1\KingFashion.dll
 E:\Module6\KingFashionShop\WebApp\KingFashion\KingFashion\obj\Debug\netcoreapp3.1\KingFashion.pdb
 E:\Module6\KingFashionShop\WebApp\KingFashion\KingFashion\obj\Debug\netcoreapp3.1\KingFashion.genruntimeconfig.cache
+<<<<<<< HEAD
+E:\Module6\KingFashionShop\WebApp\KingFashion\KingFashion\obj\Debug\netcoreapp3.1\Razor\Views\Product\ViewDetails.cshtml.g.cs
+=======
 C:\Users\ADMIN\Desktop\Project\KingFashionShop\WebApp\KingFashion\KingFashion\bin\Debug\netcoreapp3.1\appsettings.Development.json
 C:\Users\ADMIN\Desktop\Project\KingFashionShop\WebApp\KingFashion\KingFashion\bin\Debug\netcoreapp3.1\appsettings.json
 C:\Users\ADMIN\Desktop\Project\KingFashionShop\WebApp\KingFashion\KingFashion\bin\Debug\netcoreapp3.1\KingFashion.exe
@@ -2228,6 +2231,7 @@ C:\Users\ADMIN\Desktop\Project\KingFashionShop\WebApp\KingFashion\KingFashion\ob
 C:\Users\ADMIN\Desktop\Project\KingFashionShop\WebApp\KingFashion\KingFashion\obj\Debug\netcoreapp3.1\KingFashion.dll
 C:\Users\ADMIN\Desktop\Project\KingFashionShop\WebApp\KingFashion\KingFashion\obj\Debug\netcoreapp3.1\KingFashion.pdb
 C:\Users\ADMIN\Desktop\Project\KingFashionShop\WebApp\KingFashion\KingFashion\obj\Debug\netcoreapp3.1\KingFashion.genruntimeconfig.cache
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
 >>>>>>> origin/buudev
@@ -2635,3 +2639,6 @@ C:\Users\ADMIN\Documents\KingFashionShop\WebApp\KingFashion\KingFashion\obj\Debu
 C:\Users\ADMIN\Documents\KingFashionShop\WebApp\KingFashion\KingFashion\obj\Debug\netcoreapp3.1\KingFashion.genruntimeconfig.cache
 C:\Users\ADMIN\Desktop\Project\KingFashionShop\WebApp\KingFashion\KingFashion\obj\Debug\netcoreapp3.1\Razor\Views\Product\ViewDetails.cshtml.g.cs
 >>>>>>> Stashed changes
+=======
+>>>>>>> origin/buudev
+>>>>>>> master
