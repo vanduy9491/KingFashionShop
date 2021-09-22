@@ -12,6 +12,7 @@ namespace KingFashionShop.Domain.Models
         public string MetaTitle { get; set; }
         public string Slug { get; set; }
         public string Content { get; set; }
+        public bool Status { get; set; }
         public IEnumerable<Product> Products { get; set; }
     }
 }

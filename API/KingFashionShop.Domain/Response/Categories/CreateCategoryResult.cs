@@ -11,6 +11,6 @@ namespace KingFashionShop.Domain.Response.Categories
         public Category Category { get; set; }
         public bool IsExitst { get; set; }
         public bool Success => Category != null && Category.Id > 0 && !IsExitst;
-        public string Message => Success ? ResponseMessage.Category.Create : (!IsExitst ? ResponseMessage.Category.Exits : ResponseMessage.Fail);
+        public string Message => Success ? ResponseMessage.Category.Create : (IsExitst ? ResponseMessage.Category.Exits : ResponseMessage.Fail);
     }
 }

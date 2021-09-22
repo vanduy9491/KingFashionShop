@@ -12,6 +12,7 @@ namespace KingFashionShop.Service.ProductService
         Task<IEnumerable<ProductRespone>> Get(int catId);
         Task<CreateProductResult> Create(CreateProduct create);
         Task<Product> GetProduct(int proId);
+        Task<IEnumerable<ProductRespone>> GetAllProduct();
 
     }
 }

@@ -17,6 +17,15 @@ namespace KingFashionShop.Service.CategoryService
 
         }
 
+        public async Task<IEnumerable<CategoryRespone>> GetAllCategory()
+        {
+            var categories = await SqlMapper.QueryAsync<CategoryRespone>(
+                                 cnn: connection,
+                                 sql: "sp_GetCategoryAll",
+                                 commandType: CommandType.StoredProcedure);
+            return categories;
+        }
+
         public async Task<IEnumerable<CategoryRespone>> Get()
         {
             var categories = await SqlMapper.QueryAsync<CategoryRespone>(
@@ -51,6 +60,7 @@ namespace KingFashionShop.Service.CategoryService
                     parameters.Add("@slug", create.Slug);
                     parameters.Add("@content", create.Content);
                     parameters.Add("@parentId", create.ParentId);
+                    parameters.Add("@status", create.Status);
                     var category = await SqlMapper.QueryFirstOrDefaultAsync<Category>(
                                             cnn: connection,
                                             sql: "sp_CreateCategory",

@@ -19,6 +19,12 @@ namespace KingFashionShop.API.Controllers
         {
             this.categoryService = categoryService;
         }
+        [HttpGet("AllCategory")]
+        public async Task<IEnumerable<CategoryRespone>> GetAllCategory()
+        {
+            return await categoryService.GetAllCategory();
+        }
+
 
         [HttpGet]
         public async Task<IEnumerable<CategoryRespone>> Get()
