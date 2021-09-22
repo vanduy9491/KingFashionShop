@@ -30,6 +30,11 @@ namespace KingFashionShop.API.Controllers
         {
             return await categoryService.GetByParentId(id);
         }
+        [HttpGet("{catId}/Update")]
+        public async Task<IEnumerable<CategoryRespone>> GetCategoryById(int catId)
+        {
+            return await categoryService.GetCategoryById(catId);
+        }
 
         [HttpPost]
         public async Task<CreateCategoryResult> Create(CreateCategory create)

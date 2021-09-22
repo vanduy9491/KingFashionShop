@@ -25,15 +25,8 @@ category.showData = function () {
                             <td>${item.id}</td>
                             <td>${item.title}</td>
                             <td class='text-right'>
-                                 <a href='javascript:;' class="btn btn-mat btn-success btn-square btn-sm" onclick="category.openModel()">
-                                    Thêm Mới
-                                    <i class="ti-plus"></i>
-                                </a>
                                 <a href='javascript:;' class='btn btn-info btn-mat btn-sm' title="Xem Danh Mục" onclick="category.showCatByParentId(${item.id})">Xem Danh Mục
                                     <i class="ti-eye"></i>
-                                </a>
-                                <a href='javascript:;' class='btn btn-sm btn-secondary' title="Modify category" onclick="category.get(${item.id})">
-                                   Sửa <i class="ti-reload"></i>
                                 </a>
                             </td>
                         </tr>
@@ -117,6 +110,7 @@ category.showCatByParentId = function (id) {
                     <th>
                         Danh Mục
                     </th>
+                    <th>Trạng Thái</th>
                     <th></th>
                 </tr>`)
             $.each(data, function (index, item) {
@@ -125,10 +119,12 @@ category.showCatByParentId = function (id) {
                         <tr>
                             <td>${item.id}</td>
                             <td>${item.title}</td>
+                            <td class='text-right btn btn-sm ${item.status ? 'btn-success' : 'btn-warning'}'>${item.status ? '  Sẵn Có ' : '  Hết Hàng '}</td>
                             <td class='text-right'>
-                                 <a href='javascript:;' class="btn btn-mat btn-success btn-square btn-sm" onclick="category.openModel()">
-                                    Thêm Mới
-                                    <i class="ti-plus"></i>
+                                  </a>
+                                    <a href='javascript:;' class='btn btn-sm ${item.status ? 'btn-warning' : 'btn-success'}'
+                                   title='${!item.status ? 'Sẵn Có' : 'Hết Hàng'}' onclick='category.changeStatus(${item.id}, ${item.status})'>
+                                    <i class='fa ${item.status ? 'ti-lock' : 'ti-unlock'}'></i>${!item.status ? 'Sẵn Có' : 'Hết Hàng'}
                                 </a>
                                 <a href="/Product/Index/${item.id}" class='btn btn-info btn-mat btn-sm' title="Xem Danh Mục">Xem Danh Mục
                                     <i class="ti-eye"></i>
@@ -157,6 +153,45 @@ category.openModel = function () {
     $('#categoryModel').modal('show');
     $("#exampleModalLabel").html("Thêm mới Danh Mục");
 }
+
+category.changeStatus = function (id, status) {
+    bootbox.confirm({
+        title: `Danh Mục ${status ? "Sẵn Có" : "Hết Hàng"}`,
+        message: `Bạn có muốn danh mục đã ${status ? "hết hàng" : "sẵn có"}?`,
+        buttons: {
+            cancel: {
+                label: '<i class="ti-close"></i> Trở Về'
+            },
+            confirm: {
+                label: '<i class="ti-check"></i> Đồng ý'
+            }
+        },
+        callback: function (result) {
+            if (result) {
+                var changeStatusCategoryObj = {};
+                changeStatusCategoryObj.id = id;
+                changeStatusCategoryObj.status = status;
+                $.ajax({
+                    url: "https://localhost:44368/Category/ChangeStatus",
+                    method: "PUT",
+                    dataType: "json",
+                    contentType: "application/json",
+                    data: JSON.stringify(changeStatusCategoryObj),
+                    success: function (data) {
+                        if (data.success) {
+                            location.reload();
+                            $.notify(data.message, "success");
+                        }
+                        else {
+                            $.notify(data.message, "error");
+                        }
+                    }
+                });
+            }
+        }
+    });
+}
+
 category.save = function (id) {
     if ($('#frmCategory').valid()) {
         /*let Id = parseInt($('input[name="CategoryId"]').val());*/
@@ -232,7 +267,7 @@ category.get = function (id) {
         url: `https://localhost:44368/Category/Get/${id}`,
         method: "GET",
         success: function (data) {
-            $('#categoryModel').modal('show');
+            $('#categoryModel').modal('show');  
             $('input[name="CategoryName"]').val(data.categoryName);
             $('input[name="CategoryId"]').val(data.categoryId);
         }
@@ -242,4 +277,3 @@ category.get = function (id) {
 $(document).ready(function () {
     category.showData();
 });
-

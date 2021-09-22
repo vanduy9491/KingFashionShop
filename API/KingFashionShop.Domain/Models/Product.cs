@@ -8,8 +8,6 @@ namespace KingFashionShop.Domain.Models
     {
         public int Id { get; set; }
         public int UserId { get; set; }
-        public int CategoryId { get; set; }
-        public string Photo { get; set; }
         public string Title { get; set; }
         public string MetaTitle { get; set; }
         public string Slug { get; set; }
@@ -30,6 +28,9 @@ namespace KingFashionShop.Domain.Models
         public IEnumerable<ProductMeta> ProductMetas { get; set; }
         public IEnumerable<CartItem> CartItems { get; set; }
         public IEnumerable<OrderItem> OrderItems { get; set; }
+
+        public int CategoryId { get; set; }
+        public string Photo { get; set; }
 
     }
 }

@@ -13,5 +13,6 @@ namespace KingFashion.Models.Categorys
         public int Id { get; set; }
         public int ParentId { get; set; }
         public string Title { get; set; }
+        public bool Status { get; set; }
     }
 }

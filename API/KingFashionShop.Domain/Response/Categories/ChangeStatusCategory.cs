@@ -6,7 +6,7 @@ namespace KingFashionShop.Domain.Response.Categories
 {
     public class ChangeStatusCategory
     {
-        public int ParentId { get; set; }
+        public int Id { get; set; }
         public bool Status { get; set; }
     }
 }

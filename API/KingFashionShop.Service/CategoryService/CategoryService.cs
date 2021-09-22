@@ -37,6 +37,17 @@ namespace KingFashionShop.Service.CategoryService
                                  commandType: CommandType.StoredProcedure);
             return categories;
         }
+        public async Task<IEnumerable<CategoryRespone>> GetCategoryById(int id)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@id", id);  
+            var categories = await SqlMapper.QueryAsync<CategoryRespone>(
+                                 cnn: connection,
+                                 param: parameters,
+                                 sql: "sp_getCategorybyId",
+                                 commandType: CommandType.StoredProcedure);
+            return categories;
+        }
         public async Task<CreateCategoryResult> Create(CreateCategory create)
         {
             try
@@ -96,12 +107,12 @@ namespace KingFashionShop.Service.CategoryService
         {
             try
             {
-                var foundCategory = await GetCategoryByName(update.Title, update.ParentId);
+                var foundCategory = await GetCategoryByName(update.Title, update.Id);
 
                 if (foundCategory == null)
                 {
                     DynamicParameters parameters = new DynamicParameters();
-                    parameters.Add("@parentId", update.ParentId);
+                    parameters.Add("@id", update.Id);
                     parameters.Add("@title", update.Title);
                     parameters.Add("@slug", update.Slug);
                     parameters.Add("@metaTitle", update.MetaTitle);
@@ -138,12 +149,12 @@ namespace KingFashionShop.Service.CategoryService
         {
             try
             {
-                var foundCategory = await GetByParentId(changeStatus.ParentId);
+                var foundCategory = await GetByParentId(changeStatus.Id);
 
                 if (foundCategory != null)
                 {
                     DynamicParameters parameters = new DynamicParameters();
-                    parameters.Add("@catParentId", changeStatus.ParentId);
+                    parameters.Add("@id", changeStatus.Id);
                     parameters.Add("@status", changeStatus.Status);
 
                     var categoryId = await SqlMapper.QueryFirstOrDefaultAsync<int>(
