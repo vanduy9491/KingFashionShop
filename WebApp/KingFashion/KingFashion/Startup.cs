@@ -52,7 +52,7 @@ namespace KingFashion
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Shop}/{action=Index}/{id?}");
+                    pattern: "{controller=DashBoard}/{action=Index}/{id?}");
             });
         }
     }

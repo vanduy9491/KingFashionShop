@@ -47,7 +47,7 @@ category.showData = function () {
 category.showCatByParentId = function (id) {
     let pId = id;
     $.ajax({
-        url: `https://localhost:44368/Category/Get/${id} `,
+        url: `https://localhost:44368/Category/GetByParentId?parentId=${id} `,
         method: "GET",
         success: function (data) {
             $('#create').empty();
@@ -219,7 +219,8 @@ category.save = function (id) {
                 data: JSON.stringify(createCategoryObj),
                 success: function (data) {
                     if (data.success) {
-                        $('#categoryModel').modal('hide');
+                        //$('#categoryModel').modal('hide');
+                        $(".modal-footer button.btn-secondary").click();
                         $('#pCreate').empty();
                         category.showCatByParentId(id);
                         $.notify(data.message, "success");
@@ -237,9 +238,10 @@ category.save = function (id) {
             updateCategoryObj.Slug = $('input[name="Slug"]').val();
             updateCategoryObj.Content = $('textarea[name="Content"]').val();
             updateCategoryObj.Status = $('input[name="Status"]').is(":checked");
+            updateCategoryObj.Id = catId;
             updateCategoryObj.ParentId = parseInt($('input[name="ParentId"]').val());
             $.ajax({
-                url: `https://localhost:44368/CategoryDetails/${catId}/Update`,
+                url: `https://localhost:44368/Category/Update`,
                 method: "PUT",
                 dataType: "json",
                 contentType: "application/json",
@@ -247,8 +249,11 @@ category.save = function (id) {
                 success: function (data) {
                     if (data.success) {
                         $('#categoryModel').modal('hide');
-                        /*$.notify(data.message, "success");*/
-                        location.reload();
+                        //$(".modal-footer button.btn-secondary").click();
+                        $(".modal-backdrop fade").removeClass("show");
+                        $('#pCreate').empty();
+                        category.showCatByParentId(id);
+                        $.notify(data.message, "success");
                     }
                     else {
                         $.notify(data.message, "error");
@@ -273,7 +278,7 @@ category.reset = function () {
 }
 category.get = function (id) {
     $.ajax({
-        url: `https://localhost:44368/Category/Get/${id}`,
+        url: `https://localhost:44368/Category/GetByParentId?parentId=${id}`,
         method: "GET",
         success: function (data) {
             $('#categoryModel').modal('show');  
@@ -282,18 +287,19 @@ category.get = function (id) {
         }
     });
 }
-category.getbyCatId = function (CatId) {
+category.getbyCatId = function (id) {
     $("#exampleModalLabel").html("Sửa danh Mục");
     $.ajax({
-        url: `https://localhost:44368/Category/${CatId}`,
+        url: `https://localhost:44368/Category/GetCategoryById?id=${id}`,
         method: "GET",
         success: function (data) {
             $('#categoryModel').modal('show');
             $('input[name="Title"]').val(data.title);
-            $('input[name="ParentId"]').val(data.id);
-            $('input[name="MetaTitle"]').val(data.MetaTitle);
-            $('input[name="Slug"]').val(data.Slug);
-            $('textarea[name="Content"]').val(data.Content);
+            $('input[name="ParentId"]').val(data.parentId);
+            $('input[name="Id"]').val(data.id);
+            $('input[name="MetaTitle"]').val(data.metaTitle);
+            $('input[name="Slug"]').val(data.slug);
+            $('textarea[name="Content"]').val(data.content);
             $('input[name="Status"]').prop('checked', data.status);
         }
     });
