@@ -26,31 +26,11 @@ namespace KingFashion.Controllers
         public async Task<IActionResult> Index(int catId)
         {
             categoryId = catId;
-            
+
             var data = await ApiHelper.HttpGet<List<Product>>(@$"{Common.ApiUrl}Product/{catId}");
             return View(data);
         }
-        [HttpGet]
-        [Route("/Product/ViewDetails/{proId}")]
-        public async Task<IActionResult> ViewDetails(int proId)
-        {
-            var data = await ApiHelper.HttpGet<Product>(@$"{Common.ApiUrl}Product/GetProduct/{proId}");
-            return View(data);
-        }
-        //[HttpPut]
-        //[Route("/Product/ChangeStatus")]
-        //public async Task<IActionResult> ChangeStatus([FromBody] ChangeStatusProduct model)
-        //{
-        //    return Ok(await ApiHelper.HttpPost<ChangeStatusProductResult>(@$"{Common.ApiUrl}Product/ChangeStatus", "PUT", model));
-        //}
-        //[HttpPut]
-        //[Route("/Product/ChangeIsDeleted")]
-        //public async Task<IActionResult> ChangeIsDeleted([FromBody] ChangeIsDeletedProduct model)
-        //{
-        //    return Ok(await ApiHelper.HttpPost<ChangeIsDeletedProductResult>(@$"{Common.ApiUrl}Product/ChangeIsDeleted", "PUT", model));
-        //}
-        //[HttpPost]
-        //[Route("/Product/{catDetailsId}/Create")]
+
         [HttpGet("/Product/Create")]
         public async Task<IActionResult> Create()
         {
@@ -60,23 +40,31 @@ namespace KingFashion.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateProduct model)
         {
-            
+
             if (ModelState.IsValid)
             {
                 string filename = "no-img.jpg";
-                string fileAllName = "no-img.jpg";
+                string fileAllName = "";
+
+
                 if (model.Photo != null && model.Photo.Count > 0)
                 {
-                    
+
                     fileAllName = String.Empty;
                     foreach (IFormFile images in model.Photo)
                     {
+                        //filename = String.Empty;
                         string uploadFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
-                        fileAllName += $" {DateTime.Now.ToString("ddMMyyyyhhmmss")}_{images.FileName}";
+                        fileAllName += $"{DateTime.Now.ToString("ddMMyyyyhhmmss")}_{images.FileName} ";
                         filename = $"{DateTime.Now.ToString("ddMMyyyyhhmmss")}_{images.FileName} ";
                         var filePath = Path.Combine(uploadFolder, filename);
                         var fileAllPath = Path.Combine(uploadFolder, fileAllName);
+                        if (fileAllName.Split(" ").Length > 2)
+                        {
+                            images.CopyTo(new FileStream(fileAllPath, FileMode.Create));
+                        }
                         images.CopyTo(new FileStream(filePath, FileMode.Create));
+
                     }
                 }
                 var newProduct = new Product()
@@ -96,7 +84,7 @@ namespace KingFashion.Controllers
                     PublishedAt = model.PublishedAt,
                     StartsAt = model.StartsAt,
                     EndsAt = model.EndsAt,
-                    Content = model.Content,    
+                    Content = model.Content,
                     CategoryId = model.CategoryId,
                 };
                 await ApiHelper.HttpPost<CreateProductResult>(@$"{Common.ApiUrl}Product", "POST", newProduct);

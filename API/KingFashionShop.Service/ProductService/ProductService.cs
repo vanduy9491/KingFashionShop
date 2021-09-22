@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data;
+using KingFashion.Models.Products;
 
 namespace KingFashionShop.Service.ProductService
 {
@@ -15,6 +16,14 @@ namespace KingFashionShop.Service.ProductService
         public ProductService(IConfiguration configuration) : base(configuration)
         {
 
+        }
+        public async Task<IEnumerable<ProductRespone>> Get()
+        {
+            var products = await SqlMapper.QueryAsync<ProductRespone>(
+                                 cnn: connection,
+                                 sql: "sp_GetAllProduct",
+                                 commandType: CommandType.StoredProcedure);
+            return products;
         }
         public async Task<IEnumerable<ProductRespone>> Get(int catId)
         {
@@ -104,5 +113,18 @@ namespace KingFashionShop.Service.ProductService
                                 commandType: CommandType.StoredProcedure);
             return product;
         }
+
+        public async Task<IEnumerable<ProductResult>> GetProductsTopCategory(int limit)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@limit", limit);
+            var products = await SqlMapper.QueryAsync<ProductResult>(
+                cnn: connection, param: parameters, sql: "sp_GetProductsTopCategory", commandType: CommandType.StoredProcedure
+                );
+            return products;
+        }
+
+
+       
     }
 }

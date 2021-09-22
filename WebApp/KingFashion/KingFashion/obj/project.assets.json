@@ -6199,19 +6199,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ADMIN\\.nuget\\packages\\": {}
+    "C:\\Users\\Asus\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ADMIN\\Desktop\\Project\\KingFashionShop\\WebApp\\KingFashion\\KingFashion\\KingFashion.csproj",
+      "projectUniqueName": "E:\\Project\\A\\WebApp\\KingFashion\\KingFashion\\KingFashion.csproj",
       "projectName": "KingFashion",
-      "projectPath": "C:\\Users\\ADMIN\\Desktop\\Project\\KingFashionShop\\WebApp\\KingFashion\\KingFashion\\KingFashion.csproj",
-      "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ADMIN\\Desktop\\Project\\KingFashionShop\\WebApp\\KingFashion\\KingFashion\\obj\\",
+      "projectPath": "E:\\Project\\A\\WebApp\\KingFashion\\KingFashion\\KingFashion.csproj",
+      "packagesPath": "C:\\Users\\Asus\\.nuget\\packages\\",
+      "outputPath": "E:\\Project\\A\\WebApp\\KingFashion\\KingFashion\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Asus\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
