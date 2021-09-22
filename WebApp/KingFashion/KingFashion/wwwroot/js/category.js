@@ -5,6 +5,9 @@ category.showData = function () {
         method: "GET",
         success: function (data) {
             $('#tbCategory tbody').empty();
+            $('#tbCategory thead').empty();
+            $('#back').empty();
+            $('#create').empty();
             $('#tbCategory thead').append(
                 `<tr id="trr">
                     <th>
@@ -22,15 +25,8 @@ category.showData = function () {
                             <td>${item.id}</td>
                             <td>${item.title}</td>
                             <td class='text-right'>
-                                 <a href='javascript:;' class="btn btn-mat btn-success btn-square btn-sm" onclick="category.openModel()">
-                                    Thêm Mới
-                                    <i class="ti-plus"></i>
-                                </a>
                                 <a href='javascript:;' class='btn btn-info btn-mat btn-sm' title="Xem Danh Mục" onclick="category.showCatByParentId(${item.id})">Xem Danh Mục
                                     <i class="ti-eye"></i>
-                                </a>
-                                <a href='javascript:;' class='btn btn-sm btn-secondary' title="Modify category" onclick="category.get(${item.id})">
-                                   Sửa <i class="ti-reload"></i>
                                 </a>
                             </td>
                         </tr>
@@ -54,9 +50,13 @@ category.showCatByParentId = function (id) {
         url: `https://localhost:44368/Category/Get/${id} `,
         method: "GET",
         success: function (data) {
+            $('#create').empty();
             $('#create').append(
                 `<p id="pCreate">
-                    <a href="javascript:;" class="btn btn-out-dashed btn-success btn-square" onclick="category.openModel()"><i class="ti-plus"></i>Thêm Mới</a>
+                    <a id="create" href="javascript:;" class="btn btn-out-dashed btn-success btn-square" onclick="category.openModel()"><i class="ti-plus"></i>Thêm Mới</a>
+                </p>
+                <p id="pCreate">
+                    <a id="back" href="javascript:;" class="btn btn-out-dashed btn-info btn-square" onclick="category.showData()"><i class="ti-plus"></i>Quay lại</a>
                 </p>
                 <div class="modal fade" id="categoryModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -110,6 +110,7 @@ category.showCatByParentId = function (id) {
                     <th>
                         Danh Mục
                     </th>
+                    <th>Trạng Thái</th>
                     <th></th>
                 </tr>`)
             $.each(data, function (index, item) {
@@ -118,10 +119,12 @@ category.showCatByParentId = function (id) {
                         <tr>
                             <td>${item.id}</td>
                             <td>${item.title}</td>
+                            <td class='text-right btn btn-sm ${item.status ? 'btn-success' : 'btn-warning'}'>${item.status ? '  Sẵn Có ' : '  Hết Hàng '}</td>
                             <td class='text-right'>
-                                 <a href='javascript:;' class="btn btn-mat btn-success btn-square btn-sm" onclick="category.openModel()">
-                                    Thêm Mới
-                                    <i class="ti-plus"></i>
+                                  </a>
+                                    <a href='javascript:;' class='btn btn-sm ${item.status ? 'btn-warning' : 'btn-success'}'
+                                   title='${!item.status ? 'Sẵn Có' : 'Hết Hàng'}' onclick='category.changeStatus(${item.id}, ${item.status})'>
+                                    <i class='fa ${item.status ? 'ti-lock' : 'ti-unlock'}'></i>${!item.status ? 'Sẵn Có' : 'Hết Hàng'}
                                 </a>
                                 <a href="/Product/Index/${item.id}" class='btn btn-info btn-mat btn-sm' title="Xem Danh Mục">Xem Danh Mục
                                     <i class="ti-eye"></i>
@@ -150,36 +153,75 @@ category.openModel = function () {
     $('#categoryModel').modal('show');
     $("#exampleModalLabel").html("Thêm mới Danh Mục");
 }
+
+category.changeStatus = function (id, status) {
+    bootbox.confirm({
+        title: `Danh Mục ${status ? "Sẵn Có" : "Hết Hàng"}`,
+        message: `Bạn có muốn danh mục đã ${status ? "hết hàng" : "sẵn có"}?`,
+        buttons: {
+            cancel: {
+                label: '<i class="ti-close"></i> Trở Về'
+            },
+            confirm: {
+                label: '<i class="ti-check"></i> Đồng ý'
+            }
+        },
+        callback: function (result) {
+            if (result) {
+                var changeStatusCategoryObj = {};
+                changeStatusCategoryObj.id = id;
+                changeStatusCategoryObj.status = status;
+                $.ajax({
+                    url: "https://localhost:44368/Category/ChangeStatus",
+                    method: "PUT",
+                    dataType: "json",
+                    contentType: "application/json",
+                    data: JSON.stringify(changeStatusCategoryObj),
+                    success: function (data) {
+                        if (data.success) {
+                            location.reload();
+                            $.notify(data.message, "success");
+                        }
+                        else {
+                            $.notify(data.message, "error");
+                        }
+                    }
+                });
+            }
+        }
+    });
+}
+
 category.save = function (id) {
     if ($('#frmCategory').valid()) {
         /*let Id = parseInt($('input[name="CategoryId"]').val());*/
         //create new category
         /*if (Id == 0) {*/
-            var createCategoryObj = {};
-            createCategoryObj.Title = $('input[name="Title"]').val();
-            createCategoryObj.MetaTitle = $('input[name="MetaTitle"]').val();
-            createCategoryObj.Slug = $('input[name="Slug"]').val();
-            createCategoryObj.Content = $('textarea[name="Content"]').val();
-            createCategoryObj.ParentId = id;
-            $.ajax({
-                url: "https://localhost:44368/Category/Create",
-                method: "POST",
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(createCategoryObj),
-                success: function (data) {
-                    if (data.success) {
-                        $('#categoryModel').modal('hide');
-                        $('#pCreate').empty();
-                        category.showCatByParentId(id);
-                        $.notify(data.message, "success");
-                    }
-                    else {
-                        $.notify(data.message, "error");
-                    }
+        var createCategoryObj = {};
+        createCategoryObj.Title = $('input[name="Title"]').val();
+        createCategoryObj.MetaTitle = $('input[name="MetaTitle"]').val();
+        createCategoryObj.Slug = $('input[name="Slug"]').val();
+        createCategoryObj.Content = $('textarea[name="Content"]').val();
+        createCategoryObj.ParentId = id;
+        $.ajax({
+            url: "https://localhost:44368/Category/Create",
+            method: "POST",
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(createCategoryObj),
+            success: function (data) {
+                if (data.success) {
+                    $('#categoryModel').modal('hide');
+                    $('#pCreate').empty();
+                    category.showCatByParentId(id);
+                    $.notify(data.message, "success");
                 }
-            });
-       /* }*/
+                else {
+                    $.notify(data.message, "error");
+                }
+            }
+        });
+        /* }*/
         //update category
         //else {
         //    var updateCategoryObj = {};
@@ -225,7 +267,7 @@ category.get = function (id) {
         url: `https://localhost:44368/Category/Get/${id}`,
         method: "GET",
         success: function (data) {
-            $('#categoryModel').modal('show');
+            $('#categoryModel').modal('show');  
             $('input[name="CategoryName"]').val(data.categoryName);
             $('input[name="CategoryId"]').val(data.categoryId);
         }
@@ -235,4 +277,3 @@ category.get = function (id) {
 $(document).ready(function () {
     category.showData();
 });
-

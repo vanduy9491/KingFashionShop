@@ -23,8 +23,15 @@ namespace KingFashion.Controllers
             return Ok(data);
         }
         [HttpGet]
+        [Route("/Category/{catId}")]
+        public async Task<IActionResult> Get(int catId)
+        {
+            var data = await ApiHelper.HttpGet<List<Category>>(@$"{Common.ApiUrl}Category/{catId}/Update");
+            return Ok(data);
+        }
+        [HttpGet]
         [Route("/Category/Get/{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> GetParentId(int id)
         {
             var data = await ApiHelper.HttpGet<List<Category>>(@$"{Common.ApiUrl}Category/{id}");
             return Ok(data);
@@ -40,6 +47,12 @@ namespace KingFashion.Controllers
         public async Task<IActionResult> Update([FromBody] UpdateCategory model)
         {
             return  Ok(await ApiHelper.HttpPost<UpdateCategoryResult>(@$"{Common.ApiUrl}Category", "PUT", model));
+        }
+        [HttpPut]
+        [Route("/Category/ChangeStatus")]
+        public async Task<IActionResult> ChangeStatus([FromBody] ChangeStatusCategory model)
+        {
+            return Ok(await ApiHelper.HttpPost<ChangeStatusCategoryResult>(@$"{Common.ApiUrl}Category/ChangeStatus", "PUT", model));
         }
     }
 }
