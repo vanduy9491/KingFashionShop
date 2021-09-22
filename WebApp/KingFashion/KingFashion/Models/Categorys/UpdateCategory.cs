@@ -7,6 +7,7 @@ namespace KingFashion.Models.Categorys
 {
     public class UpdateCategory
     {
+        public int Id { get; set; }
         public int ParentId { get; set; }
         public string Title { get; set; }
         public string MetaTitle { get; set; }

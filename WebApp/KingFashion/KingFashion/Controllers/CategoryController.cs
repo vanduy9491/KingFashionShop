@@ -23,19 +23,19 @@ namespace KingFashion.Controllers
             return Ok(data);
         }
         [HttpGet]
-        [Route("/Category/{catId}")]
-        public async Task<IActionResult> Get(int catId)
+        [Route("/Category/GetByParentId")]
+        public async Task<IActionResult> GetByParentId([FromQuery] int parentId)
         {
-            var data = await ApiHelper.HttpGet<List<Category>>(@$"{Common.ApiUrl}Category/{catId}/Update");
+            var data = await ApiHelper.HttpGet<List<Category>>(@$"{Common.ApiUrl}Category/GetByParentId?parentId="+ parentId);
             return Ok(data);
         }
         [HttpGet]
-        [Route("/Category/Get/{id}")]
-        public async Task<IActionResult> GetParentId(int id)
+        [Route("/Category/GetCategoryById")]
+        public async Task<Category> GetCategoryById([FromQuery] int id)
         {
-            var data = await ApiHelper.HttpGet<List<Category>>(@$"{Common.ApiUrl}Category/{id}");
-            return Ok(data);
+            return await ApiHelper.HttpGet<Category>(@$"{Common.ApiUrl}Category/GetCategoryById?id=" + id);
         }
+
         [HttpPost]
         [Route("/Category/Create")]
         public async Task<IActionResult> Create([FromBody] CreateCategory model)
@@ -43,7 +43,7 @@ namespace KingFashion.Controllers
             return Ok(await ApiHelper.HttpPost<CreateCategoryResult>(@$"{Common.ApiUrl}Category", "POST", model));
         }
         [HttpPut]
-        [Route("/Category/{catId}/Update")]
+        [Route("/Category/Update")]
         public async Task<IActionResult> Update([FromBody] UpdateCategory model)
         {
             return Ok(await ApiHelper.HttpPost<UpdateCategoryResult>(@$"{Common.ApiUrl}Category", "PUT", model));

@@ -92,25 +92,21 @@
                             <li>
 
                                 <a asp-controller="Shop" asp-action="ViewShop">Shop</a>
-                                <ul class="sub-menu">
+                                @*<ul class="sub-menu">
                                     @foreach (var item in Model.Categories)
                                     {
                                         <li><a href="@Html.DisplayFor(modelItem => item.Title)">@Html.DisplayFor(modelItem => item.Title)</a></li>
                                     }
+                                </ul>*@
                             </li>
-
-
-                        </ul>
-                        </li>
-
-                        @*<li class="label1" data-label1="hot">
-                                <a href="shoping-cart.html">Features</a>
-                            </li>*@
-                        <li>
-                            <a asp-controller="Shop" asp-action="Contact">
-                                Contact
-                            </a>
-                        </li>
+                            @*<li class="label1" data-label1="hot">
+                                    <a href="shoping-cart.html">Features</a>
+                                </li>*@
+                            <li>
+                                <a asp-controller="Shop" asp-action="Contact">
+                                    Contact
+                                </a>
+                            </li>
                         </ul>
                     </div>
 

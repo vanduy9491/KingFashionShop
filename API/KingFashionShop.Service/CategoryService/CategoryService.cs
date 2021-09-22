@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using KingFashionShop.Domain.Response.Categories;
+using KingFashionShop.Commons.Messages;
 
 namespace KingFashionShop.Service.CategoryService
 {
@@ -46,16 +47,16 @@ namespace KingFashionShop.Service.CategoryService
                                  commandType: CommandType.StoredProcedure);
             return categories;
         }
-        public async Task<IEnumerable<CategoryRespone>> GetCategoryById(int id)
+        public async Task<CategoryRespone> GetCategoryById(int id)
         {
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@id", id);  
-            var categories = await SqlMapper.QueryAsync<CategoryRespone>(
+            var category = await SqlMapper.QueryFirstOrDefaultAsync<CategoryRespone>(
                                  cnn: connection,
                                  param: parameters,
                                  sql: "sp_getCategorybyId",
                                  commandType: CommandType.StoredProcedure);
-            return categories;
+            return category;
         }
         public async Task<CreateCategoryResult> Create(CreateCategory create)
         {
@@ -114,12 +115,16 @@ namespace KingFashionShop.Service.CategoryService
 
         public async Task<UpdateCategoryResult> Update(UpdateCategory update)
         {
+            UpdateCategoryResult updateCategory= new UpdateCategoryResult()
+            {
+                IsExist = false,
+            };
             try
             {
-                var foundCategory = await GetCategoryByName(update.Title, update.Id);
+                var category = await GetCategoryById(update.Id);
+                if (category == null)
+                    return updateCategory;
 
-                if (foundCategory == null)
-                {
                     DynamicParameters parameters = new DynamicParameters();
                     parameters.Add("@id", update.Id);
                     parameters.Add("@title", update.Title);
@@ -127,30 +132,19 @@ namespace KingFashionShop.Service.CategoryService
                     parameters.Add("@metaTitle", update.MetaTitle);
                     parameters.Add("@content", update.Content);
                     parameters.Add("@status", update.Status);
-                    var category = await SqlMapper.QueryFirstOrDefaultAsync<Category>(
+                    parameters.Add("@parentId", update.ParentId);
+                updateCategory.Category = await SqlMapper.QueryFirstOrDefaultAsync<Category>(
                                             cnn: connection,
                                             sql: "sp_UpdateCategory",
                                             param: parameters,
                                             commandType: CommandType.StoredProcedure
                                         );
-                    return new UpdateCategoryResult()
-                    {
-                        IsExist = false,
-                        Category = category
-                    };
-                }
-                return new UpdateCategoryResult()
-                {
-                    Category = foundCategory,
-                    IsExist = true
-                };
+
+                return updateCategory;
             }
             catch (Exception ex)
             {
-                return new UpdateCategoryResult()
-                {
-                    Category = new Category()
-                };
+                return new UpdateCategoryResult();
             }
         }
 
