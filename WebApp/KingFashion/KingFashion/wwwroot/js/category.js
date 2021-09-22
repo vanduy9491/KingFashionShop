@@ -86,6 +86,11 @@ category.showCatByParentId = function (id) {
                                         <textarea id="Content" type="text" name="Content" class="form-control"  ></textarea>
                                         <script>CKEDITOR.replace("Content");</script>
                                     </div>
+                                     <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="checkbox" class="form-check-input" name="Status"> Trạng Thái
+                                        </label>
+                                    </div>
                                 </form>
                             </div>
                             <div class="modal-footer">
@@ -194,14 +199,15 @@ category.changeStatus = function (id, status) {
 
 category.save = function (id) {
     if ($('#frmCategory').valid()) {
-        /*let Id = parseInt($('input[name="CategoryId"]').val());*/
+        let Id = parseInt($('input[name="Id"]').val());
         //create new category
-        /*if (Id == 0) {*/
+        if (Id == 0) {
         var createCategoryObj = {};
         createCategoryObj.Title = $('input[name="Title"]').val();
         createCategoryObj.MetaTitle = $('input[name="MetaTitle"]').val();
         createCategoryObj.Slug = $('input[name="Slug"]').val();
         createCategoryObj.Content = $('textarea[name="Content"]').val();
+        createCategoryObj.Status = $('input[name="Status"]').is(":checked");
         createCategoryObj.ParentId = id;
         $.ajax({
             url: "https://localhost:44368/Category/Create",
@@ -221,31 +227,31 @@ category.save = function (id) {
                 }
             }
         });
-        /* }*/
+         }
         //update category
-        //else {
-        //    var updateCategoryObj = {};
-        //    updateCategoryObj.CategoryId = categoryId;
-        //    updateCategoryObj.CategoryName = $('input[name="CategoryName"]').val();
-        //    updateCategoryObj.Status = $('input[name="Status"]').is(":checked");
-        //    $.ajax({
-        //        url: "https://localhost:44368/Category/Update",
-        //        method: "PUT",
-        //        dataType: "json",
-        //        contentType: "application/json",
-        //        data: JSON.stringify(updateCategoryObj),
-        //        success: function (data) {
-        //            if (data.success) {
-        //                $('#categoryModel').modal('hide');
-        //                category.showData();
-        //                $.notify(data.message, "success");
-        //            }
-        //            else {
-        //                $.notify(data.message, "error");
-        //            }
-        //        }
-        //    });
-        //}
+        else {
+            var updateCategoryObj = {};
+            updateCategoryObj.CategoryId = categoryId;
+            updateCategoryObj.CategoryName = $('input[name="CategoryName"]').val();
+            updateCategoryObj.Status = $('input[name="Status"]').is(":checked");
+            $.ajax({
+                url: "https://localhost:44368/Category/Update",
+                method: "PUT",
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(updateCategoryObj),
+                success: function (data) {
+                    if (data.success) {
+                        $('#categoryModel').modal('hide');
+                        category.showData();
+                        $.notify(data.message, "success");
+                    }
+                    else {
+                        $.notify(data.message, "error");
+                    }
+                }
+            });
+        }
     }
 }
 category.reset = function () {
