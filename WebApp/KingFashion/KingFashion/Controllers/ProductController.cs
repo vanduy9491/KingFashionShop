@@ -31,6 +31,16 @@ namespace KingFashion.Controllers
             return View(data);
         }
 
+        [HttpGet]
+        [Route("/Product/GetProductsTopCategory")]
+        public async Task<IActionResult> GetProductsTopCategory(int limit)
+        {
+            var data = await ApiHelper.HttpGet<List<Product>>(@$"{Common.ApiUrl}/api/Product/GetProductsTopCategory?limit="+ limit);
+            return View(data);
+        }
+
+
+
         [HttpGet("/Product/Create")]
         public async Task<IActionResult> Create()
         {

@@ -72,6 +72,8 @@ category.showCatByParentId = function (id) {
                                     <div class="form-group">
                                         <label>Tên danh mục</label>
                                         <input type="text" name="Title" class="form-control" data-rule-required="true" />
+                                        <input type="hidden" name="ParentId" class="form-control" data-rule-required="true" value="${pId}" />
+                                        <input type="hidden" name="Id" value="0" />
                                     </div>
                                     <div class="form-group">
                                         <label>Tiêu đề meta</label>
@@ -134,7 +136,7 @@ category.showCatByParentId = function (id) {
                                 <a href="/Product/Index/${item.id}" class='btn btn-info btn-mat btn-sm' title="Xem Danh Mục">Xem Danh Mục
                                     <i class="ti-eye"></i>
                                 </a>
-                                <a href='javascript:;' class='btn btn-sm btn-secondary' title="Modify category" onclick="category.get(${item.id})">
+                                <a href='javascript:;' class='btn btn-sm btn-secondary' title="Modify category" onclick="category.getbyCatId(${item.id})">
                                    Sửa <i class="ti-reload"></i>
                                 </a>
                             </td>
@@ -199,43 +201,45 @@ category.changeStatus = function (id, status) {
 
 category.save = function (id) {
     if ($('#frmCategory').valid()) {
-        let Id = parseInt($('input[name="Id"]').val());
-        //create new category
-        if (Id == 0) {
-        var createCategoryObj = {};
-        createCategoryObj.Title = $('input[name="Title"]').val();
-        createCategoryObj.MetaTitle = $('input[name="MetaTitle"]').val();
-        createCategoryObj.Slug = $('input[name="Slug"]').val();
-        createCategoryObj.Content = $('textarea[name="Content"]').val();
-        createCategoryObj.Status = $('input[name="Status"]').is(":checked");
-        createCategoryObj.ParentId = id;
-        $.ajax({
-            url: "https://localhost:44368/Category/Create",
-            method: "POST",
-            dataType: "json",
-            contentType: "application/json",
-            data: JSON.stringify(createCategoryObj),
-            success: function (data) {
-                if (data.success) {
-                    $('#categoryModel').modal('hide');
-                    $('#pCreate').empty();
-                    category.showCatByParentId(id);
-                    $.notify(data.message, "success");
+        let parentId = id
+        let catId = parseInt($('input[name="Id"]').val());
+        if (catId == 0) {
+            var createCategoryObj = {};
+            createCategoryObj.Title = $('input[name="Title"]').val();
+            createCategoryObj.MetaTitle = $('input[name="MetaTitle"]').val();
+            createCategoryObj.Slug = $('input[name="Slug"]').val();
+            createCategoryObj.Content = $('textarea[name="Content"]').val();
+            createCategoryObj.Status = $('input[name="Status"]').is(":checked");
+            createCategoryObj.ParentId = parentId;
+            $.ajax({
+                url: "https://localhost:44368/Category/Create",
+                method: "POST",
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(createCategoryObj),
+                success: function (data) {
+                    if (data.success) {
+                        $('#categoryModel').modal('hide');
+                        $('#pCreate').empty();
+                        category.showCatByParentId(id);
+                        $.notify(data.message, "success");
+                    }
+                    else {
+                        $.notify(data.message, "error");
+                    }
                 }
-                else {
-                    $.notify(data.message, "error");
-                }
-            }
-        });
-         }
-        //update category
+            });
+        }
         else {
             var updateCategoryObj = {};
-            updateCategoryObj.CategoryId = categoryId;
-            updateCategoryObj.CategoryName = $('input[name="CategoryName"]').val();
+            updateCategoryObj.Title = $('input[name="Title"]').val();
+            updateCategoryObj.MetaTitle = $('input[name="MetaTitle"]').val();
+            updateCategoryObj.Slug = $('input[name="Slug"]').val();
+            updateCategoryObj.Content = $('textarea[name="Content"]').val();
             updateCategoryObj.Status = $('input[name="Status"]').is(":checked");
+            updateCategoryObj.ParentId = parseInt($('input[name="ParentId"]').val());
             $.ajax({
-                url: "https://localhost:44368/Category/Update",
+                url: `https://localhost:44368/CategoryDetails/${catId}/Update`,
                 method: "PUT",
                 dataType: "json",
                 contentType: "application/json",
@@ -243,8 +247,8 @@ category.save = function (id) {
                 success: function (data) {
                     if (data.success) {
                         $('#categoryModel').modal('hide');
-                        category.showData();
-                        $.notify(data.message, "success");
+                        /*$.notify(data.message, "success");*/
+                        location.reload();
                     }
                     else {
                         $.notify(data.message, "error");
@@ -268,7 +272,6 @@ category.reset = function () {
     $('input[name="CategoryId"]').val(0);
 }
 category.get = function (id) {
-    $("#exampleModalLabel").html("Sửa Danh Mục");
     $.ajax({
         url: `https://localhost:44368/Category/Get/${id}`,
         method: "GET",
@@ -278,7 +281,22 @@ category.get = function (id) {
             $('input[name="CategoryId"]').val(data.categoryId);
         }
     });
-
+}
+category.getbyCatId = function (CatId) {
+    $("#exampleModalLabel").html("Sửa danh Mục");
+    $.ajax({
+        url: `https://localhost:44368/Category/${CatId}`,
+        method: "GET",
+        success: function (data) {
+            $('#categoryModel').modal('show');
+            $('input[name="Title"]').val(data.title);
+            $('input[name="ParentId"]').val(data.id);
+            $('input[name="MetaTitle"]').val(data.MetaTitle);
+            $('input[name="Slug"]').val(data.Slug);
+            $('textarea[name="Content"]').val(data.Content);
+            $('input[name="Status"]').prop('checked', data.status);
+        }
+    });
 }
 $(document).ready(function () {
     category.showData();

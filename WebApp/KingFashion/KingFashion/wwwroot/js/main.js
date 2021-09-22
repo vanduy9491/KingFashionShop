@@ -331,7 +331,7 @@
 
           
             $.ajax({
-                url: "https://localhost:44315/api/Product/" + productId,
+                url:"https://localhost:44322/api/Product/" + productId,
                 method: "GET",
                 success: function (data) {
                   
@@ -357,13 +357,13 @@
 
         e.preventDefault();
         $.ajax({
-            url: "https://localhost:44315/api/Product/ByCategoryId?categoryId=1&boundary=-1&limit=4",
+            url: "https://localhost:44322/api/Product/GetProductsTopCategory",
             method: "GET",
             success: function (data) {
 
                 var number = 4;
                 var lengtData = data.length; 
-                if (lengtData == 12) {
+                if (lengtData == 21) {
                     var link = document.getElementById('loadmore');
                     link.style.visibility = 'hidden';
                 }
