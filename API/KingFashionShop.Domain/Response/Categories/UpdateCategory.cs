@@ -12,5 +12,6 @@ namespace KingFashionShop.Domain.Response.Categories
         public string Slug { get; set; }
         public string Content { get; set; }
         public bool Status { get; set; }
+        public int ParentId { get; set; }
     }
 }

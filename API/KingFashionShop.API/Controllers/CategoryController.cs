@@ -25,15 +25,16 @@ namespace KingFashionShop.API.Controllers
         {
             return await categoryService.Get();
         }
-        [HttpGet("{id}")]
-        public async Task<IEnumerable<CategoryRespone>> GetByParentId(int id)
+        [HttpGet("GetByParentId")]
+        public async Task<IEnumerable<CategoryRespone>> GetByParentId([FromQuery]  int parentId)
         {
-            return await categoryService.GetByParentId(id);
+            return await categoryService.GetByParentId(parentId);
         }
-        [HttpGet("{catId}/Update")]
-        public async Task<IEnumerable<CategoryRespone>> GetCategoryById(int catId)
+
+        [HttpGet("GetCategoryById")]
+        public async Task<CategoryRespone> GetCategoryById([FromQuery] int id)
         {
-            return await categoryService.GetCategoryById(catId);
+            return await categoryService.GetCategoryById(id);
         }
 
         [HttpPost]

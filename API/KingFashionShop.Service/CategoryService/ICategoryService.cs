@@ -15,7 +15,7 @@ namespace KingFashionShop.Service.CategoryService
         Task<CreateCategoryResult> Create(CreateCategory create);
         Task<UpdateCategoryResult> Update(UpdateCategory update);
         Task<ChangeStatusCategoryResult> ChangeStatus(ChangeStatusCategory changeStatus);
-        Task<IEnumerable<CategoryRespone>> GetCategoryById(int id);
+        Task<CategoryRespone> GetCategoryById(int id);
 
     }
 }
