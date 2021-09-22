@@ -33,6 +33,11 @@ namespace KingFashionShop.API.Controllers
         {
             return await productService.Get(catId);
         }
+        [HttpGet("GetAllProduct")]
+        public async Task<IEnumerable<ProductRespone>> GetAllProduct()
+        {
+            return await productService.GetAllProduct();
+        }
 
         [HttpPost]
         public async Task<CreateProductResult> Create(CreateProduct create)

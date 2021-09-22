@@ -90,10 +90,11 @@
     </div>
     <div class="col-md-5>
         <div class="form-group">
-            <label asp-for="Photo" class="control-label"></label><br/>
-            @foreach (var img in Model.Photo.Split(" "))
+            <label asp-for="Photo" class="control-label"></label><br />
+            
+            @foreach (var img in Model.Photo.Split(" ").Skip(1))
             {
-                <img width="400px" class="img-fluid img-thumbnail img-lg" src="~/images/@img"><br/>
+                <img width="400px" class="img-fluid img-thumbnail img-lg" src="~/images/@img"><br />
             }
         </div>
     </div>

@@ -17,6 +17,15 @@ namespace KingFashionShop.Service.CategoryService
 
         }
 
+        public async Task<IEnumerable<CategoryRespone>> GetAllCategory()
+        {
+            var categories = await SqlMapper.QueryAsync<CategoryRespone>(
+                                 cnn: connection,
+                                 sql: "sp_GetCategoryAll",
+                                 commandType: CommandType.StoredProcedure);
+            return categories;
+        }
+
         public async Task<IEnumerable<CategoryRespone>> Get()
         {
             var categories = await SqlMapper.QueryAsync<CategoryRespone>(

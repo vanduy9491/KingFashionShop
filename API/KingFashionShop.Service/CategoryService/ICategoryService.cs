@@ -10,6 +10,8 @@ namespace KingFashionShop.Service.CategoryService
 {
     public interface ICategoryService
     {
+        Task<IEnumerable<CategoryRespone>> GetAllCategory();
+
         Task<IEnumerable<CategoryRespone>> Get();
         Task<IEnumerable<CategoryRespone>> GetByParentId(int CatId);
         Task<CreateCategoryResult> Create(CreateCategory create);
