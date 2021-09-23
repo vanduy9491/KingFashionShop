@@ -23,6 +23,7 @@ namespace KingFashionShop.Service.ProductService
                                  cnn: connection,
                                  sql: "sp_GetAllProduct",
                                  commandType: CommandType.StoredProcedure);
+            return products;
         }
         public async Task<IEnumerable<ProductRespone>> GetAllProduct()
         {
