@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using KingFashion.Models.Products;
+using KingFashionShop.Domain.ProductRespones;
 
 namespace KingFashionShop.Service.ProductService
 {
@@ -23,6 +24,7 @@ namespace KingFashionShop.Service.ProductService
                                  cnn: connection,
                                  sql: "sp_GetAllProduct",
                                  commandType: CommandType.StoredProcedure);
+            return products;
         }
         public async Task<IEnumerable<ProductRespone>> GetAllProduct()
         {
@@ -31,7 +33,18 @@ namespace KingFashionShop.Service.ProductService
                 cnn: connection, sql: "sp_GetAllProduct", commandType: CommandType.StoredProcedure  
                 );
             return products;
-        }   
+        }
+
+        public async Task<IEnumerable<ProductRespone>> GetProductById(int productId)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@proId", productId);
+            var products = await SqlMapper.QueryAsync<ProductRespone>(
+                cnn: connection, param: parameters, sql: "sp_GetProductById", commandType: CommandType.StoredProcedure
+                );
+            return products;
+        }
+
         public async Task<IEnumerable<ProductRespone>> Get(int catId)
         {
             DynamicParameters parameters = new DynamicParameters();
@@ -130,8 +143,22 @@ namespace KingFashionShop.Service.ProductService
                 );
             return products;
         }
+        
 
-
-       
+        public async Task<BoundaryList<Product>> GetProductByCategoryId(int categoryId, bool? isCategoryParent, int boundary, int limit)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@categoryId", categoryId);
+            parameters.Add("@boundary", boundary);
+            parameters.Add("@limit", limit);
+            parameters.Add("@isCategoryParent", limit);
+            var items = await SqlMapper.QueryAsync<Product>(
+                                cnn: connection,
+                                sql: "sp_GetProductByCategoryId",
+                                param: parameters,
+                                commandType: CommandType.StoredProcedure);
+            boundary = boundary != 0 ? boundary += limit : limit;
+            return new BoundaryList<Product>() { Boundary = boundary, Items = items };
+        }
     }
 }

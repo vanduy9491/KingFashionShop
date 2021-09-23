@@ -1,5 +1,6 @@
 ﻿using KingFashion.Models.Products;
 using KingFashionShop.Domain.Models;
+using KingFashionShop.Domain.ProductRespones;
 using KingFashionShop.Domain.Response.ProductRespones;
 using KingFashionShop.Service.ProductService;
 using Microsoft.AspNetCore.Http;
@@ -27,7 +28,11 @@ namespace KingFashionShop.API.Controllers
         {
             return await productService.Get();
         }
-
+        [HttpGet("{productId}")]
+        public async Task<IEnumerable<ProductRespone>> GetProductById(int productId)
+        {
+            return await productService.GetProductById(productId);
+        }
         [HttpGet("{catId}")]
         public async Task<IEnumerable<ProductRespone>> Get(int catId)
         {
@@ -55,6 +60,11 @@ namespace KingFashionShop.API.Controllers
             if (!limit.HasValue)
                 limit = -1;
             return await productService.GetProductsTopCategory(limit.Value);
+        }
+        [HttpGet("GetProductByCategoryId")]
+        public async Task<BoundaryList<Product>> GetProductByCategoryId([FromQuery] int categoryId, [FromQuery] bool? isCategoryParent ,[FromQuery] int boundary, [FromQuery] int limit)
+        {
+            return await productService.GetProductByCategoryId(categoryId, isCategoryParent ,boundary, limit);
         }
     }
 }

@@ -21,6 +21,7 @@ namespace KingFashionShop.API
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                });
+                }
+                );
     }
 }
