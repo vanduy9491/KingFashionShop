@@ -3,11 +3,8 @@
 @{
     ViewData["Title"] = "Index";
 }
-
-<h1>Index</h1>
-
 <p>
-    <a asp-controller="Product" asp-action="Create">Create New</a>
+    <a class="btn btn-out-dashed btn-success btn-square" asp-controller="Product" asp-action="Create"><i class="ti-plus"></i>Create New</a>
 </p>
 <table class="table table-hover" id="tbProduct">
     <thead style="background:black;color:white">
@@ -17,16 +14,6 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Title)
-            </th>
-
-            <th>
-                @Html.DisplayNameFor(model => model.Summary)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Type)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SKU)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Price)
@@ -63,15 +50,6 @@
                     @Html.DisplayFor(modelItem => item.Title)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Summary)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Type)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SKU)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.Price)
                 </td>
                 <td>
@@ -93,9 +71,9 @@
                     <img class="img-fluid img-thumbnail img-lg" src="~/images/@item.Photo.Split(" ")[1]">
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    <a asp-controller="Product" asp-action="ViewDetails" asp-route-proId="@item.Id">Xem sản phẩm</a> |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    <a class='btn btn-sm btn-secondary btn-sm' href="/Product/Update/@item.Id" title="Sửa sản phẩm"><i class="ti-pencil"></i></a> 
+                    <a class='btn btn-info btn-mat btn-sm' asp-controller="Product" asp-action="ViewDetails" asp-route-proId="@item.Id" title="Xem sản phẩm"><i class="ti-eye"></i></a> 
+                    <a class='btn btn-danger btn-mat btn-sm' title="Xem sản phẩm"><i class="ti-trash"></i></a> 
                 </td>
             </tr>
         }

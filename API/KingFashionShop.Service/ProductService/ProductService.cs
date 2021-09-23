@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using KingFashion.Models.Products;
+using KingFashionShop.Domain.ProductRespones;
 
 namespace KingFashionShop.Service.ProductService
 {
@@ -32,7 +33,18 @@ namespace KingFashionShop.Service.ProductService
                 cnn: connection, sql: "sp_GetAllProduct", commandType: CommandType.StoredProcedure  
                 );
             return products;
-        }   
+        }
+
+        public async Task<IEnumerable<ProductRespone>> GetProductById(int productId)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@proId", productId);
+            var products = await SqlMapper.QueryAsync<ProductRespone>(
+                cnn: connection, param: parameters, sql: "sp_GetProductById", commandType: CommandType.StoredProcedure
+                );
+            return products;
+        }
+
         public async Task<IEnumerable<ProductRespone>> Get(int catId)
         {
             DynamicParameters parameters = new DynamicParameters();
@@ -131,8 +143,71 @@ namespace KingFashionShop.Service.ProductService
                 );
             return products;
         }
+        
 
 
-       
+        public async Task<BoundaryList<Product>> GetProductByCategoryId(int categoryId, bool? isCategoryParent, int boundary, int limit)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@categoryId", categoryId);
+            parameters.Add("@boundary", boundary);
+            parameters.Add("@limit", limit);
+            parameters.Add("@isCategoryParent", limit);
+            var items = await SqlMapper.QueryAsync<Product>(
+                                cnn: connection,
+                                sql: "sp_GetProductByCategoryId",
+                                param: parameters,
+                                commandType: CommandType.StoredProcedure);
+            boundary = boundary != 0 ? boundary += limit : limit;
+            return new BoundaryList<Product>() { Boundary = boundary, Items = items };
+        }
+        
+        public async Task<UpdateProductResult> Update(UpdateProduct update)
+        {
+            UpdateProductResult updateProduct = new UpdateProductResult()
+            {
+                IsExist = false,
+            };
+            try
+            {
+                var product = await GetProduct(update.Id);
+                if (product == null)
+                    return updateProduct;
+
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@id", update.Id);
+                parameters.Add("@userId", update.UserId);
+                parameters.Add("@title", update.Title);
+                parameters.Add("@metaTitle", update.MetaTitle);
+                parameters.Add("@slug", update.Slug);
+                parameters.Add("@summary", update.Summary);
+                parameters.Add("@type", update.Type);
+                parameters.Add("@SKU", update.SKU);
+                parameters.Add("@price", update.Price);
+                parameters.Add("@discount", update.Discount);
+                parameters.Add("@quantity", update.Quantity);
+                parameters.Add("@shop", update.Shop);
+                parameters.Add("@createdAt", update.CreatedAt);
+                parameters.Add("@updatedAt", update.UpdateAt);
+                parameters.Add("@publishedAt", update.PublishedAt);
+                parameters.Add("@startsAt", update.StartsAt);
+                parameters.Add("@endsAt", update.EndsAt);
+                parameters.Add("@content", update.Content);
+                parameters.Add("@categoryId", update.CategoryId);
+                parameters.Add("@photo", update.Photo);
+                updateProduct.Product = await SqlMapper.QueryFirstOrDefaultAsync<Product>(
+                                            cnn: connection,
+                                            sql: "sp_UpdateProduct",
+                                            param: parameters,
+                                            commandType: CommandType.StoredProcedure
+                                        );
+
+                return updateProduct;
+            }
+            catch (Exception ex)
+            {
+                return new UpdateProductResult();
+            };
+        }
     }
 }

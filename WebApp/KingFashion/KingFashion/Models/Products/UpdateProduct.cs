@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 ﻿using Microsoft.AspNetCore.Http;
+=======
+﻿
+using Microsoft.AspNetCore.Http;
+>>>>>>> 8e904dea86b68b2f5ab030b54b3c065e7b53e08f
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +32,10 @@ namespace KingFashion.Models.Products
         public DateTime EndsAt { get; set; }
         public string Content { get; set; }
         public int CategoryId { get; set; }
-        public IFormFile Photo { get; set; }
+
+        public List<IFormFile> Photo { get; set; }
+        public string ExistPhoto { get; set; }
+
+
     }
 }
