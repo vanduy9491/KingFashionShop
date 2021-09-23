@@ -134,10 +134,12 @@ namespace KingFashionShop.Service.ProductService
             return product;
         }
 
-        public async Task<IEnumerable<ProductResult>> GetProductsTopCategory(int limit)
+        public async Task<IEnumerable<ProductResult>> GetProductsTopCategory(int topCategoryId,int limit, int boundary)
         {
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@limit", limit);
+            parameters.Add("@boundary", boundary);
+            parameters.Add("@topCategoryId", topCategoryId);
             var products = await SqlMapper.QueryAsync<ProductResult>(
                 cnn: connection, param: parameters, sql: "sp_GetProductsTopCategory", commandType: CommandType.StoredProcedure
                 );
@@ -146,13 +148,13 @@ namespace KingFashionShop.Service.ProductService
         
 
 
-        public async Task<BoundaryList<Product>> GetProductByCategoryId(int categoryId, bool? isCategoryParent, int boundary, int limit)
+        public async Task<BoundaryList<Product>> GetProductByCategoryId(int categoryId, bool isCategoryParent, int boundary, int limit)
         {
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@categoryId", categoryId);
             parameters.Add("@boundary", boundary);
             parameters.Add("@limit", limit);
-            parameters.Add("@isCategoryParent", limit);
+            parameters.Add("@isCategoryParent", isCategoryParent);
             var items = await SqlMapper.QueryAsync<Product>(
                                 cnn: connection,
                                 sql: "sp_GetProductByCategoryId",
