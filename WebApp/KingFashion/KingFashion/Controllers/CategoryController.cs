@@ -26,6 +26,7 @@ namespace KingFashion.Controllers
         [Route("/Category/GetByParentId")]
         public async Task<IActionResult> GetByParentId([FromQuery] int parentId)
         {
+            ViewBag.ParentId = parentId;
             var data = await ApiHelper.HttpGet<List<Category>>(@$"{Common.ApiUrl}Category/GetByParentId?parentId="+ parentId);
             return Ok(data);
         }

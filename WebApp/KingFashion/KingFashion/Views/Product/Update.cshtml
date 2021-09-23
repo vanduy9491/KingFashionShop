@@ -1,4 +1,4 @@
-﻿@model KingFashion.Models.Products.Product
+﻿@model KingFashion.Models.Products.UpdateProduct
 
 @{
     ViewData["Title"] = "ViewDetails";
@@ -13,49 +13,50 @@
         <div class="row">
             <div class="form-group col-md-6">
                 <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" readonly />
+                <input asp-for="Id" class="form-control" />
             </div>
             <div class="form-group col-md-6">
                 <label asp-for="UserId" class="control-label"></label>
-                <input asp-for="UserId" class="form-control" readonly />
+                <input asp-for="UserId" class="form-control" />
             </div>
         </div>
         <div class="form-group">
             <label asp-for="Title" class="control-label"></label>
-            <input asp-for="Title" class="form-control" readonly />
+            <input asp-for="Title" class="form-control" />
         </div>
         <div class="form-group">
             <label asp-for="MetaTitle" class="control-label"></label>
-            <input asp-for="MetaTitle" class="form-control" readonly />
+            <input asp-for="MetaTitle" class="form-control" />
         </div>
         <div class="form-group">
             <label asp-for="Slug" class="control-label"></label>
-            <input asp-for="Slug" class="form-control" readonly />
+            <input asp-for="Slug" class="form-control" />
         </div>
         <div class="form-group">
             <label asp-for="Summary" class="control-label"></label>
-            <input asp-for="Summary" class="form-control" readonly />
+            <input asp-for="Summary" class="form-control" />
         </div>
         <div class="form-group">
             <label asp-for="Type" class="control-label"></label>
-            <input asp-for="Type" class="form-control" readonly />
+            <input asp-for="Type" class="form-control" />
         </div>
         <div class="form-group">
             <label asp-for="SKU" class="control-label"></label>
-            <input asp-for="SKU" class="form-control" readonly />
+            <input asp-for="SKU" class="form-control" />
         </div>
+
         <div class="row">
             <div class="form-group col-md-4">
                 <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" readonly />
+                <input asp-for="Price" class="form-control" />
             </div>
             <div class="form-group col-md-4">
                 <label asp-for="Discount" class="control-label"></label>
-                <input asp-for="Discount" class="form-control" readonly />
+                <input asp-for="Discount" class="form-control" />
             </div>
             <div class="form-group col-md-4">
                 <label asp-for="Quantity" class="control-label"></label>
-                <input asp-for="Quantity" class="form-control" readonly />
+                <input asp-for="Quantity" class="form-control" />
             </div>
         </div>
         <div class="form-group form-check">
@@ -65,36 +66,41 @@
         </div>
         <div class="form-group">
             <label asp-for="CreatedAt" class="control-label"></label>
-            <input asp-for="CreatedAt" class="form-control" readonly />
+            <input asp-for="CreatedAt" class="form-control" />
         </div>
         <div class="form-group">
             <label asp-for="UpdateAt" class="control-label"></label>
-            <input asp-for="UpdateAt" class="form-control" readonly />
+            <input asp-for="UpdateAt" class="form-control" />
         </div>
         <div class="form-group">
             <label asp-for="PublishedAt" class="control-label"></label>
-            <input asp-for="PublishedAt" class="form-control" readonly />
+            <input asp-for="PublishedAt" class="form-control" />
         </div>
         <div class="form-group">
             <label asp-for="StartsAt" class="control-label"></label>
-            <input asp-for="StartsAt" class="form-control" readonly />
+            <input asp-for="StartsAt" class="form-control" />
         </div>
         <div class="form-group">
             <label asp-for="EndsAt" class="control-label"></label>
-            <input asp-for="EndsAt" class="form-control" readonly />
+            <input asp-for="EndsAt" class="form-control" />
         </div>
         <div class="form-group">
             <label asp-for="Content" class="control-label"></label>
-            <input asp-for="Content" class="form-control" readonly />
+            <input asp-for="Content" class="form-control" />
         </div>
+        @*<div class="form-group">
+                <label asp-for="CategoryId" class="control-label"></label>
+                <input asp-for="CategoryId" class="form-control" />
+            </div>*@
     </div>
-    <div class="col-md-5 ml-5>
+    <div class="col-md-5>
         <div class="form-group">
             <label asp-for="Photo" class="control-label"></label><br />
 
             @foreach (var img in Model.Photo.Split(" ").Skip(1))
             {
-                <img width="300px" class="img-fluid img-thumbnail img-lg" src="~/images/@img"><br />
+                <img width="400px" class="img-fluid img-thumbnail img-lg" src="~/images/@img"><br />
+                <button onclick="img.openModel()"></button>
             }
         </div>
     </div>
@@ -103,7 +109,38 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-
+<div class="modal fade" id="imageModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thay đổi ảnh</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="frmImage">
+                    <div class="form-group">
+                        <img class="img-thumbnail no-photo" src="~/images/no-img.jpg" alt="no photo" />
+                        <label asp-for="Photo" class="col-sm-2 col-form-label"></label>
+                        <div class="custom-file col-sm-10">
+                            <input multiple asp-for="Photo" class="custom-file-input" />
+                            <label class="custom-file-label mx-sm-3" for="customFile">Choose file</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    <i class="ti-close"></i> Đóng
+                </button>
+                <button type="button" class="btn btn-primary" id="btnSave">
+                    <i class="ti-check"></i> Lưu
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 @section scripts{
     <script asp-append-version="true">
         var img = {};
@@ -112,7 +149,14 @@
             $('.no-photo').attr('src', window.URL.createObjectURL($(this)[0].files[0]));
             $(".custom-file-label").addClass("selected").html(fileName);
         });
-
+        img.openModel = function () {
+            $('#imageModel').modal('show');
+        };
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $('.no-photo').attr('src', window.URL.createObjectURL($(this)[0].files[0]));
+            $(".custom-file-label").addClass("selected").html(fileName);
+        });
         $(document).ready(function () {
             $(".custom-file-input").on("change", function () {
                 var fileLabel = $(this).next('.custom-file-label');

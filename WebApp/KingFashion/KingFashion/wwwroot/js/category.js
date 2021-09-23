@@ -1,4 +1,5 @@
 ﻿var category = {};
+var categoryId = 0;
 category.showData = function () {
     $.ajax({
         url: "https://localhost:44368/Category/Get",
@@ -6,8 +7,8 @@ category.showData = function () {
         success: function (data) {
             $('#tbCategory tbody').empty();
             $('#tbCategory thead').empty();
-            $('#back').empty();
-            $('#create').empty();
+            $('#Ccreate').hide();
+            $('#pCreate').hide();
             $('#tbCategory thead').append(
                 `<tr id="trr">
                     <th>
@@ -45,68 +46,13 @@ category.showData = function () {
     });
 }
 category.showCatByParentId = function (id) {
-    let pId = id;
+    categoryId = id;
     $.ajax({
         url: `https://localhost:44368/Category/GetByParentId?parentId=${id} `,
         method: "GET",
         success: function (data) {
-            $('#create').empty();
-            $('#create').append(
-                `<p id="pCreate">
-                    <a id="create" href="javascript:;" class="btn btn-out-dashed btn-success btn-square" onclick="category.openModel()"><i class="ti-plus"></i>Thêm Mới</a>
-                </p>
-                <p id="pCreate">
-                    <a id="back" href="javascript:;" class="btn btn-out-dashed btn-info btn-square" onclick="category.showData()"><i class="ti-plus"></i>Quay lại</a>
-                </p>
-                <div class="modal fade" id="categoryModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Thêm mới danh mục</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form id="frmCategory">
-                                    <div class="form-group">
-                                        <label>Tên danh mục</label>
-                                        <input type="text" name="Title" class="form-control" data-rule-required="true" />
-                                        <input type="hidden" name="ParentId" class="form-control" data-rule-required="true" value="${pId}" />
-                                        <input type="hidden" name="Id" value="0" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Tiêu đề meta</label>
-                                        <input type="text" name="MetaTitle" class="form-control"  />
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Slug</label>
-                                        <input type="text" name="Slug" class="form-control" data-rule-required="true" />
-                                    </div>
-                                        <div class="form-group">
-                                        <label>Nội dung</label>
-                                        <textarea id="Content" type="text" name="Content" class="form-control"  ></textarea>
-                                        <script>CKEDITOR.replace("Content");</script>
-                                    </div>
-                                     <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input type="checkbox" class="form-check-input" name="Status"> Trạng Thái
-                                        </label>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                    <i class="ti-close"></i> Đóng
-                                </button>
-                                <button type="button" class="btn btn-primary" onclick="category.save(${pId})">
-                                    <i class="ti-check"></i> Lưu
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>`);
-
+            $('#Ccreate').show();
+            $('#pCreate').show();
             $('#tbCategory tbody').empty();
             $('#tbCategory thead').empty();
             $('#tbCategory thead').append(
@@ -126,7 +72,7 @@ category.showCatByParentId = function (id) {
                         <tr>
                             <td>${item.id}</td>
                             <td>${item.title}</td>
-                            <td class='text-right btn btn-sm ${item.status ? 'btn-success' : 'btn-warning'}'>${item.status ? '  Sẵn Có ' : '  Hết Hàng '}</td>
+                            <td class='btn btn-sm ${item.status ? 'btn-success' : 'btn-warning'}'>${item.status ? '  Sẵn Có ' : '  Hết Hàng '}</td>
                             <td class='text-right'>
                                   </a>
                                     <a href='javascript:;' class='btn btn-sm ${item.status ? 'btn-warning' : 'btn-success'}'
@@ -164,7 +110,7 @@ category.openModel = function () {
 category.changeStatus = function (id, status) {
     bootbox.confirm({
         title: `Danh Mục ${status ? "Sẵn Có" : "Hết Hàng"}`,
-        message: `Bạn có muốn danh mục đã ${status ? "hết hàng" : "sẵn có"}?`,
+        message: `Bạn có muốn danh mục đã ${status ? "hết hàng" : "sẵn có"}?` ,
         buttons: {
             cancel: {
                 label: '<i class="ti-close"></i> Trở Về'
@@ -186,7 +132,7 @@ category.changeStatus = function (id, status) {
                     data: JSON.stringify(changeStatusCategoryObj),
                     success: function (data) {
                         if (data.success) {
-                            location.reload();
+                            category.showCatByParentId(categoryId);
                             $.notify(data.message, "success");
                         }
                         else {
@@ -198,6 +144,10 @@ category.changeStatus = function (id, status) {
         }
     });
 }
+
+$("#btnSave").on("click", function () {
+    category.save(categoryId);
+})
 
 category.save = function (id) {
     if ($('#frmCategory').valid()) {
@@ -219,9 +169,9 @@ category.save = function (id) {
                 data: JSON.stringify(createCategoryObj),
                 success: function (data) {
                     if (data.success) {
-                        //$('#categoryModel').modal('hide');
-                        $(".modal-footer button.btn-secondary").click();
-                        $('#pCreate').empty();
+                        $('#categoryModel').modal('hide');
+                        $('#Ccreate').show();
+                        $('#pCreate').show();
                         category.showCatByParentId(id);
                         $.notify(data.message, "success");
                     }
@@ -249,9 +199,8 @@ category.save = function (id) {
                 success: function (data) {
                     if (data.success) {
                         $('#categoryModel').modal('hide');
-                        //$(".modal-footer button.btn-secondary").click();
-                        $(".modal-backdrop fade").removeClass("show");
-                        $('#pCreate').empty();
+                        $('#Ccreate').show();
+                        $('#pCreate').show();
                         category.showCatByParentId(id);
                         $.notify(data.message, "success");
                     }

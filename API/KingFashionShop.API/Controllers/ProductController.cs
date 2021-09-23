@@ -61,10 +61,17 @@ namespace KingFashionShop.API.Controllers
                 limit = -1;
             return await productService.GetProductsTopCategory(limit.Value);
         }
+        
         [HttpGet("GetProductByCategoryId")]
         public async Task<BoundaryList<Product>> GetProductByCategoryId([FromQuery] int categoryId, [FromQuery] bool? isCategoryParent ,[FromQuery] int boundary, [FromQuery] int limit)
         {
             return await productService.GetProductByCategoryId(categoryId, isCategoryParent ,boundary, limit);
+        }
+        [HttpPut]
+        public async Task<UpdateProductResult> Update(UpdateProduct update)
+        {
+            return await productService.Update(update);
+
         }
     }
 }
