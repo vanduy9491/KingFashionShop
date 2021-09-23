@@ -357,16 +357,6 @@
             url: "https://localhost:44322/api/Product/GetProductsTopCategory",
             method: "GET",
             success: function (data) {
-
-                var number = 4;
-                var lengtData = data.length;
-                var link = document.getElementById('loadmore');
-                if (lengtData == 20) {
-                    
-                    link.classList.add("d-none");
-                }
-                data = data.splice(number, number );
-
                 $.each(data, function (index, pro) {
                     var item = $(
                         `<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item ${dataFilter}">
@@ -412,24 +402,6 @@
     });
 
   
-    //$('.js-show-filter').on('click', function () {
-    //    $(this).toggleClass('show-filter');
-    //    $('.panel-filter').slideToggle(400);
-
-    //    if ($('.js-show-search').hasClass('show-search')) {
-    //        $('.js-show-search').removeClass('show-search');
-    //        $('.panel-search').slideUp(400);
-    //    }
-    //});
-
-    //$('.js-show-search').on('click', function () {
-    //    $(this).toggleClass('show-search');
-    //    $('.panel-search').slideToggle(400);
-
-    //    if ($('.js-show-filter').hasClass('show-filter')) {
-    //        $('.js-show-filter').removeClass('show-filter');
-    //        $('.panel-filter').slideUp(400);
-    //    }
-    //});
+   
 
 })(jQuery);
