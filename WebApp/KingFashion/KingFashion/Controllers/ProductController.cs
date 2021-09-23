@@ -113,13 +113,6 @@ namespace KingFashion.Controllers
 
             return View();
         }
-        [HttpGet]
-        [Route("/Product/Update/{proId}")]
-        public async Task<IActionResult> Update()
-        {
-
-             return View();
-        }
         [HttpPost]
         public async Task<IActionResult> Update(UpdateProduct update)
         {
