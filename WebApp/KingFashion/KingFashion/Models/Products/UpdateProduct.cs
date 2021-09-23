@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -26,6 +27,6 @@ namespace KingFashion.Models.Products
         public DateTime EndsAt { get; set; }
         public string Content { get; set; }
         public int CategoryId { get; set; }
-        public string Photo { get; set; }
+        public IFormFile Photo { get; set; }
     }
 }

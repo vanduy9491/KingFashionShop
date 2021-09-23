@@ -102,6 +102,7 @@ namespace KingFashion.Controllers
 
             return View();
         }
+        
         [HttpPut]
         [Route("/Product/Update")]
         public async Task<IActionResult> Update([FromBody] UpdateProduct model)
