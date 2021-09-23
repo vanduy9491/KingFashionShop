@@ -282,59 +282,56 @@
         $('.js-show-modal1').on('click', function (e) {
             e.preventDefault();
             let productId = $(this).attr('data-item');
-            $(".js-name-detail").text(data.productName);
-            $(".mtext-106").text("$" + data.price);
-            var images = ["../images/product-detail-01.jpg", "../images/product-detail-02.jpg", "../images/product-detail-03.jpg"];
-
-            $('.slick3').empty();
-            $('.wrap-slick3-dots').empty();
-            $('.wrap-slick3-arrows').empty();
-            $('.slick3').attr("class", "slick3 gallery-lb");
-            $.each(images, function (index, item) {
-                $('.slick3').append(
-                    `<div class="item-slick3" data-thumb="${item}">
-                <div class="wrap-pic-w pos-relative">
-                    <img src="${item}" alt="IMG-PRODUCT">
-
-                    <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="${item}">
-                        <i class="fa fa-expand"></i>
-                    </a>
-                </div>
-            </div>
-            `);
-
-            });
-            $('.wrap-slick3').each(function () {
-                $(this).find('.slick3').slick({
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                    fade: true,
-                    infinite: true,
-                    autoplay: false,
-                    autoplaySpeed: 6000,
-
-                    arrows: true,
-                    appendArrows: $(this).find('.wrap-slick3-arrows'),
-                    prevArrow: '<button class="arrow-slick3 prev-slick3"><i class="fa fa-angle-left" aria-hidden="true"></i></button>',
-                    nextArrow: '<button class="arrow-slick3 next-slick3"><i class="fa fa-angle-right" aria-hidden="true"></i></button>',
-
-                    dots: true,
-                    appendDots: $(this).find('.wrap-slick3-dots'),
-                    dotsClass: 'slick3-dots',
-                    customPaging: function (slick, index) {
-                        var portrait = $(slick.$slides[index]).data('thumb');
-                        return '<img src=" ' + portrait + ' "/><div class="slick3-dot-overlay"></div>';
-                    },
-                });
-            });
-            $('.js-modal1').addClass('show-modal1');
-
-          
             $.ajax({
-                url:"https://localhost:44322/api/Product/" + productId,
+                url: "https://localhost:44322/api/Product/GetProduct/" + productId,
                 method: "GET",
                 success: function (data) {
-                  
+                    $(".js-name-detail").text(data.title);
+                    $(".mtext-106").text("$" + data.price);
+                    var images = ["../images/product-detail-01.jpg", "../images/product-detail-02.jpg", "../images/product-detail-03.jpg"];
+
+                    $('.slick3').empty();
+                    $('.wrap-slick3-dots').empty();
+                    $('.wrap-slick3-arrows').empty();
+                    $('.slick3').attr("class", "slick3 gallery-lb");
+                    $.each(images, function (index, item) {
+                        $('.slick3').append(
+                            `<div class="item-slick3" data-thumb="${item}">
+                        <div class="wrap-pic-w pos-relative">
+                            <img src="${item}" alt="IMG-PRODUCT">
+     
+                            <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="${item}">
+                                <i class="fa fa-expand"></i>
+                            </a>
+                        </div>
+                    </div>
+                    `);
+
+                    });
+                    $('.wrap-slick3').each(function () {
+                        $(this).find('.slick3').slick({
+                            slidesToShow: 1,
+                            slidesToScroll: 1,
+                            fade: true,
+                            infinite: true,
+                            autoplay: false,
+                            autoplaySpeed: 6000,
+
+                            arrows: true,
+                            appendArrows: $(this).find('.wrap-slick3-arrows'),
+                            prevArrow: '<button class="arrow-slick3 prev-slick3"><i class="fa fa-angle-left" aria-hidden="true"></i></button>',
+                            nextArrow: '<button class="arrow-slick3 next-slick3"><i class="fa fa-angle-right" aria-hidden="true"></i></button>',
+
+                            dots: true,
+                            appendDots: $(this).find('.wrap-slick3-dots'),
+                            dotsClass: 'slick3-dots',
+                            customPaging: function (slick, index) {
+                                var portrait = $(slick.$slides[index]).data('thumb');
+                                return '<img src=" ' + portrait + ' "/><div class="slick3-dot-overlay"></div>';
+                            },
+                        });
+                    });
+                    $('.js-modal1').addClass('show-modal1');
                 }
             });
         });
@@ -362,10 +359,11 @@
             success: function (data) {
 
                 var number = 4;
-                var lengtData = data.length; 
-                if (lengtData == 21) {
-                    var link = document.getElementById('loadmore');
-                    link.style.visibility = 'hidden';
+                var lengtData = data.length;
+                var link = document.getElementById('loadmore');
+                if (lengtData == 20) {
+                    
+                    link.classList.add("d-none");
                 }
                 data = data.splice(number, number );
 
@@ -412,5 +410,26 @@
             }
         });
     });
+
+  
+    //$('.js-show-filter').on('click', function () {
+    //    $(this).toggleClass('show-filter');
+    //    $('.panel-filter').slideToggle(400);
+
+    //    if ($('.js-show-search').hasClass('show-search')) {
+    //        $('.js-show-search').removeClass('show-search');
+    //        $('.panel-search').slideUp(400);
+    //    }
+    //});
+
+    //$('.js-show-search').on('click', function () {
+    //    $(this).toggleClass('show-search');
+    //    $('.panel-search').slideToggle(400);
+
+    //    if ($('.js-show-filter').hasClass('show-filter')) {
+    //        $('.js-show-filter').removeClass('show-filter');
+    //        $('.panel-filter').slideUp(400);
+    //    }
+    //});
 
 })(jQuery);

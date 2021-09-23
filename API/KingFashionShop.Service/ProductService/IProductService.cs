@@ -1,5 +1,6 @@
 ﻿using KingFashion.Models.Products;
 using KingFashionShop.Domain.Models;
+using KingFashionShop.Domain.ProductRespones;
 using KingFashionShop.Domain.Response.ProductRespones;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,8 @@ namespace KingFashionShop.Service.ProductService
         Task<Product> GetProduct(int proId);
         Task<IEnumerable<ProductResult>> GetProductsTopCategory(int limit);
         Task<IEnumerable<ProductRespone>> GetAllProduct();
+        Task<IEnumerable<ProductRespone>> GetProductById(int productId);
+        Task<BoundaryList<Product>> GetProductByCategoryId(int categoryId, bool? isCategoryParent, int boundary, int limit);
         Task<UpdateProductResult> Update(UpdateProduct update);
     }
 }
