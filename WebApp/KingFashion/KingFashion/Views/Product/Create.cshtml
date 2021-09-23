@@ -3,11 +3,6 @@
 @{
     ViewData["Title"] = "Create";
 }
-
-<h1>Create</h1>
-
-<h4>CreateProduct</h4>
-<hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-controller="Product" asp-action="Create" method="post" enctype="multipart/form-data">
@@ -127,7 +122,7 @@
         $(".custom-file-input").on("change", function () {
             var fileName = $(this).val().split("\\").pop();
             $('.no-photo').attr('src', window.URL.createObjectURL($(this)[0].files[0]));
-            $(".custom-file-label").addClass("selected").html(fileName);
+            $(".custom-file-label").addClass("selected").html(fileName);    
         });
         $(document).ready(function () {
             $(".custom-file-input").on("change", function () {

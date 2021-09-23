@@ -56,5 +56,10 @@ namespace KingFashionShop.API.Controllers
                 limit = -1;
             return await productService.GetProductsTopCategory(limit.Value);
         }
+        [HttpPut]
+        public async Task<UpdateProductResult> Update(UpdateProduct update)
+        {
+            return await productService.Update(update);
+        }
     }
 }

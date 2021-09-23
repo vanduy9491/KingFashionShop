@@ -16,5 +16,6 @@ namespace KingFashionShop.Service.ProductService
         Task<Product> GetProduct(int proId);
         Task<IEnumerable<ProductResult>> GetProductsTopCategory(int limit);
         Task<IEnumerable<ProductRespone>> GetAllProduct();
+        Task<UpdateProductResult> Update(UpdateProduct update);
     }
 }

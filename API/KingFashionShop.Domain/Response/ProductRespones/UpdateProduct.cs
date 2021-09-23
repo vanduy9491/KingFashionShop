@@ -1,11 +1,8 @@
-﻿
-using Microsoft.AspNetCore.Http;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace KingFashion.Models.Products
+namespace KingFashionShop.Domain.Response.ProductRespones
 {
     public class UpdateProduct
     {
@@ -28,7 +25,6 @@ namespace KingFashion.Models.Products
         public DateTime EndsAt { get; set; }
         public string Content { get; set; }
         public int CategoryId { get; set; }
-        public List<IFormFile> Photo { get; set; }
-        public string ExistPhoto { get; set; }
+        public string Photo { get; set; }
     }
 }
