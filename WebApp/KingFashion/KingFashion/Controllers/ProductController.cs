@@ -50,7 +50,6 @@ namespace KingFashion.Controllers
         }
 
 
-
         [HttpGet("/Product/Create")]
         public IActionResult Create()
         {
@@ -173,5 +172,19 @@ namespace KingFashion.Controllers
 
             return View();
         }
+
+        [HttpGet("/Product/ViewDetails/{proId}")]
+        public async Task<IActionResult> ViewDetails(int proId)
+        {
+            var product = await ApiHelper.HttpGet<Product>(@$"{Common.ApiUrl}Product/GetProduct/{proId}");
+            return View(product);
+        }
+        [HttpGet("/Product/Update/{proId}")]
+        public async Task<IActionResult> Update(int proId)
+        {
+            var product = await ApiHelper.HttpGet<Product>(@$"{Common.ApiUrl}Product/GetProduct/{proId}");
+            return View(product);
+        }
     }
+   
 }

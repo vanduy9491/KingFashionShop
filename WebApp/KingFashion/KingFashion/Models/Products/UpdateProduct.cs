@@ -30,5 +30,6 @@ namespace KingFashion.Models.Products
         public int CategoryId { get; set; }
         public List<IFormFile> Photo { get; set; }
         public string ExistPhoto { get; set; }
+        public string Photo { get; set; }
     }
 }
