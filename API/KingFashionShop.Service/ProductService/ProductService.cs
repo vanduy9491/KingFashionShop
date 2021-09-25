@@ -122,10 +122,10 @@ namespace KingFashionShop.Service.ProductService
             }
         }
 
-        public async Task<Product> GetProduct(int proId)
+        public async Task<Product> GetProduct(int Id)
         {
             DynamicParameters parameters = new DynamicParameters();
-            parameters.Add("@proId", proId);
+            parameters.Add("@proId", Id);
             var product = await SqlMapper.QueryFirstOrDefaultAsync<Product>(
                                 cnn: connection,
                                 sql: "sp_GetProductById",

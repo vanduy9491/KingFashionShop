@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KingFashionShop.Domain.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -21,6 +22,27 @@ namespace KingFashion.Models.Products
         public string Content { get; set; }
         public string CategorySlug { get; set; }
         public string Photo { get; set; }
+
+        public ProductResult()
+        {
+
+        }
+
+        public ProductResult(Product product)
+        {
+            Id = product.Id;
+            Title = product.Title;
+            MetaTitle = product.MetaTitle;
+            Slug = product.Slug;
+            Summary = product.Summary;
+            Price = product.Price;
+            Discount = product.Discount;
+            Shop = product.Shop;
+            StartsAt = product.StartsAt;
+            EndsAt = product.EndsAt;
+            Content = product.Content;
+            Photo = product.Photo;
+        }
      
     }
 }

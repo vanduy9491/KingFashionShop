@@ -1,3 +1,4 @@
+using KingFashionShop.Service.CartService;
 using KingFashionShop.Service.CategoryService;
 using KingFashionShop.Service.ProductService;
 using Microsoft.AspNetCore.Builder;
@@ -37,6 +38,7 @@ namespace KingFashionShop.API
             services.AddSwaggerGen();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<ICartService, CartService>();
 
 
         }
