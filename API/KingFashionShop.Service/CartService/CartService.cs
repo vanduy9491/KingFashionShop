@@ -61,7 +61,7 @@ namespace KingFashionShop.Service.CartService
         public async Task<CartResponse> AddCart(AddCart addCart)
         {
             var cart = await GetBySessionId(addCart.sessionId);
-            Product product = await productService.GetProduct(addCart.productId);
+            Product pAdd = await productService.GetProduct(addCart.productId);
             if (cart == null)
             {
                 DynamicParameters parameters = new DynamicParameters();
@@ -88,15 +88,15 @@ namespace KingFashionShop.Service.CartService
                        );
                 var newCartItem = new CartItem()
                 {
-                    Price = product.Price,
-                    Discount = product.Discount,
+                    Price = pAdd.Price,
+                    Discount = pAdd.Discount,
                     CartId = newCart.Id,
                     CreatedAt = DateTime.Now,
-                    ProductId = product.Id,
+                    ProductId = pAdd.Id,
                     Quantity = addCart.quantity
                 };
                 newCartItem = await cartItemService.CreateCartItem(newCartItem);
-                CartItemResponse cartItemResult = new CartItemResponse(newCartItem, product);
+                CartItemResponse cartItemResult = new CartItemResponse(newCartItem, pAdd);
 
                 cart = new CartResponse(newCart, new List<CartItemResponse>() { cartItemResult });
             }
@@ -107,16 +107,16 @@ namespace KingFashionShop.Service.CartService
                 {
                     var newCartItem = new CartItem()
                     {
-                        Price = product.Price,
-                        Discount = product.Discount,
+                        Price = pAdd.Price,
+                        Discount = pAdd.Discount,
                         CartId = cart.Id,
                         CreatedAt = DateTime.Now,
-                        ProductId = product.Id,
+                        ProductId = pAdd.Id,
                         Quantity = addCart.quantity
                     };
                     newCartItem = await cartItemService.CreateCartItem(newCartItem);
 
-                    CartItemResponse cartItemResult = new CartItemResponse(newCartItem, product);
+                    CartItemResponse cartItemResult = new CartItemResponse(newCartItem, pAdd);
                     cart.Items = new List<CartItemResponse>() { cartItemResult };
                 }
                 else
@@ -129,29 +129,31 @@ namespace KingFashionShop.Service.CartService
                         {
                             pFound = true;
                             item.Quantity += addCart.quantity;
-                            item.Price = product.Price;
-                            item.Discount = product.Discount;
+                            item.Price = pAdd.Price;
+                            item.Discount = pAdd.Discount;
                             item.UpdatedAt = DateTime.Now;
                             var updateCartItem = await cartItemService.UpdateCartItem(item);
-                            cartItemsResult.Add(new CartItemResponse(updateCartItem, product));
-                            break;
+                            cartItemsResult.Add(new CartItemResponse(updateCartItem, pAdd));
                         }
                         else
-                            cartItemsResult.Add(new CartItemResponse(item, product));
+                        {
+                           var p = await productService.GetProduct(item.ProductId);
+                            cartItemsResult.Add(new CartItemResponse(item, p));
+                        }
                     }
                     if (!pFound)
                     {
                         var newCartItem = new CartItem()
                         {
-                            Price = product.Price,
-                            Discount = product.Discount,
+                            Price = pAdd.Price,
+                            Discount = pAdd.Discount,
                             CartId = cart.Id,
                             CreatedAt = DateTime.Now,
-                            ProductId = product.Id,
+                            ProductId = pAdd.Id,
                             Quantity = addCart.quantity
                         };
                         newCartItem = await cartItemService.CreateCartItem(newCartItem);
-                        cartItemsResult.Add(new CartItemResponse(newCartItem, product));
+                        cartItemsResult.Add(new CartItemResponse(newCartItem, pAdd));
 
                     }
                     cart.Items = cartItemsResult;
@@ -189,8 +191,10 @@ namespace KingFashionShop.Service.CartService
                     var updateCartItem = await cartItemService.UpdateCartItem(item);
                     cartItemsResult.Add(new CartItemResponse(updateCartItem, product));
                 }
-                else
-                    cartItemsResult.Add(new CartItemResponse(item, product));
+                else { 
+                    var p = await productService.GetProduct(item.ProductId);
+                cartItemsResult.Add(new CartItemResponse(item, p));
+                }
             }
             cart.Items = cartItemsResult;
             return cart;
