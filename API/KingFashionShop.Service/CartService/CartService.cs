@@ -129,8 +129,8 @@ namespace KingFashionShop.Service.CartService
                         {
                             pFound = true;
                             item.Quantity += addCart.quantity;
-                            item.Price = product.Price * item.Quantity;
-                            item.Discount = product.Discount * item.Quantity;
+                            item.Price = product.Price;
+                            item.Discount = product.Discount;
                             item.UpdatedAt = DateTime.Now;
                             var updateCartItem = await cartItemService.UpdateCartItem(item);
                             cartItemsResult.Add(new CartItemResponse(updateCartItem, product));
@@ -183,8 +183,8 @@ namespace KingFashionShop.Service.CartService
                 if (item.ProductId == changeCart.productId && item.CartId == cart.Id)
                 {
                     item.Quantity = changeCart.quantity;
-                    item.Price = product.Price * item.Quantity;
-                    item.Discount = product.Discount * item.Quantity;
+                    item.Price = product.Price;
+                    item.Discount = product.Discount;
                     item.UpdatedAt = DateTime.Now;
                     var updateCartItem = await cartItemService.UpdateCartItem(item);
                     cartItemsResult.Add(new CartItemResponse(updateCartItem, product));

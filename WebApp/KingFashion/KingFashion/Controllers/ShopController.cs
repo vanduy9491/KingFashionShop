@@ -3,6 +3,7 @@ using KingFashion.Helpers;
 using KingFashion.Models;
 using KingFashion.Models.Categorys;
 using KingFashion.Models.Products;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -29,14 +30,15 @@ namespace KingFashionWeb.Controllers
             shopAll.Categories = await ApiHelper.HttpGet<List<CategoryResult>>(@$"{Common.ApiUrl}Category");
             shopAll.Products = await ApiHelper.HttpGet<List<ProductResult>>(@$"{Common.ApiUrl}Product/GetProductsTopCategory?limit=8");
             string sessionId = Request.Cookies["sessionId"];
-            if (sessionId == null) { 
+            if (sessionId == null)
+            {
                 string data = DateTime.Now.ToString();
-            sessionId = Convert.ToBase64String(Encoding.UTF8.GetBytes(data));
-            Response.Cookies.Append("sessionId", sessionId);
+                sessionId = Convert.ToBase64String(Encoding.UTF8.GetBytes(data));
+                Response.Cookies.Append("sessionId", sessionId, new CookieOptions() { Expires = DateTimeOffset.Now.AddYears(2) });
             }
             return View(shopAll);
-    }
         }
+
         [HttpPost]
         [Route("/Shop/Index/{productId:int}")]
         public async Task<IActionResult> Index(int productId)

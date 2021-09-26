@@ -23,6 +23,20 @@ namespace KingFashion.Models.Products
         public string Content { get; set; }
         public string CategorySlug { get; set; }
         public string Photo { get; set; }
-       
+        public string MainPhoto
+        {
+            get
+            {
+                if (!String.IsNullOrEmpty(Photo.Trim()))
+                {
+                    var images = Photo.Split(" ");
+                    if (images.Length > 0)
+                        return images[1];
+                }
+                return null;
+            }
+        }
+
+
     }
 }
