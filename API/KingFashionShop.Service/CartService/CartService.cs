@@ -78,6 +78,8 @@ namespace KingFashionShop.Service.CartService
                 parameters.Add("@city", null);
                 parameters.Add("@province", null);
                 parameters.Add("@country", null);
+                parameters.Add("@createdAt", DateTime.Now);
+
                 var newCart = await SqlMapper.QueryFirstOrDefaultAsync<Cart>(
                        cnn: connection,
                        param: parameters,
@@ -91,10 +93,10 @@ namespace KingFashionShop.Service.CartService
                     CartId = newCart.Id,
                     CreatedAt = DateTime.Now,
                     ProductId = product.Id,
-                    Quantity = 1
+                    Quantity = addCart.quantity
                 };
                 newCartItem = await cartItemService.CreateCartItem(newCartItem);
-                CartItemResponse cartItemResult = new CartItemResponse(newCartItem,product);
+                CartItemResponse cartItemResult = new CartItemResponse(newCartItem, product);
 
                 cart = new CartResponse(newCart, new List<CartItemResponse>() { cartItemResult });
             }
@@ -110,7 +112,7 @@ namespace KingFashionShop.Service.CartService
                         CartId = cart.Id,
                         CreatedAt = DateTime.Now,
                         ProductId = product.Id,
-                        Quantity = 1
+                        Quantity = addCart.quantity
                     };
                     newCartItem = await cartItemService.CreateCartItem(newCartItem);
 
@@ -119,20 +121,38 @@ namespace KingFashionShop.Service.CartService
                 }
                 else
                 {
-                  var  cartItemsResult  =new List<CartItemResponse>() ;
+                    var cartItemsResult = new List<CartItemResponse>();
+                    var pFound = false;
                     foreach (var item in cartItems)
                     {
-                        if (item.ProductId == addCart.productId)
+                        if (item.ProductId == addCart.productId && item.CartId == cart.Id)
                         {
-                           
-                            item.Quantity += 1;
+                            pFound = true;
+                            item.Quantity += addCart.quantity;
                             item.Price = product.Price * item.Quantity;
                             item.Discount = product.Discount * item.Quantity;
                             item.UpdatedAt = DateTime.Now;
-                            var updateCartItem =   await cartItemService.UpdateCart(item);
-                            cartItemsResult.Add(new CartItemResponse(updateCartItem,product));
+                            var updateCartItem = await cartItemService.UpdateCartItem(item);
+                            cartItemsResult.Add(new CartItemResponse(updateCartItem, product));
                             break;
                         }
+                        else
+                            cartItemsResult.Add(new CartItemResponse(item, product));
+                    }
+                    if (!pFound)
+                    {
+                        var newCartItem = new CartItem()
+                        {
+                            Price = product.Price,
+                            Discount = product.Discount,
+                            CartId = cart.Id,
+                            CreatedAt = DateTime.Now,
+                            ProductId = product.Id,
+                            Quantity = addCart.quantity
+                        };
+                        newCartItem = await cartItemService.CreateCartItem(newCartItem);
+                        cartItemsResult.Add(new CartItemResponse(newCartItem, product));
+
                     }
                     cart.Items = cartItemsResult;
                 }
@@ -144,6 +164,54 @@ namespace KingFashionShop.Service.CartService
         public Task<CartResponse> CreateCart(UpdateCart updateCart)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<CartResponse> ChangeItem(ChangeCart changeCart)
+        {
+            var cart = await GetBySessionId(changeCart.sessionId);
+            if (cart == null)
+                return null;
+            var cartItems = await cartItemService.GetCartItemsByCartId(cart.Id);
+            if (cartItems == null && cartItems.AsList().Count == 0)
+                return null;
+            Product product = await productService.GetProduct(changeCart.productId);
+            if (product == null)
+                return null;
+            var cartItemsResult = new List<CartItemResponse>();
+            foreach (var item in cartItems)
+            {
+                if (item.ProductId == changeCart.productId && item.CartId == cart.Id)
+                {
+                    item.Quantity = changeCart.quantity;
+                    item.Price = product.Price * item.Quantity;
+                    item.Discount = product.Discount * item.Quantity;
+                    item.UpdatedAt = DateTime.Now;
+                    var updateCartItem = await cartItemService.UpdateCartItem(item);
+                    cartItemsResult.Add(new CartItemResponse(updateCartItem, product));
+                }
+                else
+                    cartItemsResult.Add(new CartItemResponse(item, product));
+            }
+            cart.Items = cartItemsResult;
+            return cart;
+        }
+
+        public async Task<CartResponse> Remove(RemoveCart removeCart)
+        {
+            var cart = await GetBySessionId(removeCart.sessionId);
+            if (cart == null)
+                return null;
+            await cartItemService.RemoveCartItem(removeCart.productId, cart.Id);
+            var cartItems = await cartItemService.GetCartItemsByCartId(cart.Id);
+            var cartItemsResult = new List<CartItemResponse>();
+            if (cartItems != null)
+                foreach (var item in cartItems)
+                {
+                    Product product = await productService.GetProduct(item.ProductId);
+                    cartItemsResult.Add(new CartItemResponse(item, product));
+                }
+            cart.Items = cartItemsResult;
+            return cart;
         }
     }
 }

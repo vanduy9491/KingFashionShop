@@ -14,7 +14,6 @@ namespace KingFashionShop.Domain.Response.Cart
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string LastName { get; set; }
-
         public string Mobile { get; set; }
         public string Email { get; set; }
         public string Line1 { get; set; }
@@ -23,7 +22,7 @@ namespace KingFashionShop.Domain.Response.Cart
         public string Province { get; set; }
         public string Country { get; set; }
 
-        public IEnumerable<CartItemResponse> Items;
+        public IEnumerable<CartItemResponse> Items { get; set; }
 
         public CartResponse()
         {

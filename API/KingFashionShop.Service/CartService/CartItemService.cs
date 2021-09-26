@@ -45,7 +45,7 @@ namespace KingFashionShop.Service.CartService
                   );
         }
 
-        public async Task<CartItem> UpdateCart(CartItem cartItem)
+        public async Task<CartItem> UpdateCartItem(CartItem cartItem)
         {
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@id",cartItem.Id);
@@ -62,7 +62,7 @@ namespace KingFashionShop.Service.CartService
             return await SqlMapper.QueryFirstOrDefaultAsync<CartItem>(
                 cnn: connection,
                 param: parameters,
-                sql: "sp_GetCartItemsByCartId",
+                sql: "sp_UpdateCartItem",
                 commandType: CommandType.StoredProcedure
                 );
         }
@@ -77,6 +77,19 @@ namespace KingFashionShop.Service.CartService
                 sql: "sp_GetCartItemsByCartId",
                 commandType: CommandType.StoredProcedure
                 );
+        }
+
+        public async Task RemoveCartItem(int productId , int cartId)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@cartId", cartId);
+            parameters.Add("@productId", productId);
+            await SqlMapper.QueryAsync(
+               cnn: connection,
+               param: parameters,
+               sql: "sp_DeleteCartItem",
+               commandType: CommandType.StoredProcedure
+               );
         }
     }
 }

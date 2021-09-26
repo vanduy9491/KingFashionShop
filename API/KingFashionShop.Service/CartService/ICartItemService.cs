@@ -11,7 +11,7 @@ namespace KingFashionShop.Service.CartService
     {
         public Task<CartItem> GetByCartId(string cartId);
         public Task<CartItem> CreateCartItem(CartItem cartItem);
-        public Task<CartItem> UpdateCart(CartItem cartItem);
+        public Task<CartItem> UpdateCartItem(CartItem cartItem);
 
         public Task<IEnumerable<CartItem>> GetCartItemsByCartId(int cartId);
 

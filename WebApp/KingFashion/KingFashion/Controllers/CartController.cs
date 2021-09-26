@@ -27,7 +27,7 @@ namespace KingFashion.Controllers
         //get Cart
         [HttpPost]
         [Route("/Cart/Add")]
-        public async Task<IActionResult> Create(CreateCart model)
+        public async Task<IActionResult> Create(AddCart model)
         {
             return Ok(await ApiHelper.HttpPost<CreateCartResult>(@$"{Common.ApiUrl}Cart", "POST", model));
         }

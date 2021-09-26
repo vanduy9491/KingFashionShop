@@ -32,7 +32,8 @@ namespace KingFashionShop.API
             {
                 options.AddDefaultPolicy(builder => builder.WithOrigins("https://localhost:44368")
                             .AllowAnyHeader()
-                            .AllowAnyMethod());
+                            .AllowCredentials()
+                            .AllowAnyMethod()) ;
             });
             services.AddControllers();
             services.AddSwaggerGen();

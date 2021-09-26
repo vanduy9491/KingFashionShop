@@ -21,25 +21,21 @@ namespace KingFashionWeb.Controllers
         {
             _logger = logger;
         }
-        
+
         public async Task<IActionResult> Index()
         {
-           
+
             ShopAll shopAll = new ShopAll();
             shopAll.Categories = await ApiHelper.HttpGet<List<CategoryResult>>(@$"{Common.ApiUrl}Category");
             shopAll.Products = await ApiHelper.HttpGet<List<ProductResult>>(@$"{Common.ApiUrl}Product/GetProductsTopCategory?limit=8");
             string sessionId = Request.Cookies["sessionId"];
-            if (sessionId != null)
-            {
-               // string cartService = 
-            }
-            else {
+            if (sessionId == null) { 
                 string data = DateTime.Now.ToString();
-                sessionId = Convert.ToBase64String(Encoding.UTF8.GetBytes(data));
-                Response.Cookies.Append("sessionId", sessionId);
+            sessionId = Convert.ToBase64String(Encoding.UTF8.GetBytes(data));
+            Response.Cookies.Append("sessionId", sessionId);
             }
-           
             return View(shopAll);
+    }
         }
         [HttpPost]
         [Route("/Shop/Index/{productId:int}")]

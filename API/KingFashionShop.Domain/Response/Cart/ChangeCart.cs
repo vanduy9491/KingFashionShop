@@ -4,7 +4,7 @@ using System.Text;
 
 namespace KingFashionShop.Domain.Response.Cart
 {
-    public class AddCart
+    public class ChangeCart
     {
         public string sessionId { get; set; }
         public int productId { get; set; }

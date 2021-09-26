@@ -14,7 +14,8 @@ namespace KingFashionShop.Service.CartService
         public Task<CartResponse> UpdateCart(UpdateCart updateCart);
 
         public Task<CartResponse> CreateCart(UpdateCart updateCart);
-
         public Task CheckOut(string sessionId);
+        Task<CartResponse> ChangeItem(ChangeCart changeCart);
+        Task<CartResponse> Remove(RemoveCart removeCart);
     }
 }

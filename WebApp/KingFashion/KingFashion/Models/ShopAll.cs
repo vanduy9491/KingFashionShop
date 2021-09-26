@@ -12,6 +12,6 @@ namespace KingFashion.Models
     {
         public List<CategoryResult> Categories { get; set; }
         public List<ProductResult> Products { get; set; }
-
+        public int CartNotify { get; internal set; }
     }
 }

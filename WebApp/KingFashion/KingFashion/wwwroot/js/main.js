@@ -193,12 +193,12 @@
     });
 
 
-
-
     /*==================================================================
     [ Cart ]*/
     $('.js-show-cart').on('click', function () {
+
         $('.js-panel-cart').addClass('show-header-cart');
+
     });
 
     $('.js-hide-cart').on('click', function () {
@@ -290,6 +290,7 @@
                     $(".mtext-106").text("$" + data.price);
                     var images = ["../images/product-detail-01.jpg", "../images/product-detail-02.jpg", "../images/product-detail-03.jpg"];
 
+
                     $('.slick3').empty();
                     $('.wrap-slick3-dots').empty();
                     $('.wrap-slick3-arrows').empty();
@@ -332,6 +333,7 @@
                         });
                     });
                     $('.js-modal1').addClass('show-modal1');
+                    $('.js-addcart-detail').attr("data-item",data.id);
                 }
             });
         });
