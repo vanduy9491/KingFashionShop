@@ -22,10 +22,10 @@ namespace KingFashionShop.Domain.Response.Cart
 
         }
 
-        public CartItemResponse(CartItem cartItem, Product product)
+        public CartItemResponse(CartItem cartItem)
         {
             Id = cartItem.Id;
-            Product = new ProductResult(product);
+            Product = new ProductResult(cartItem.Product);
             CartId = cartItem.CartId;
             Price = cartItem.Price;
             Discount = cartItem.Discount;

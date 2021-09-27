@@ -26,37 +26,39 @@ namespace KingFashionShop.API.Controllers
         public async Task<CartResponse> GetBySessionId()
         {
             var sessionId = Request.Cookies["sessionId"];
-            return await cartService.GetBySessionId(sessionId);
+            var cart = await cartService.GetBySessionId(sessionId);
+            return CartResponse.ToCartResult(cart);
+          
         }
-        [HttpGet("CheckOut")]
-        public async Task CheckOut([FromQuery] string sessionId)
-        {
-            await cartService.CheckOut(sessionId);
-        }
+      
         [HttpGet("ChangeItem")]
         public async Task<CartResponse> ChangeItem([FromQuery] int productId, [FromQuery] int quantity)
         {
-            return await cartService.ChangeItem(new ChangeCart() { 
+            var cart = await cartService.ChangeItem(new ChangeCart() { 
              sessionId = Request.Cookies["sessionId"],
              productId = productId,
              quantity = quantity
             });
+            return CartResponse.ToCartResult(cart);
         }
 
         [HttpGet("Remove")]
         public async Task<CartResponse> RemoveItem([FromQuery] int productId)
         {
-            return await cartService.Remove(new RemoveCart()
+            var cart = await cartService.Remove(new RemoveCart()
             {
                 sessionId = Request.Cookies["sessionId"],
                 productId = productId,
             });
+            return CartResponse.ToCartResult(cart);
+
         }
         [HttpPost("Add")]
         public async Task<CartResponse> CreateCart(AddCart addCart)
         {
             addCart.sessionId = Request.Cookies["sessionId"];
-            return await cartService.AddCart(addCart);
+            var cart = await cartService.AddCart(addCart);
+            return CartResponse.ToCartResult(cart);
         }
     }
 }

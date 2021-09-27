@@ -213,3 +213,4 @@ cartService.updateCart = function (items) {
         $(this).parent().parent().remove();
     });
 }
+

@@ -54,6 +54,12 @@ namespace KingFashionShop.API.Controllers
         {
             return await productService.GetProduct(proId);
         }
+        [HttpGet("GetProductBy")]
+        public async Task<ProductResult> GetProductBy([FromQuery] int productId)
+        {
+            var product = await productService.GetProduct(productId);
+            return new ProductResult(product);
+        }
         [HttpGet("GetProductsTopCategory")]
         public async Task<IEnumerable<ProductResult>> GetProductsTopCategory([FromQuery] int? topCategoryId, [FromQuery] int? boundary, [FromQuery] int limit)
         {

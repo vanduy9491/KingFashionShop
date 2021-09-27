@@ -9,13 +9,10 @@ namespace KingFashionShop.Service.CartService
 {
     public interface ICartService
     {
-        public Task<CartResponse> GetBySessionId(string sessionId);
-        public Task<CartResponse> AddCart(AddCart addCart);
-        public Task<CartResponse> UpdateCart(UpdateCart updateCart);
-
-        public Task<CartResponse> CreateCart(UpdateCart updateCart);
-        public Task CheckOut(string sessionId);
-        Task<CartResponse> ChangeItem(ChangeCart changeCart);
-        Task<CartResponse> Remove(RemoveCart removeCart);
+        public Task<Cart> GetBySessionId(string sessionId);
+        public Task<Cart> AddCart(AddCart addCart);
+        public Task<Cart> UpdateCart(Cart cart);
+        Task<Cart> ChangeItem(ChangeCart changeCart);
+        Task<Cart> Remove(RemoveCart removeCart);
     }
 }

@@ -22,7 +22,29 @@ namespace KingFashion.Models.Products
         public string Content { get; set; }
         public string CategorySlug { get; set; }
         public string Photo { get; set; }
-       
+
+        public List<string> Images
+        {
+            get
+            {
+                List<string> images = new List<string>();
+                if (!String.IsNullOrEmpty(Photo.Trim()))
+                {
+                    var items = Photo.Split(" ");
+                    foreach (var item in items)
+                    {
+                        if (!string.IsNullOrEmpty(item.Trim()))
+                            images.Add(item);
+                    }
+                   
+                }
+                return images;
+            }
+            set
+            {
+            }
+        }
+
         public string MainPhoto
         {
             get

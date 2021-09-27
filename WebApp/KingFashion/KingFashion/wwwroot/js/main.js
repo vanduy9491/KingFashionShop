@@ -272,23 +272,22 @@
             e.preventDefault();
             let productId = $(this).attr('data-item');
             $.ajax({
-                url: "https://localhost:44322/api/Product/GetProduct/" + productId,
+                url: "https://localhost:44322/api/Product/GetProductBy?productId=" + productId,
                 method: "GET",
                 success: function (data) {
                     $(".js-name-detail").text(data.title);
                     $(".mtext-106").text("$" + data.price);
-                    var images = ["../images/product-detail-01.jpg", "../images/product-detail-02.jpg", "../images/product-detail-03.jpg"];
 
 
                     $('.slick3').empty();
                     $('.wrap-slick3-dots').empty();
                     $('.wrap-slick3-arrows').empty();
                     $('.slick3').attr("class", "slick3 gallery-lb");
-                    $.each(images, function (index, item) {
+                    $.each(data.images, function (index, item) {
                         $('.slick3').append(
                             `<div class="item-slick3" data-thumb="${item}">
                         <div class="wrap-pic-w pos-relative">
-                            <img src="${item}" alt="IMG-PRODUCT">
+                            <img src="../images/${item}" alt="IMG-PRODUCT">
      
                             <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="${item}">
                                 <i class="fa fa-expand"></i>
@@ -317,7 +316,7 @@
                             dotsClass: 'slick3-dots',
                             customPaging: function (slick, index) {
                                 var portrait = $(slick.$slides[index]).data('thumb');
-                                return '<img src=" ' + portrait + ' "/><div class="slick3-dot-overlay"></div>';
+                                return '<img src="../images/' + portrait + '"/><div class="slick3-dot-overlay"></div>';
                             },
                         });
                     });
@@ -406,6 +405,40 @@
                     $('.isotope-grid').append(item).isotope('appended', item);
                 });
                 $.quickView();
+            }
+        });
+    });
+
+
+
+    $('.block2 .block2-txt .stext-104').on('click', function (e) {
+        e.preventDefault();
+        let productId = $(this).attr('data-item');
+        $.ajax({
+            url: "https://localhost:44322/api/Product/GetProductBy?productId=" + productId,
+            method: "GET",
+            success: function (data) {
+                $(".js-name-detail").text(data.title);
+                $(".mtext-106").text("$" + data.price);
+                $('.slick3').empty();
+                $('.wrap-slick3-dots').empty();
+                $('.wrap-slick3-arrows').empty();
+                $('.slick3').attr("class", "slick3 gallery-lb");
+                $.each(data.images, function (index, item) {
+                    $('.slick3').append(
+                        `<div class="item-slick3" data-thumb="${item}">
+                        <div class="wrap-pic-w pos-relative">
+                            <img src="../images/${item}" alt="IMG-PRODUCT">
+                            <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="${item}">
+                                <i class="fa fa-expand"></i>
+                            </a>
+                        </div>
+                    </div>
+                    `);
+
+                });  
+                $('.js-modal1').addClass('show-modal1');
+                $('.js-addcart-detail').attr("data-item", data.id);
             }
         });
     });

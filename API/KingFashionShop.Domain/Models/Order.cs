@@ -10,7 +10,7 @@ namespace KingFashionShop.Domain.Models
         public int UserId { get; set; }
         public string SessionId { get; set; }
         public string Token { get; set; }
-        public int Status { get; set; }
+        public OrderStatus Status { get; set; }
         public float SubTotal { get; set; }
         public float ItemDiscount { get; set; }
         public float Tax { get; set; }
