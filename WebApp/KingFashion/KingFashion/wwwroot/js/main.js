@@ -193,11 +193,12 @@
     });
 
 
+
+
     /*==================================================================
     [ Cart ]*/
     $('.js-show-cart').on('click', function () {
-        cartService.cartPanel();
-        
+        $('.js-panel-cart').addClass('show-header-cart');
     });
 
     $('.js-hide-cart').on('click', function () {
@@ -214,7 +215,17 @@
         $('.js-sidebar').removeClass('show-sidebar');
     });
 
-    
+    /*==================================================================
+    [ +/- num product ]*/
+    $('.btn-num-product-down').on('click', function () {
+        var numProduct = Number($(this).next().val());
+        if (numProduct > 0) $(this).next().val(numProduct - 1);
+    });
+
+    $('.btn-num-product-up').on('click', function () {
+        var numProduct = Number($(this).prev().val());
+        $(this).prev().val(numProduct + 1);
+    });
 
     /*==================================================================
     [ Rating ]*/
@@ -279,7 +290,6 @@
                     $(".mtext-106").text("$" + data.price);
                     var images = ["../images/product-detail-01.jpg", "../images/product-detail-02.jpg", "../images/product-detail-03.jpg"];
 
-
                     $('.slick3').empty();
                     $('.wrap-slick3-dots').empty();
                     $('.wrap-slick3-arrows').empty();
@@ -322,7 +332,6 @@
                         });
                     });
                     $('.js-modal1').addClass('show-modal1');
-                    $('.js-addcart-detail').attr("data-item",data.id);
                 }
             });
         });
@@ -334,65 +343,54 @@
         $('.js-modal1').removeClass('show-modal1');
     });
 
-    $.boundary = function () {
-        var elementsSize = 0;
-        var iterate = document.evaluate('//div[contains(@class,"isotope-item") and not(contains(@style,"display: none"))]', document.cloneNode(true));
-
-        while (iterate.iterateNext() !== null) {
-            elementsSize++;
-        }
-        return elementsSize
-    }
-    $.loadingMore = false;
-
     /*==================================================================
     [ Show modal1 ]*/
     $('#loadmore').on('click', function (e) {
         e.preventDefault();
-        $('#loadmore a').text("Loading");
-        $.loadingMore = true;
-        var topCategoryUrl = "https://localhost:44322/api/Product/GetProductsTopCategory?limit=4";
-        let topCategoryId = $('.how-active1').attr('data-item')
-        if (topCategoryId !== undefined) {
-            topCategoryUrl += `&topCategoryId=${topCategoryId}`;
-        }
-        topCategoryUrl += `&boundary=${$.boundary()}`;
-        var dataFilter = $('.how-active1').attr('data-filter');
+        let CatDetailsId = $('.how-active1').attr('data-item')
+        var dataFilter = $('.how-active1').attr('data-filter')
         dataFilter = dataFilter != '*' ? dataFilter.replace(".", "") : "";
+        var cnt;
+
+        e.preventDefault();
         $.ajax({
-            url: topCategoryUrl,
+            url: "https://localhost:44322/api/Product/GetProductsTopCategory",
             method: "GET",
-            error: function (xhr, status, errorThrown) {
-                $.loadingMore = false;
-                $('#loadmore a').text("Load More");
-            },
             success: function (data) {
-                $.loadingMore = false;
-                $('#loadmore a').text("Load More");
-                //if (data.length < 4) {
-                //    document.getElementById('loadmore').style.visibility = 'hidden';
-                //}
-                $.each(data, function (index, product) {
+
+                var number = 4;
+                var lengtData = data.length;
+                var link = document.getElementById('loadmore');
+                if (lengtData == 20) {
+                    
+                    link.classList.add("d-none");
+                }
+                data = data.splice(number, number );
+
+                $.each(data, function (index, pro) {
                     var item = $(
                         `<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item ${dataFilter}">
                             <!-- Block2 -->
                             <div class="block2">
                                 <div class="block2-pic hov-img0">
-                                    <img src="images/${product.mainPhoto}" alt="IMG-PRODUCT">
+                                    <img src="images/product-01.jpg" alt="IMG-PRODUCT">
                 
-                                    <a href="#" data-item="${product.id}" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+                                    <a href="#" data-item="${pro.Id}" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
                                         Quick View
                                     </a>
                                 </div>
+                
                                 <div class="block2-txt flex-w flex-t p-t-14">
                                     <div class="block2-txt-child1 flex-col-l ">
                                         <a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-                                        ${product.title}
+                                        ${pro.Title}
                                         </a>
+                
                                         <span class="stext-105 cl3">
-                                            ${product.price}
+                                            ${pro.price}
                                         </span>
                                     </div>
+                
                                     <div class="block2-txt-child2 flex-r p-t-3">
                                         <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
                                             <img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON">
@@ -403,10 +401,35 @@
                             </div>
                         </div>`
                     );
+
                     $('.isotope-grid').append(item).isotope('appended', item);
+
                 });
                 $.quickView();
+              
             }
         });
     });
+
+  
+    //$('.js-show-filter').on('click', function () {
+    //    $(this).toggleClass('show-filter');
+    //    $('.panel-filter').slideToggle(400);
+
+    //    if ($('.js-show-search').hasClass('show-search')) {
+    //        $('.js-show-search').removeClass('show-search');
+    //        $('.panel-search').slideUp(400);
+    //    }
+    //});
+
+    //$('.js-show-search').on('click', function () {
+    //    $(this).toggleClass('show-search');
+    //    $('.panel-search').slideToggle(400);
+
+    //    if ($('.js-show-filter').hasClass('show-filter')) {
+    //        $('.js-show-filter').removeClass('show-filter');
+    //        $('.panel-filter').slideUp(400);
+    //    }
+    //});
+
 })(jQuery);

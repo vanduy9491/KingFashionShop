@@ -113,12 +113,12 @@ product.save = function () {
         if (productId == 0) {
             var createProductObj = {
                 ProductName: $('input[name="ProductName"]').val(),
-                Price: parseInt($('input[name="Price"]').val()),
+                Price:parseInt($('input[name="Price"]').val()),
                 Quantity: parseInt($('input[name="Quantity"]').val())
             };
             createProductObj.Status = $('input[name="Status"]').is(":checked");
             createProductObj.Color = $('option[name="Color"]').val();
-            createProductObj.Photo = $('input[name="Photo"]').val();
+            createProductObj.Photo =  $('input[name="Photo"]').val();
             createProductObj.ProductCode = $('input[name="ProductCode"]').val();
             createProductObj.Description = $('input[name="Description"]').val();
             createProductObj.Size = $('option[name="Size"]').val();

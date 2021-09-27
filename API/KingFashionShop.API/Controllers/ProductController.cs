@@ -28,13 +28,13 @@ namespace KingFashionShop.API.Controllers
         {
             return await productService.Get();
         }
-        [HttpGet("{productId}")]
-        public async Task<IEnumerable<ProductRespone>> GetProductById(int productId)
+        [HttpGet("productId")]
+        public async Task<IEnumerable<ProductRespone>> GetProductById([FromQuery] int productId)
         {
             return await productService.GetProductById(productId);
         }
-        [HttpGet("{catId}")]
-        public async Task<IEnumerable<ProductRespone>> Get(int catId)
+        [HttpGet("catId")]
+        public async Task<IEnumerable<ProductRespone>> Get([FromQuery] int catId)
         {
             return await productService.Get(catId);
         }

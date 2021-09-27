@@ -36,6 +36,7 @@ namespace KingFashion.Controllers
         {
             return await ApiHelper.HttpGet<Category>(@$"{Common.ApiUrl}Category/GetCategoryById?id=" + id);
         }
+
         [HttpPost]
         [Route("/Category/Create")]
         public async Task<IActionResult> Create([FromBody] CreateCategory model)

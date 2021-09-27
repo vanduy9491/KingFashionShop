@@ -59,7 +59,21 @@
                     @Html.DisplayFor(modelItem => item.Quantity)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Shop)
+                    @if (item.Shop)
+                    {
+                        <a href="javascript:;" class="btn btn-warning btn-sm" style="background-color:#33d176; border-color:#33d176"
+                           title="Sẵn Có" onclick="product.changeShop(@item.Id, @item.Shop.ToString().ToLower())">
+                            Sẵn Có
+                        </a>
+
+                    }
+                    else
+                    {
+                        <a href="javascript:;" class="btn btn-warning btn-sm"
+                           title="Hết Hàng" onclick="product.changeShop(@item.Id, @item.Shop.ToString().ToLower())">
+                            Hết Hàng
+                        </a>
+                    }
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.CreatedAt)
@@ -73,7 +87,7 @@
                 <td>
                     <a class='btn btn-sm btn-secondary btn-sm' href="/Product/Update/@item.Id" title="Sửa sản phẩm"><i class="ti-pencil"></i></a> 
                     <a class='btn btn-info btn-mat btn-sm' asp-controller="Product" asp-action="ViewDetails" asp-route-proId="@item.Id" title="Xem sản phẩm"><i class="ti-eye"></i></a> 
-                    <a class='btn btn-danger btn-mat btn-sm' title="Xem sản phẩm"><i class="ti-trash"></i></a> 
+                    <a href="javascript:;" class="btn btn-danger btn-sm" onclick="product.changeShop(@item.Id, @item.Shop.ToString().ToLower())"><i class="ti-trash"></i></a> 
                 </td>
             </tr>
         }
@@ -81,11 +95,11 @@
 </table>
 @section scripts {
 
-    <script src="~/js/category.js" asp-append-version="true"></script>
+    <script src="~/js/changeShopProduct.js" asp-append-version="true"></script>
     <script>
         $('#tbProduct').DataTable({
             columnDefs: [
-                { orderable: false, targets: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] }
+                { orderable: false, targets: [2,3,4,5,6,7,8,9] }
             ],
             order: [[0, 'desc']]
         });

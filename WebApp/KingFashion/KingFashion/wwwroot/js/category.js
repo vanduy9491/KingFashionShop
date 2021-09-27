@@ -74,16 +74,16 @@ category.showCatByParentId = function (id) {
                             <td>${item.title}</td>
                             <td class='btn btn-sm ${item.status ? 'btn-success' : 'btn-warning'}'>${item.status ? '  Sẵn Có ' : '  Hết Hàng '}</td>
                             <td class='text-right'>
-                                  </a>
-                                    <a href='javascript:;' class='btn btn-sm ${item.status ? 'btn-warning' : 'btn-success'}'
-                                   title='${!item.status ? 'Sẵn Có' : 'Hết Hàng'}' onclick='category.changeStatus(${item.id}, ${item.status})'>
-                                    <i class='fa ${item.status ? 'ti-lock' : 'ti-unlock'}'></i>${!item.status ? 'Sẵn Có' : 'Hết Hàng'}
-                                </a>
-                                <a href="/Product/Index/${item.id}" class='btn btn-info btn-mat btn-sm' title="Xem Danh Mục">Xem Danh Mục
+                                  
+                                        <a href="/Product/Index/${item.id}" class='btn btn-info btn-mat btn-sm' title="Xem Danh Mục">Xem Danh Mục
                                     <i class="ti-eye"></i>
                                 </a>
                                 <a href='javascript:;' class='btn btn-sm btn-secondary' title="Modify category" onclick="category.getbyCatId(${item.id})">
                                    Sửa <i class="ti-reload"></i>
+                                </a>
+                                 <a href='javascript:;' class='btn btn-sm ${item.status ? 'btn-warning' : 'btn-success'}'
+                                   title='${!item.status ? 'Sẵn Có' : 'Hết Hàng'}' onclick='category.changeStatus(${item.id}, ${item.status})'>
+                                    <i class='fa ${item.status ? 'ti-lock' : 'ti-unlock'}'></i>
                                 </a>
                             </td>
                         </tr>
@@ -110,7 +110,7 @@ category.openModel = function () {
 category.changeStatus = function (id, status) {
     bootbox.confirm({
         title: `Danh Mục ${status ? "Sẵn Có" : "Hết Hàng"}`,
-        message: `Bạn có muốn danh mục đã ${status ? "hết hàng" : "sẵn có"}?`,
+        message: `Bạn có muốn danh mục đã ${status ? "hết hàng" : "sẵn có"}?` ,
         buttons: {
             cancel: {
                 label: '<i class="ti-close"></i> Trở Về'
@@ -230,7 +230,7 @@ category.get = function (id) {
         url: `https://localhost:44368/Category/GetByParentId?parentId=${id}`,
         method: "GET",
         success: function (data) {
-            $('#categoryModel').modal('show');
+            $('#categoryModel').modal('show');  
             $('input[name="CategoryName"]').val(data.categoryName);
             $('input[name="CategoryId"]').val(data.categoryId);
         }

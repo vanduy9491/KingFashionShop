@@ -23,6 +23,6 @@ namespace KingFashion.Models.Products
         public string Content { get; set; }
         public string CategorySlug { get; set; }
         public string Photo { get; set; }
-        public string MainPhoto{ get; set; }
+       
     }
 }
