@@ -28,9 +28,9 @@ namespace KingFashionShop.Service.ProductService
         }
         public async Task<IEnumerable<ProductRespone>> GetAllProduct()
         {
-            
+
             var products = await SqlMapper.QueryAsync<ProductRespone>(
-                cnn: connection, sql: "sp_GetAllProduct", commandType: CommandType.StoredProcedure  
+                cnn: connection, sql: "sp_GetAllProduct", commandType: CommandType.StoredProcedure
                 );
             return products;
         }
@@ -50,7 +50,7 @@ namespace KingFashionShop.Service.ProductService
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@categoryId", catId);
             var products = await SqlMapper.QueryAsync<ProductRespone>(
-                cnn: connection,param: parameters, sql:"sp_GetListProduct", commandType: CommandType.StoredProcedure
+                cnn: connection, param: parameters, sql: "sp_GetListProduct", commandType: CommandType.StoredProcedure
                 );
             return products;
         }
@@ -122,10 +122,10 @@ namespace KingFashionShop.Service.ProductService
             }
         }
 
-        public async Task<Product> GetProduct(int Id)
+        public async Task<Product> GetProduct(int proId)
         {
             DynamicParameters parameters = new DynamicParameters();
-            parameters.Add("@proId", Id);
+            parameters.Add("@proId", proId);
             var product = await SqlMapper.QueryFirstOrDefaultAsync<Product>(
                                 cnn: connection,
                                 sql: "sp_GetProductById",
@@ -134,27 +134,25 @@ namespace KingFashionShop.Service.ProductService
             return product;
         }
 
-        public async Task<IEnumerable<ProductResult>> GetProductsTopCategory(int topCategoryId,int limit, int boundary)
+        public async Task<IEnumerable<ProductResult>> GetProductsTopCategory(int limit)
         {
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@limit", limit);
-            parameters.Add("@boundary", boundary);
-            parameters.Add("@topCategoryId", topCategoryId);
             var products = await SqlMapper.QueryAsync<ProductResult>(
                 cnn: connection, param: parameters, sql: "sp_GetProductsTopCategory", commandType: CommandType.StoredProcedure
                 );
             return products;
         }
-        
 
 
-        public async Task<BoundaryList<Product>> GetProductByCategoryId(int categoryId, bool isCategoryParent, int boundary, int limit)
+
+        public async Task<BoundaryList<Product>> GetProductByCategoryId(int categoryId, bool? isCategoryParent, int boundary, int limit)
         {
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@categoryId", categoryId);
             parameters.Add("@boundary", boundary);
             parameters.Add("@limit", limit);
-            parameters.Add("@isCategoryParent", isCategoryParent);
+            parameters.Add("@isCategoryParent", limit);
             var items = await SqlMapper.QueryAsync<Product>(
                                 cnn: connection,
                                 sql: "sp_GetProductByCategoryId",
@@ -163,7 +161,7 @@ namespace KingFashionShop.Service.ProductService
             boundary = boundary != 0 ? boundary += limit : limit;
             return new BoundaryList<Product>() { Boundary = boundary, Items = items };
         }
-        
+
         public async Task<UpdateProductResult> Update(UpdateProduct update)
         {
             UpdateProductResult updateProduct = new UpdateProductResult()
@@ -195,7 +193,6 @@ namespace KingFashionShop.Service.ProductService
                 parameters.Add("@startsAt", update.StartsAt);
                 parameters.Add("@endsAt", update.EndsAt);
                 parameters.Add("@content", update.Content);
-                parameters.Add("@categoryId", update.CategoryId);
                 parameters.Add("@photo", update.Photo);
                 updateProduct.Product = await SqlMapper.QueryFirstOrDefaultAsync<Product>(
                                             cnn: connection,
@@ -210,6 +207,43 @@ namespace KingFashionShop.Service.ProductService
             {
                 return new UpdateProductResult();
             };
+        }
+
+        public async Task<ChangeShopResult> ChangeShop(ChangeShop changeShop)
+        {
+            try
+            {
+                var foundCategory = await GetProduct(changeShop.Id);
+
+                if (foundCategory != null)
+                {
+                    DynamicParameters parameters = new DynamicParameters();
+                    parameters.Add("@id", changeShop.Id);
+                    parameters.Add("@shop", changeShop.Shop);
+
+                    var categoryId = await SqlMapper.QueryFirstOrDefaultAsync<int>(
+                                            cnn: connection,
+                                            sql: "sp_ChangeShopProduct",
+                                            param: parameters,
+                                            commandType: CommandType.StoredProcedure
+                                        );
+                    return new ChangeShopResult()
+                    {
+                        Success = categoryId > 0
+                    };
+                }
+                return new ChangeShopResult()
+                {
+                    Success = false
+                };
+            }
+            catch (Exception)
+            {
+                return new ChangeShopResult()
+                {
+                    Success = false
+                };
+            }
         }
     }
 }

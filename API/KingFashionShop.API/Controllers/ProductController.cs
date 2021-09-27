@@ -55,13 +55,11 @@ namespace KingFashionShop.API.Controllers
             return await productService.GetProduct(proId);
         }
         [HttpGet("GetProductsTopCategory")]
-        public async Task<IEnumerable<ProductResult>> GetProductsTopCategory([FromQuery] int? topCategoryId, [FromQuery] int? boundary, [FromQuery] int limit)
+        public async Task<IEnumerable<ProductResult>> GetProductsTopCategory([FromQuery] int? limit)
         {
-            if (!boundary.HasValue)
-                boundary = -1;
-            if (!topCategoryId.HasValue)
-                topCategoryId = -1;
-            return await productService.GetProductsTopCategory(topCategoryId.Value,limit, boundary.Value);
+            if (!limit.HasValue)
+                limit = -1;
+            return await productService.GetProductsTopCategory(limit.Value);
         }
 
         [HttpGet("GetProductByCategoryId")]
@@ -77,6 +75,12 @@ namespace KingFashionShop.API.Controllers
         {
             return await productService.Update(update);
 
+        }
+        [HttpPut]
+        [Route("ChangeShop")]
+        public async Task<ChangeShopResult> ChangeShop(ChangeShop changeShop)
+        {
+            return await productService.ChangeShop(changeShop);
         }
     }
 }

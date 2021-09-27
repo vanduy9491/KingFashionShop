@@ -4,34 +4,31 @@
     ViewData["Title"] = "Index";
 }
 <p>
-    <a class="btn btn-out-dashed btn-success btn-square" asp-controller="Product" asp-action="Create"><i class="ti-plus"></i>Create New</a>
+    <a class="btn btn-out-dashed btn-success btn-square" asp-controller="Product" asp-action="Create"><i class="ti-plus"></i>Thêm Mới Sản Phẩm</a>
 </p>
 <table class="table table-hover" id="tbProduct">
     <thead style="background:black;color:white">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Id)
+                #
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Title)
+                Tên Sản Phẩm
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Price)
+               Giá
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Discount)
+                Giãm Giá
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Quantity)
+                Số Lượng
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Shop)
+               Bán Tại Cửa Hàng
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CreatedAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Content)
+                Nội Dung
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Photo)
@@ -74,9 +71,6 @@
                             Hết Hàng
                         </a>
                     }
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CreatedAt)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Content)
