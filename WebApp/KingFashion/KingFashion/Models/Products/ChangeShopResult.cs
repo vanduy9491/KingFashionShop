@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace KingFashion.Models.Products
 {
-    public class ChangeStatusProductResult
+    public class ChangeShopResult
     {
+        public Product Product { get; set; }
         public bool Success { get; set; }
         public string Message { get; set; }
     }
