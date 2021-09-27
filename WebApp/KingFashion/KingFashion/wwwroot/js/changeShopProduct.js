@@ -1,8 +1,8 @@
 ﻿var product = {}
 product.changeShop = function (id, shop) {
     bootbox.confirm({
-        title: `Danh Mục ${shop ? "Sẵn Có" : "Hết Hàng"}`,
-        message: `Bạn có muốn danh mục đã ${shop ? "hết hàng" : "sẵn có"}?`,
+        title: `Danh Mục ${shop ? "Đang Bán" : "Tạm Ngưng"}`,
+        message: `Bạn có muốn danh mục đã ${shop ? "Tạm Ngưng" : "Đang Bán"}?`,
         buttons: {
             cancel: {
                 label: '<i class="ti-close"></i> Trở Về'
