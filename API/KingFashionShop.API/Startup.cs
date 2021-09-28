@@ -1,5 +1,6 @@
 using KingFashionShop.Service.CartService;
 using KingFashionShop.Service.CategoryService;
+using KingFashionShop.Service.ContactService;
 using KingFashionShop.Service.ProductService;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -40,6 +41,8 @@ namespace KingFashionShop.API
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICartService, CartService>();
+            services.AddScoped<IContactService, ContactService>();
+
 
 
         }

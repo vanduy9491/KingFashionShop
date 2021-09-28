@@ -1,0 +1,26 @@
+﻿@model IEnumerable<Contact>
+
+@{
+    ViewData["Title"] = "Liên hệ";
+}
+
+<h1>Danh sách liên hệ</h1>
+
+<div class="card-block table-border-style">
+    <div class="table-responsive">
+        <table class="table table-hover" id="tbContact">
+            <thead style="background:black;color:white">
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+@section scripts {
+
+    <script src="~/js/Contact.js" asp-append-version="true"></script>
+
+}
