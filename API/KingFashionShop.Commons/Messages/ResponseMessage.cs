@@ -25,5 +25,9 @@ namespace KingFashionShop.Commons.Messages
             public static string NotFound = "Product has been not found!";
             public static string ChangeStatus = "Product has been change status successful!";
         }
+        public static class Contact
+        {
+            public static string Create = "Email đã gửi thành công";
+        }
     }
 }

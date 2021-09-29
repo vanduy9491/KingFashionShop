@@ -29,23 +29,31 @@ namespace KingFashionShop.Domain.Response.Cart
                 
         }
 
-        public CartResponse(Models.Cart cart, IEnumerable<CartItemResponse> items)
-        {
-            Id = cart.Id;
-            SessionId = cart.SessionId;
-            Token = cart.Token;
-            Status = cart.Status;
-            FirstName = cart.FirstName;
-            MiddleName = cart.MiddleName;
-            LastName = cart.LastName;
-            Mobile = cart.Mobile;
-            Email = cart.Email;
-            Line1 = cart.Line1;
-            Line2 = cart.Line2;
-            City = cart.City;
-            Province = cart.Province;
-            Country = cart.Country;
-            Items = items;
+        public static CartResponse ToCartResult(Models.Cart cart) {
+            CartResponse result = new CartResponse();
+            if (cart == null) return result;
+            result.Id = cart.Id;
+            result.SessionId = cart.SessionId;
+            result.Token = cart.Token;
+            result.Status = cart.Status;
+            result.FirstName = cart.FirstName;
+            result.MiddleName = cart.MiddleName;
+            result.LastName = cart.LastName;
+            result.Mobile = cart.Mobile;
+            result.Email = cart.Email;
+            result.Line1 = cart.Line1;
+            result.Line2 = cart.Line2;
+            result.City = cart.City;
+            result.Province = cart.Province;
+            result.Country = cart.Country;
+            var cartItems = new List<CartItemResponse>();
+
+            foreach (var item in cart.CartItems)
+            {
+                cartItems.Add(new CartItemResponse(item));
+            }
+            result.Items = cartItems;
+            return result;
         }
     }
 }

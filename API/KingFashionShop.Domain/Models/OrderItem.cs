@@ -15,7 +15,7 @@ namespace KingFashionShop.Domain.Models
         public int Quantity { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
-        public int Content { get; set; }
+        public string Content { get; set; }
         public Product Product { get; set; }
         public Order Order { get; set; }
     }

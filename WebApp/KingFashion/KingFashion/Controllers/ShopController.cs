@@ -2,6 +2,7 @@
 using KingFashion.Helpers;
 using KingFashion.Models;
 using KingFashion.Models.Categorys;
+using KingFashion.Models.Contacts;
 using KingFashion.Models.Products;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -62,18 +63,17 @@ namespace KingFashionWeb.Controllers
         {
             ShopAll shopAll = new ShopAll();
             shopAll.Categories = await ApiHelper.HttpGet<List<CategoryResult>>(@$"{Common.ApiUrl}Category");
-            shopAll.Products = await ApiHelper.HttpGet<List<ProductResult>>(@$"{Common.ApiUrl}Product/GetProductsTopCategory?limit=16");
+            //shopAll.Products = await ApiHelper.HttpGet<List<ProductResult>>(@$"{Common.ApiUrl}Product/GetProductsTopCategory?limit=16");
 
             return View(shopAll);
 
         }
-        [Route("/Contact")]
+        [HttpGet]
+        [Route("/Shop/Contact")]
         public async Task<IActionResult> Contact()
         {
-            ShopAll shopAll = new ShopAll();
-            shopAll.Categories = await ApiHelper.HttpGet<List<CategoryResult>>(@$"{Common.ApiUrl}Category");
-            shopAll.Products = await ApiHelper.HttpGet<List<ProductResult>>(@$"{Common.ApiUrl}Product");
-            return View(shopAll);
+            
+            return View();
 
         }
         public async Task<IActionResult> ProductDetails()
@@ -94,5 +94,12 @@ namespace KingFashionWeb.Controllers
 
         }
 
+        [HttpPost]
+        [Route("/Shop/Contact")]
+        public async Task<IActionResult> Contact(Contact model)
+        {
+            await ApiHelper.HttpPost<CreateContactResult>($@"{Common.ApiUrl}Contact", "POST", model);
+            return View();
+        }
     }
 }
