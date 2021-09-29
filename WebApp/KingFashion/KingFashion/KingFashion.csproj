@@ -1,11 +1,50 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20210928024348_A.cs" />
+    <Compile Remove="Migrations\20210928024348_A.Designer.cs" />
+    <Compile Remove="Migrations\20210928031049_AddIdentityFk.cs" />
+    <Compile Remove="Migrations\20210928031049_AddIdentityFk.Designer.cs" />
+    <Compile Remove="Migrations\20210928031634_AddIdentityFk.cs" />
+    <Compile Remove="Migrations\20210928031634_AddIdentityFk.Designer.cs" />
+    <Compile Remove="Migrations\20210928041715_CreateUser.cs" />
+    <Compile Remove="Migrations\20210928041715_CreateUser.Designer.cs" />
+    <Compile Remove="Migrations\20210928042215_CreateUser.cs" />
+    <Compile Remove="Migrations\20210928042215_CreateUser.Designer.cs" />
+    <Compile Remove="Migrations\20210928042355_CreateUser.cs" />
+    <Compile Remove="Migrations\20210928042355_CreateUser.Designer.cs" />
+    <Compile Remove="Migrations\20210928042503_CreateUser.cs" />
+    <Compile Remove="Migrations\20210928042503_CreateUser.Designer.cs" />
+    <Compile Remove="Migrations\20210928042700_CreateUser.cs" />
+    <Compile Remove="Migrations\20210928042700_CreateUser.Designer.cs" />
+    <Compile Remove="Migrations\20210928043444_CreateUser.cs" />
+    <Compile Remove="Migrations\20210928043444_CreateUser.Designer.cs" />
+    <Compile Remove="Migrations\20210928045832_CreateFixCart.cs" />
+    <Compile Remove="Migrations\20210928045832_CreateFixCart.Designer.cs" />
+    <Compile Remove="Migrations\20210928071340_CreateFixCart.cs" />
+    <Compile Remove="Migrations\20210928071340_CreateFixCart.Designer.cs" />
+    <Compile Remove="Migrations\20210928072551_CreateFixCart.cs" />
+    <Compile Remove="Migrations\20210928072551_CreateFixCart.Designer.cs" />
+    <Compile Remove="Migrations\20210928074531_Add-DBContextUser.cs" />
+    <Compile Remove="Migrations\20210928074531_Add-DBContextUser.Designer.cs" />
+    <Compile Remove="Migrations\20210928074923_Add-DBContextUser.cs" />
+    <Compile Remove="Migrations\20210928074923_Add-DBContextUser.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.17" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.17" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.17" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.17" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.17" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.17">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
   </ItemGroup>
 

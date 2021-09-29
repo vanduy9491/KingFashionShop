@@ -1,0 +1,47 @@
+﻿@model Register
+@{
+    ViewData["Title"] = "Đăng Ký";
+}
+<div class="auth-box">
+    <div class="row m-b-20">
+        <div class="col-md-12">
+            <h3 class="text-center txt-primary">Đăng ký</h3>
+        </div>
+    </div>
+    <hr><!-- [ Form ] Start -->
+    <form class="my-5" asp-controller="Account" asp-action="Register">
+        <div class="input-group">
+            <input asp-for="Email" type="text" class="form-control" placeholder="Nhập Email">
+            <span asp-validation-for="Email" class="md-line"></span>
+        </div>
+        <div class="input-group">
+            <input asp-for="Password" type="password" class="form-control" placeholder="Nhập mật khẩu">
+            <span asp-validation-for="Password" class="md-line"></span>
+        </div>
+        <div class="input-group">
+            <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Nhập lại mật khẩu">
+            <span asp-validation-for="ConfirmPassword" class="md-line"></span>
+        </div>
+        <div class="row m-t-25 text-left">
+            <div class="col-md-12">
+                <div class="checkbox-fade fade-in-primary">
+                    <label>
+                        <input type="checkbox" value="">
+                        <span class="cr"><i class="cr-icon icofont icofont-ui-check txt-primary"></i></span>
+                        <span class="text-inverse">Tôi đọc và chấp nhận Điều khoản &amp; Điều kiện</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row m-t-30">
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">Đăng ký</button>
+            </div>
+        </div>
+    </form>
+    <!-- [ Form ] End -->
+    <div class="text-center text-muted">
+        Bạn đã có sẵn tài khoản?
+        <a asp-controller="Account" asp-action="Login"><strong>Đăng nhập</strong></a>
+    </div>
+</div>
