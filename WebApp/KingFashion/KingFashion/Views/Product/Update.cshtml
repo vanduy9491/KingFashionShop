@@ -11,6 +11,10 @@
         <div class="col-md-5 ml-5">
             <div class="row">
                 <div class="form-group col-md-6">
+                    <label asp-for="CategoryId" class="control-label"></label>
+                    <input asp-for="CategoryId" class="form-control" />
+                </div>
+                <div class="form-group col-md-6">
                     <label asp-for="UserId" class="control-label"></label>
                     <input asp-for="UserId" class="form-control" />
                 </div>
@@ -88,12 +92,15 @@
         <div class="col-md-5>
             <div class="form-group">
                 <label asp-for="Photo" class="control-label"></label><br />
+                <input asp-for="Photo" class="form-control" />
 
-                @foreach (var img in Model.Photo.Split(" ").Skip(1))
-            {
-                <img width="400px" class="img-fluid img-thumbnail img-lg" src="~/images/@img"><br />
-                <button onclick="img.openModel()"></button>
-            }
+                <img width="400px" class="img-fluid img-thumbnail img-lg ml-3" src="~/images/@Model.Photo.Split(" ")[1]"><br />
+                <div class="row ml-4">
+                    @foreach (var img in Model.Photo.Split(" ").Skip(1))
+                    {
+                        <img width="100px" class="img-fluid img-thumbnail img-lg" src="~/images/@img"><br />
+                    }
+                </div>
             </div>
         </div>
         <div class="form-group">

@@ -130,18 +130,18 @@ namespace KingFashion.Controllers
                 };
             }
             return View(update);
+        }
+        [HttpPut]
+        [Route("/Product/ChangeShop")]
+        public async Task<IActionResult> ChangeStatus([FromBody] ChangeShop model)
+        {
+            return Ok(await ApiHelper.HttpPost<ChangeShopResult>(@$"{Common.ApiUrl}Product/ChangeShop", "PUT", model));
+        }
+        [HttpGet]
+        [Route("/Product/View/{proId}")]
+        public async Task<IActionResult> ViewDetails(int proId)
+        {
+            return View(await ApiHelper.HttpGet<Product>(@$"{Common.ApiUrl}Product/GetProduct/{proId}"));
+        }
     }
-    [HttpPut]
-    [Route("/Product/ChangeShop")]
-    public async Task<IActionResult> ChangeStatus([FromBody] ChangeShop model)
-    {
-        return Ok(await ApiHelper.HttpPost<ChangeShopResult>(@$"{Common.ApiUrl}Product/ChangeShop", "PUT", model));
-    }
-    [HttpGet]
-    [Route("/Product/View/{proId}")]
-    public async Task<IActionResult> ViewDetails(int proId)
-    {
-        return View(await ApiHelper.HttpGet<Product>(@$"{Common.ApiUrl}Product/GetProduct/{proId}"));
-    }
-}
 }

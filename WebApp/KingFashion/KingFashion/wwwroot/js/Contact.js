@@ -76,41 +76,17 @@ contact.save = function (id) {
     emailObj.To = $('input[name="EmailTo"]').val();
     emailObj.Subject = $('input[name="Subject"]').val();
     emailObj.Body = $('textarea[name="ContentReply"]').val();
-    emailObj.FromEmail = "kingstartloving@gmail.com"
-    emailObj.FromPassword = 'Loveemyeu2';
+    emailObj.ContactId = id;
+    
     $.ajax({
         url: "https://localhost:44368/Contact/Reply",
         method: "POST",
         dataType: "json",
         contentType: "application/json",
-        data: JSON.stringify(emailObj),
-        success: function (data) {
-            if (data.success) {
-                contact.changeStatus(id);
-            }
-            else {
-                alert("Trả lời không thành công");
-            }
-        }
+        data: JSON.stringify(emailObj)
     });
+    window.location.href = 'https://localhost:44368/Contact';
+    
 }
-contact.changeStatus = function (id) {
-    var changeStatusContact = {};
-        changeStatusContact.Id = id
-    $.ajax({
-        url: `https://localhost:44368/ChangeStatus`,
-        method: "PUT",
-        dataType: "json",
-        contentType: "application/json",
-        data: JSON.stringify(changeStatusContact),
-        success: function (data) {
-            if (data.success) {
-                alert("Trả lời thành công");
-            }
-            else {
-                alert("Trả lời không thành công");
-            }
-        }
-    });
-}
+
 

@@ -194,7 +194,8 @@ namespace KingFashionShop.Service.ProductService
                 parameters.Add("@endsAt", update.EndsAt);
                 parameters.Add("@content", update.Content);
                 parameters.Add("@photo", update.Photo);
-                updateProduct.Product = await SqlMapper.QueryFirstOrDefaultAsync<Product>(
+                parameters.Add("@categoryId", update.CategoryId);
+                updateProduct.Product  = await SqlMapper.QueryFirstOrDefaultAsync<Product>(
                                             cnn: connection,
                                             sql: "sp_UpdateProduct",
                                             param: parameters,
