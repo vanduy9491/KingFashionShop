@@ -41,7 +41,7 @@ namespace KingFashion.Controllers
         }
         [HttpPost]
         [Route("Contact/Reply")]
-        public IActionResult RepLy([FromBody] EmailModel model)
+        public async Task<IActionResult> RepLy([FromBody] EmailModel model)
         {
             using (MailMessage message = new MailMessage(model.FromEmail, model.To))
             {
@@ -58,14 +58,17 @@ namespace KingFashion.Controllers
                     smtp.Credentials = cred;
                     smtp.Port = 587;
                     smtp.Send(message);
-                    ViewBag.Message = "Email sent Successfully!";
+                    ViewBag.Message = "Đã gửi mail thành công!";
                 }
             }
-            return View();
+            ChangeStatusContact changeContactStatus = new ChangeStatusContact();
+            changeContactStatus.Id = model.ContactId;
+            await ApiHelper.HttpPost<Contact>(@$"{Common.ApiUrl}Contact/ChangStatus/{model.ContactId}","PUT", changeContactStatus);
+            return RedirectToAction("Index","Contact");
         }
         [HttpPut]
         [Route("ChangeStatus")]
-        public async  Task<IActionResult> ChangeStatus([FromBody] ChangeStatusContact model)
+        public async Task<IActionResult> ChangeStatus([FromBody] ChangeStatusContact model)
         {
             return Ok(await ApiHelper.HttpPost<Contact>(@$"{Common.ApiUrl}Contact/ChangStatus/{model.Id}","PUT", model));
         }

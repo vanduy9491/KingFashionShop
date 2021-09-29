@@ -5,6 +5,7 @@
     Layout = "~/Views/Shared/_DashBoardLayout.cshtml";
 }
 
+<<<<<<< HEAD
 <div class="page-body">
     <div class="row">
         <div class="col-sm-12">
@@ -52,6 +53,57 @@
     <a href="javascript:;" class="btn hor-grd btn-grd-success" style="background-image: linear-gradient(to top, #7bfcb0 0%, #12f972 51%, #05d85c 100%);" onclick="contact.get(@ViewBag.ContactId)"><i class="ti-email"></i>Trả lời</a>
     <a class="btn btn-inverse btn-square" asp-action="Index"><i class="ti-back-left"></i>Trở Về</a>
 </div>
+=======
+<h1>ViewContact</h1>
+
+<div>
+    <h4>Contact</h4>
+    <hr />
+    <dl class="row">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Chi tiết phản hồi của khách hàng</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="frmCategory">
+                    <div class="form-group">
+                        <label asp-for="Email"></label>
+                        <input asp-for="Email" class="form-control" readonly />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Content"> Nội dung</label>
+                        <textarea asp-for="Content" class="form-control" readonly></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Status">Trạng thái</label>
+                        @if (Model.Status)
+                        {
+                            <input value=" Đã phản hồi" class="form-control" readonly />
+                        }
+                        else
+                        {
+                            <input value="Chưa phản hồi" class="form-control" readonly />
+                        }
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    <i class="ti-close"></i> Đóng
+                </button>
+                <button type="button" class="btn btn-primary" onclick="contact.get(@ViewBag.ContactId)">
+                    <i class="ti-check"></i> Phản hồi
+                </button>
+            </div>
+        </div>
+       
+    </dl>
+</div>
+
+>>>>>>> d65981caf45f3fb0f1390e75d4327e2108415c58
 <div class="modal fade" id="replyModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -82,13 +134,38 @@
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">
                     <i class="ti-close"></i> Đóng
                 </button>
+<<<<<<< HEAD
                 <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="contact.save(@ViewBag.ContactId);">
                     <i class="ti-check"></i> Phản hồi
+=======
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="contact.save(@ViewBag.ContactId);" data-target="#myModal">
+                    <i class="ti-close"></i> Phản hồi
+>>>>>>> d65981caf45f3fb0f1390e75d4327e2108415c58
                 </button>
             </div>
         </div>
     </div>
 </div>
+<div id="myModal" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="icon-box">
+                    <i class="fa fa-check"></i>
+                </div>
+                <h4 class="modal-title">Thank you!</h4>
+            </div>
+            <div class="modal-body">
+                <p class="text-center">Cảm ơn quý khách đã góp ý.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success btn-block" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<span style="color: green"> @ViewBag.Message</span>
 @section scripts {
 
     <script src="~/js/Contact.js" asp-append-version="true"></script>

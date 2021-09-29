@@ -1,10 +1,9 @@
-﻿@model Contact	
-
+﻿@model Contact
 
 <!-- Title page -->
 <section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url(../images/bg-01.jpg);">
 
-    
+
 
     <h2 class="ltext-105 cl0 txt-center">
         Contact
@@ -23,7 +22,7 @@
                     </h4>
 
                     <div class="bor8 m-b-20 how-pos4-parent">
-                        <input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" asp-for="Email"  placeholder="Your Email Address">
+                        <input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" asp-for="Email" placeholder="Your Email Address">
                         <img class="how-pos4 pointer-none" src="~/images/icons/icon-email.png" alt="ICON">
                     </div>
 
@@ -31,8 +30,8 @@
                         <textarea class="stext-111 cl2 plh3 size-120 p-lr-28 p-tb-25" asp-for="Content" placeholder="How Can We Help?"></textarea>
                     </div>
 
-                    <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#dialog1"> Create</button>
-                       
+                    <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#myModal" > Create</button>
+
                 </form>
             </div>
 
@@ -95,20 +94,32 @@
     <div class="size-303" id="google_map" data-map-x="40.691446" data-map-y="-73.886787" data-pin="~/images/icons/pin.png" data-scrollwhell="0" data-draggable="1" data-zoom="11"></div>
 </div>
 
-<div class="modal fade" id="dialog1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+<div id="myModal" class="modal fade">
+    <div class="modal-dialog modal-confirm">
         <div class="modal-content">
-
+            <div class="modal-header">
+                <div class="icon-box">
+                    <i class="fa fa-check"></i>
+                </div>
+                <h4 class="modal-title">Thank you!</h4>
+            </div>
             <div class="modal-body">
-                <img src="http://goactionstations.co.uk/wp-content/uploads/2017/03/Green-Round-Tick.png" style="width:50px"/>
-                     <h1>Thank You</h1>
-                    <p>Cám ơn bạn đã phản hồi!!!</p>
+                <p class="text-center">Cảm ơn quý khách đã góp ý.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success btn-block" data-dismiss="modal">OK</button>
             </div>
         </div>
     </div>
 </div>
 <script>
-    $('#dialog1').modal('show')
+    
+    var formMessage = {};
+    formMessage.reset = function () {
+         
+        $('input[name="Email"]').val("");
+        $('input[name="Content"]').val("");
+    }
 </script>
 
 

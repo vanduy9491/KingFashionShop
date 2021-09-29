@@ -10,7 +10,8 @@ namespace KingFashion.Models.Contacts
         public string To { get; set; }
         public string Subject { get; set; }
         public string Body { get; set; }
-        public string FromEmail { get; set; }
-        public string FromPassword { get; set; }
+        public string FromEmail = "kingstartloving@gmail.com";
+        public string FromPassword = "Loveemyeu2";
+        public int ContactId { get; set; }
     }
 }
