@@ -6,7 +6,7 @@
 <p>
     <a class="btn btn-out-dashed btn-success btn-square" asp-controller="Product" asp-action="Create"><i class="ti-plus"></i>Thêm Mới Sản Phẩm</a>
 </p>
-<table class="table table-hover" id="tbProduct">
+<table class="table table-hover table-bordered" id="tbProduct">
     <thead style="background:black;color:white">
         <tr>
             <th>
@@ -30,6 +30,7 @@
             <th>
                 Nội Dung
             </th>
+            <th>Ngày được tạo</th>
             <th>
                 @Html.DisplayNameFor(model => model.Photo)
             </th>
@@ -75,6 +76,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Content)
                 </td>
+                <td>@item.CreatedAt</td>
                 <td>
                     <img class="img-fluid img-thumbnail img-lg" src="~/images/@item.Photo.Split(" ")[1]">
                 </td>

@@ -10,15 +10,15 @@
     </div>
     <hr><!-- [ Form ] Start -->
     <form class="my-5" asp-controller="Account" asp-action="Register">
-        <div class="input-group">
-            <input asp-for="Email" type="text" class="form-control" placeholder="Nhập Email">
+        <div class="form-group">
+            <input asp-for="Email" type="text" class="form-control col-12" placeholder="Nhập Email"> 
             <span asp-validation-for="Email" class="md-line"></span>
         </div>
-        <div class="input-group">
+        <div class="form-group">
             <input asp-for="Password" type="password" class="form-control" placeholder="Nhập mật khẩu">
             <span asp-validation-for="Password" class="md-line"></span>
         </div>
-        <div class="input-group">
+        <div class="form-group">
             <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Nhập lại mật khẩu">
             <span asp-validation-for="ConfirmPassword" class="md-line"></span>
         </div>

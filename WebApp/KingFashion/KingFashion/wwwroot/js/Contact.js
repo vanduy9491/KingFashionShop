@@ -44,7 +44,7 @@ contact.showData = function () {
             $.fn.dataTable.ext.errMode = 'none';
             $('#tbContact').DataTable({
                 columnDefs: [
-                    { orderable: false, targets: [2, 3] }
+                    { orderable: false, targets: [4] }
                 ],
                 order: [[0, 'desc']]
             });

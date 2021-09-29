@@ -69,7 +69,6 @@ namespace KingFashion.Controllers
 
                 if (model.Photo != null && model.Photo.Count > 0)
                 {
-
                     fileAllName = String.Empty;
                     foreach (IFormFile images in model.Photo)
                     {
@@ -84,7 +83,6 @@ namespace KingFashion.Controllers
                             images.CopyTo(new FileStream(fileAllPath, FileMode.Create));
                         }
                         images.CopyTo(new FileStream(filePath, FileMode.Create));
-
                     }
                 }
                 var newProduct = new Product()

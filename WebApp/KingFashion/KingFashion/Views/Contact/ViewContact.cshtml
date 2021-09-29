@@ -5,49 +5,52 @@
     Layout = "~/Views/Shared/_DashBoardLayout.cshtml";
 }
 
-<h1>ViewContact</h1>
-
-<div>
-    <h4>Contact</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2" hidden>
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-        <dd class="col-sm-10" hidden>
-            @Html.DisplayFor(model => model.Id)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Content)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Content)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
-        <dd class="col-sm-10">
-            @if (Model.Status)
-            {
-                <input value="Đã phản hồi" class="form-control" />
-            }
-            else
-            {
-                <input value="Chưa phản hồi" class="form-control" />
-            }
-
-        </dd>
-    </dl>
+<div class="page-body">
+    <div class="row">
+        <div class="col-sm-12">
+            <!-- Basic Form Inputs card start -->
+            <div class="card">
+                <div class="card-block">
+                    <h3 class="sub-title"><strong>Phản Hồi</strong></h3>
+                    <div>
+                        <label class="col-sm-2 col-form-label" hidden> @Html.DisplayNameFor(model => model.Id)</label>
+                    </div>
+                    <div>
+                        <label class="col-sm-2 col-form-label" hidden> @Html.DisplayFor(model => model.Id)r</label>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label"><strong> @Html.DisplayNameFor(model => model.Email)</strong></label>
+                        <div class="col-sm-10">
+                            @Html.DisplayFor(model => model.Email)
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label"><strong>Nội dung</strong></label>
+                        <div class="col-sm-10">
+                            @Html.DisplayFor(model => model.Content)
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label"><strong>Trạng thái</strong></label>
+                        <div class="col-sm-10">
+                            @if (Model.Status)
+                            {
+                                <input style="width:25%" value="Đã phản hồi" class="form-control" disabled />
+                            }
+                            else
+                            {
+                                <input style="width:25%" value="Chưa phản hồi" class="form-control" disabled />
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <div>
-    <a href="javascript:;" class="btn btn-out-dashed btn-success btn-square" onclick="contact.get(@ViewBag.ContactId)">Trả lời</a>
-    <a asp-action="Index">Back to List</a>
+    <a href="javascript:;" class="btn hor-grd btn-grd-success" style="background-image: linear-gradient(to top, #7bfcb0 0%, #12f972 51%, #05d85c 100%);" onclick="contact.get(@ViewBag.ContactId)"><i class="ti-email"></i>Trả lời</a>
+    <a class="btn btn-inverse btn-square" asp-action="Index"><i class="ti-back-left"></i>Trở Về</a>
 </div>
 <div class="modal fade" id="replyModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -61,8 +64,8 @@
             <div class="modal-body">
                 <form id="frmContact">
                     <div class="form-group">
-                        <label>To</label>
-                        <input type="text" name="EmailTo" class="form-control" data-rule-required="true" value="@ViewBag.To" />
+                        <label>Đến</label>
+                        <input type="text" name="EmailTo" class="form-control" data-rule-required="true" value="@ViewBag.To" disabled />
                         <input type="hidden" name="Id" class="form-control" data-rule-required="true" value="@ViewBag.ContactId" />
                     </div>
                     <div class="form-group">
@@ -79,8 +82,8 @@
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">
                     <i class="ti-close"></i> Đóng
                 </button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="contact.save(@ViewBag.ContactId);">
-                    <i class="ti-close"></i> Phản hồi
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="contact.save(@ViewBag.ContactId);">
+                    <i class="ti-check"></i> Phản hồi
                 </button>
             </div>
         </div>

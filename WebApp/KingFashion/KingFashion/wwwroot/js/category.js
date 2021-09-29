@@ -64,22 +64,23 @@ category.showCatByParentId = function (id) {
                         Danh Mục
                     </th>
                     <th>Trạng Thái</th>
+                    <th>Slug</th>
                     <th></th>
                 </tr>`)
             $.each(data, function (index, item) {
                 $('#tbCategory tbody').append(
-                    `
+                    `   
                         <tr>
                             <td>${item.id}</td>
                             <td>${item.title}</td>
-                            <td class='btn btn-sm ${item.status ? 'btn-success' : 'btn-warning'}'>${item.status ? '  Sẵn Có ' : '  Hết Hàng '}</td>
+                            <td><a href='javascript:;' onclick='category.changeStatus(${item.id}, ${item.status})'  class='btn btn-sm ${item.status ? 'btn-success' : 'btn-warning'}'>${item.status ? '  Sẵn Có ' : '  Hết Hàng '}</a></td>
+                            <td>${item.slug}</td>
                             <td class='text-right'>
-                                  
-                                        <a href="/Product/Index/${item.id}" class='btn btn-info btn-mat btn-sm' title="Xem Danh Mục">Xem Danh Mục
+                                        <a href="/Product/Index/${item.id}" class='btn btn-info btn-mat btn-sm' title="Xem Danh Mục">
                                     <i class="ti-eye"></i>
                                 </a>
                                 <a href='javascript:;' class='btn btn-sm btn-secondary' title="Modify category" onclick="category.getbyCatId(${item.id})">
-                                   Sửa <i class="ti-reload"></i>
+                                    <i class="ti-reload"></i>
                                 </a>
                                  <a href='javascript:;' class='btn btn-sm ${item.status ? 'btn-warning' : 'btn-success'}'
                                    title='${!item.status ? 'Sẵn Có' : 'Hết Hàng'}' onclick='category.changeStatus(${item.id}, ${item.status})'>

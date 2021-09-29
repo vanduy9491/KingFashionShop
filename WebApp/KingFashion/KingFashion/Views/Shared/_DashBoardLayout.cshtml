@@ -1,4 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@inject SignInManager<User> signInManager
+@{
+    var user = new User();
+    if (signInManager.IsSignedIn(User))
+    {
+        user = signInManager.UserManager.FindByNameAsync(User.Identity.Name).Result;
+    }
+}
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -30,12 +38,14 @@
     <link rel="stylesheet" type="text/css" href="~/assets/css/style.css">
     <link rel="stylesheet" type="text/css" href="~/assets/css/jquery.mCustomScrollbar.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.2/datatables.min.css" />
+
     <script src="~/assets/ckeditor/ckeditor.js"></script>
     <style>
         .btn-danger {
             background-color: red !important;
             border-color: red !important;
         }
+
         .btn-success {
             background-color: #3ffa8c !important;
         }
@@ -117,39 +127,10 @@
                             </li>
                         </ul>
                         <ul class="nav-right">
-                            <li class="user-profile header-notification">
-                                <a href="#!">
-                                    <img src="~/assets/images/avatar-4.jpg" class="img-radius" alt="User-Profile-Image">
-                                    <span>John Doe</span>
-                                    <i class="ti-angle-down"></i>
+                            <li>
+                                <a asp-controller="Account" asp-action="Signout">
+                                    <i class="ti-layout-sidebar-left"></i> Đăng Xuất
                                 </a>
-                                <ul class="show-notification profile-notification">
-                                    <li>
-                                        <a href="#!">
-                                            <i class="ti-settings"></i> Settings
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="ti-user"></i> Profile
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="ti-email"></i> My Messages
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="ti-lock"></i> Lock Screen
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="auth-normal-sign-in.html">
-                                            <i class="ti-layout-sidebar-left"></i> Logout
-                                        </a>
-                                    </li>
-                                </ul>
                             </li>
                         </ul>
                     </div>
@@ -162,21 +143,9 @@
                         <div class="pcoded-inner-navbar main-menu">
                             <div class="">
                                 <div class="main-menu-header">
-                                    <img class="img-40 img-radius" src="~/assets/images/avatar-4.jpg" alt="User-Profile-Image">
                                     <div class="user-details">
-                                        <span>John Doe</span>
-                                        <span id="more-details">UX Designer<i class="ti-angle-down"></i></span>
+                                        <span id="more-details">@User.Identity.Name</span>
                                     </div>
-                                </div>
-
-                                <div class="main-menu-content">
-                                    <ul>
-                                        <li class="more-details">
-                                            <a href="#"><i class="ti-user"></i>View Profile</a>
-                                            <a href="#!"><i class="ti-settings"></i>Settings</a>
-                                            <a href="auth-normal-sign-in.html"><i class="ti-layout-sidebar-left"></i>Logout</a>
-                                        </li>
-                                    </ul>
                                 </div>
                             </div>
                             <div class="pcoded-navigatio-lavel" data-i18n="nav.category.navigation">Home</div>

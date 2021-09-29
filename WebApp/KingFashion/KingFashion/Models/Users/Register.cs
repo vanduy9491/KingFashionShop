@@ -8,15 +8,15 @@ namespace KingFashion.Models.Users
 {
     public class Register
     {
-        [Required]
-        [EmailAddress]
+        [Required(ErrorMessage = "Email là bắt buộc")]
+        [EmailAddress(ErrorMessage = "Email không phải là một địa chỉ e-mail hợp lệ")]
         public string Email { get; set; }
-        [Required]
+        [Required(ErrorMessage ="Mật khẩu là bắc buộc")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Xác nhận Mật khẩu là bắt buộc")]
         [DataType(DataType.Password)]
-        [Compare("Password", ErrorMessage = "Confirm password not match.")]
+        [Compare("Password", ErrorMessage = "Xác nhận mật khẩu không khớp")]
         public string ConfirmPassword { get; set; }
     }
 }

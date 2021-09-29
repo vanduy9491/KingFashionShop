@@ -30,7 +30,7 @@ namespace KingFashion.Services
                 {
                     Id = string.Empty,
                     Email = string.Empty,
-                    Message = "User is not existing."
+                    Message = "Người dùng không tồn tại."
                 };
             }
             var signInResult = await signInManager.PasswordSignInAsync(user, LoginUser.Password, LoginUser.RememberMe, false);
@@ -41,7 +41,7 @@ namespace KingFashion.Services
                 {
                     Id = user.Id,
                     Email = user.Email,
-                    Message = "Login successed",
+                    Message = "Đăng nhập thành công",
                     Roles = roles.ToArray()
                 };
             }
@@ -49,7 +49,7 @@ namespace KingFashion.Services
             {
                 Id = string.Empty,
                 Email = string.Empty,
-                Message = "Something went wrong, please try agin later."
+                Message = "Đã xảy ra lỗi, vui lòng thử lại sau."
             };
         }
         public async Task<RegisterResult> Register(Register register)
