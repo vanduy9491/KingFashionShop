@@ -42,6 +42,7 @@ category.showData = function () {
                 order: [[0, 'desc']]
             });
             $('#tbCategory_wrapper').addClass('w-100');
+
         }
     });
 }
@@ -91,14 +92,6 @@ category.showCatByParentId = function (id) {
                     `
                 );
             });
-            $.fn.dataTable.ext.errMode = 'none';
-            $('#tbCategory').DataTable({
-                columnDefs: [
-                    { orderable: false, targets: 2 }
-                ],
-                order: [[0, 'desc']]
-            });
-            $('#tbCategory_wrapper').addClass('w-100');
         }
     });
 }
