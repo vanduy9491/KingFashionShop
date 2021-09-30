@@ -1,58 +1,60 @@
 ﻿
 
-<br><br><br><br><br>
+<br>
+<br>
+<br>
+<br>
+<br>
 <form method="post" class="bg0 mt-3" id="form-data">
     <div class="container">
         <div class="flex-w flex-tr">
-            <div class="size-210 bor10 p-lr-70 p-t-55 p-b-70 p-lr-15-lg w-full-md">
+            <div id="formcheck" class="size-210 bor10 p-lr-70 p-t-55 p-b-70 p-lr-15-lg w-full-md">
                 <div>
                     <h4 class="mtext-105 cl2 txt-center p-b-30">
                         Checkout
                     </h4>
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                    <label  class="stext-101">Name</label>
+                    <label class="stext-101">First Name</label>
                     <div class="bor8 m-b-20 how-pos4-parent">
-                        <input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" id="name">
+                        <input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" name="FirstName" >
                         <i class="how-pos4 pointer-none zmdi zmdi-account"></i>
                     </div>
-                    <span  class="text-danger"></span>
-
-                    <label  class="stext-101">Email</label>
+                   
+                    <span class="text-danger"></span>
+                    <label class="stext-101"> Last Name </label>
                     <div class="bor8 m-b-20 how-pos4-parent">
-                        <input  class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="email" id="email">
+                        <input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" name="LastName">
+                        <i class="how-pos4 pointer-none zmdi zmdi-account"></i>
+                    </div>
+                    <span class="text-danger"></span>
+
+                    <label class="stext-101">Email</label>
+                    <div class="bor8 m-b-20 how-pos4-parent">
+                        <input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="email" name="Email">
                         <i class="how-pos4 pointer-none zmdi zmdi-email"></i>
                     </div>
-                    <span  class="text-danger"></span>
+                    <span class="text-danger"></span>
 
-                    <label  class="stext-101">StreetAddress</label>
+                    <label class="stext-101">StreetAddress</label>
                     <div class="bor8 m-b-20 how-pos4-parent">
-                        <input  class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" id="streetAddress">
+                        <input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" name="Line1">
                         <i class="how-pos4 pointer-none zmdi zmdi-home"></i>
                     </div>
-                    <span  class="text-danger"></span>
+                    <span class="text-danger"></span>
 
                     <label class="stext-101">City</label>
                     <div class="bor8 m-b-20 how-pos4-parent">
-                        <input  class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" id="city">
+                        <input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" name="City">
                         <i class="how-pos4 pointer-none zmdi zmdi-city"></i>
                     </div>
-                    <span  class="text-danger"></span>
-
-                    <label  class="stext-101">State</label>
+                    <span class="text-danger"></span>
+                    <label class="stext-101">PhoneNumber</label>
                     <div class="bor8 m-b-20 how-pos4-parent">
-                        <input  class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" id="state">
-                        <i class="how-pos4 pointer-none zmdi zmdi-play-for-work"></i>
-                    </div>
-                    <span  class="text-danger"></span>
-
-                    <label  class="stext-101">PhoneNumber</label>
-                    <div class="bor8 m-b-20 how-pos4-parent">
-                        <input  class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="number" id="phone">
+                        <input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="number" name="Mobile">
                         <i class="how-pos4 pointer-none zmdi zmdi-phone"></i>
                     </div>
-                    <span  class="text-danger"></span>
-
+                    <span class="text-danger"></span>
                 </div>
             </div>
 
@@ -60,123 +62,20 @@
                 <h4 class="d-flex justify-content-between align-items-center mb-3">
                     <span class="text-info">Order Summary:</span>
                 </h4>
-                <ul class="list-group mb-3">
-                 
+                <ul id="showCart" class="list-group mb-3">
 
-                        <li class="list-group-item d-flex justify-content-between">
-                            <div>
-                                <h6 class="my-0">Title</h6>
-                                <small class="text-muted">Quantity: Count</small>
-                            </div>
-                            <span class="text-muted">Price * Count</span>
-                        </li>
-                   
                     <li class="list-group-item d-flex justify-content-between bg-light">
-                        <small class="text-info">Total (USD)</small>
+                        <small class="text-muted">total (VND)</small>
                         <strong class="text-info">tổng tiền</strong>
                     </li>
                 </ul>
-                <a href="https://developer.flutterwave.com/docs/test-cards#" target="_blank" class="flex-c-m stext-101 cl2 size-116 bg8 bor14 hov-btn3 p-lr-15 m-t-15 trans-04 pointer">View Test Cards For Testing Payment</a>
+
                 <div>
                     <script src="https://checkout.flutterwave.com/v3.js"></script>
-                    <button type="button" class="flex-c-m stext-101 cl0 text-white size-116 bg3 bor14 hov-btn3 p-lr-15 m-t-15 trans-04 pointer" onclick="makePayment()">Make Payment</button>
+                    <button id="clickPayment" type="button" class="flex-c-m stext-101 cl0 text-white size-116 bg3 bor14 hov-btn3 p-lr-15 m-t-15 trans-04 pointer">Make Payment</button>
                 </div>
             </div>
         </div>
     </div>
 </form>
-
-@*@section Scripts{
-    <partial name="_ValidationScriptsPartial" />
-
-    <script>
-
-            function generateTxRefUId() {
-                return Date.now().toString(36) + Math.random().toString(36).substr(2);
-            }
-
-        var txRefUId = generateTxRefUId();
-        var status = "";
-
-            function makePayment() {
-                FlutterwaveCheckout({
-                    public_key: "@Flutterwave.Value.PublicKey",
-                    tx_ref: txRefUId,
-                    amount:@Model.OrderHeader.OrderTotal,
-                    currency: "USD",
-                    country: "NG",
-                    payment_options: "card, ussd",
-                    // redirect_url: // specified redirect URL
-                    //    "https://bulkybookme.azurewebsites.net",
-                    meta: {
-                        consumer_id: 23,
-                        consumer_mac: "92a3-912ba-1192a",
-                    },
-                    customer: {
-                        email: document.getElementById("email").value,
-                        phone_number: document.getElementById("phone").value,
-                        name: document.getElementById("name").value,
-                    },
-                    callback: function (data) {
-
-                        var newData = {
-                            "name": data.customer.name,
-                            "email": data.customer.email,
-                            "amount": data.amount,
-                            "currency": data.currency,
-                            "phoneNumber": data.customer.phone_number,
-                            "flwRef": data.flw_ref,
-                            "transactionId": data.transaction_id,
-                            "txRef": data.tx_ref,
-                            "status": data.status,
-                            "phoneNumber": data.customer.phone_number,
-                            "streetAddress": document.getElementById("streetAddress").value,
-                            "city": document.getElementById("city").value,
-                            "state": document.getElementById("state").value
-                        };
-
-                        status = data.status;
-
-                        if (data.status == "successful") {
-                            $.ajax({
-                                type: "POST",
-                                url: "/Customer/Cart/Checkout",
-                                data: JSON.stringify(newData),
-                                contentType: "application/json",
-                                success: function (newValue) { ////////
-                                    console.log(newValue);
-                                    if (newValue.success) {
-                                        Swal.fire(
-                                            'Success!',
-                                            newValue.message,
-                                            'success'
-                                        ).then((btnOk) => {
-                                            // redirect to home
-                                            window.location = newValue.url;
-                                        });
-                                    }
-                                }
-                            });
-                        }
-                    },
-                    onclose: function () {
-                        if (status == "successful") {
-                            Swal.fire(
-                                'Success!',
-                                "Payment Successful! Your Order is being processed",
-                                'success'
-                            ).then((btnOk) => {
-                                // redirect to home
-                                window.location = "https://cozadev.azurewebsites.net/";
-                            });
-                        }
-                    },
-                    customizations: {
-                        title: "My store",
-                        description: "Payment for items in cart",
-                        logo: "https://cozadev.azurewebsites.net/images/icons/logo-01.png",
-                    },
-                });
-            }
-    </script>*@
 }

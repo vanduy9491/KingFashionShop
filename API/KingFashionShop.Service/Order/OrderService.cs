@@ -2,6 +2,7 @@
 using KingFashionShop.Domain.Models;
 using KingFashionShop.Domain.Response.CheckOut;
 using KingFashionShop.Service.CartService;
+using KingFashionShop.Service.TransactionService;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -16,18 +17,21 @@ namespace KingFashionShop.Service.Order
         private ICartService cartService;
         private ICartItemService cartItemService;
         private IOrderItemService orderItemService;
+        private ITransactionService transactionService;
         public OrderService(IConfiguration configuration) : base(configuration)
         {
             cartService = new CartService.CartService(configuration);
             cartItemService = new CartItemService(configuration);
             orderItemService = new OrderItemService(configuration);
+            transactionService = new TransactionService.TransactionService(configuration);
+
         }
-        public async Task<Domain.Models.Order> Checkout(string sessionId, CheckoutOrder checkoutOrder)
+        public async Task<Domain.Models.Order> Checkout(CheckoutOrder checkoutOrder)
         {
-            var cart = await cartService.GetBySessionId(sessionId);
+            var cart = await cartService.GetBySessionId(checkoutOrder.SessionId);
             checkoutOrder.TransferFields(cart);
             await cartService.UpdateCart(cart);
-            cart = await cartService.GetBySessionId(sessionId);
+            cart = await cartService.GetBySessionId(checkoutOrder.SessionId);
             float tax = 0;
             float shipping = 0;
             float discount = 0;
@@ -39,14 +43,13 @@ namespace KingFashionShop.Service.Order
             {
                 subTotal += (cartItem.Price * cartItem.Quantity);
                 itemDiscount += cartItem.Discount;
-               
-                
             }
             total = subTotal + tax + shipping;
             grandTotal = total;
             var order = new Domain.Models.Order()
             {
                 FirstName = cart.FirstName,
+                MiddleName = cart.MiddleName,
                 LastName = cart.LastName,
                 Mobile = cart.Mobile,
                 Email = cart.Email,
@@ -67,7 +70,6 @@ namespace KingFashionShop.Service.Order
                 Content = cart.Content,
                 Status = Domain.Models.OrderStatus.New
             };
-
             order = await CreateOrder(order);
             foreach (var cartItem in cart.CartItems)
             {
@@ -82,15 +84,21 @@ namespace KingFashionShop.Service.Order
                     Content = cartItem.Content
 
                 });
-                 
-                    
-                
-
             }
-
+            if(order.UserId != null)
+            {
+                await transactionService.CreateTransaction(new Domain.Models.CreateTransaction()
+                {
+                    UserId = order.UserId,
+                    CreatedAt = order.CreatedAt,
+                    OrderId = order.Id,
+                    Content = order.Content
+                });
+            }
+           
             return order;
-        }
 
+        }
         public async Task<Domain.Models.Order> CreateOrder(Domain.Models.Order order)
         {
             DynamicParameters parameters = new DynamicParameters();
@@ -128,31 +136,10 @@ namespace KingFashionShop.Service.Order
 
         }
 
-        public async Task<Domain.Models.Order> UpdateOrder(Domain.Models.Order order)
-        {
-            /* DynamicParameters parameters = new DynamicParameters();
-             parameters.Add("@sessionId", order.SessionId);
-             parameters.Add("@token", Guid.NewGuid().ToString());
-             parameters.Add("@status", CartStatus.New);
-             parameters.Add("@firstName", null);
-             parameters.Add("@middleName", null);
-             parameters.Add("@lastName", null);
-             parameters.Add("@mobile", null);
-             parameters.Add("@email", null);
-             parameters.Add("@line1", null);
-             parameters.Add("@line2", null);
-             parameters.Add("@city", null);
-             parameters.Add("@province", null);
-             parameters.Add("@country", null);
-             parameters.Add("@createdAt", DateTime.Now);
+        //public async Task<Domain.Models.Order> UpdateOrder(Domain.Models.Order order)
+        //{
 
-             return = await SqlMapper.QueryFirstOrDefaultAsync<Domain.Models.Order>(
-                    cnn: connection,
-                    param: parameters,
-                    sql: "sp_CreateCartBySessionId",
-                    commandType: CommandType.StoredProcedure
-                    );*/
-            return null;
-        }
+        //    return null;
+        //}
     }
 }

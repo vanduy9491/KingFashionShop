@@ -197,7 +197,7 @@
     [ Cart ]*/
     $('.js-show-cart').on('click', function () {
         cartService.cartPanel();
-        
+
     });
 
     $('.js-hide-cart').on('click', function () {
@@ -214,7 +214,7 @@
         $('.js-sidebar').removeClass('show-sidebar');
     });
 
-    
+
 
     /*==================================================================
     [ Rating ]*/
@@ -321,7 +321,7 @@
                         });
                     });
                     $('.js-modal1').addClass('show-modal1');
-                    $('.js-addcart-detail').attr("data-item",data.id);
+                    $('.js-addcart-detail').attr("data-item", data.id);
                 }
             });
         });
@@ -436,7 +436,7 @@
                     </div>
                     `);
 
-                });  
+                });
                 $('.js-modal1').addClass('show-modal1');
                 $('.js-addcart-detail').attr("data-item", data.id);
             }

@@ -9,8 +9,8 @@ namespace KingFashionShop.Service.Order
 {
    public interface IOrderService
     {
-        Task<Domain.Models.Order> Checkout(string sessionId, CheckoutOrder checkoutOrder);
+        Task<Domain.Models.Order> Checkout(CheckoutOrder checkoutOrder);
         Task<Domain.Models.Order> CreateOrder(Domain.Models.Order order);
-        Task<Domain.Models.Order> UpdateOrder(Domain.Models.Order order);
+        //Task<Domain.Models.Order> UpdateOrder(Domain.Models.Order order);
     }
 }

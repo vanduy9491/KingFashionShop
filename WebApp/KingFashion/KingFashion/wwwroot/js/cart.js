@@ -1,4 +1,6 @@
 ﻿cartService = {};
+var Id = 0;
+var total = 0;
 cart = undefined;
 /*-----------------------CART HEADER-----------------------*/
 $('.js-addcart-detail').each(function () {
@@ -15,10 +17,9 @@ $('.js-addcart-detail').each(function () {
 
 cartService.cartPanel = function () {
     if (cart !== undefined && cart.items !== undefined && cart.items.length > 0) {
-        cartService.updateCartHeader(cart.items);
+        cartService.updateCartHeader(cart.items);       
         $('.js-panel-cart').addClass('show-header-cart');
-    }
-    else
+    } else
         location.reload();
 }
 
@@ -34,7 +35,7 @@ cartService.homeCartInit = function () {
                 if (data === undefined)
                     return;
                 cart = data;
-                cartService.updateNotify(data.items);
+                cartService.updateNotify(data.items);                
             }
         });
 }
@@ -54,7 +55,7 @@ cartService.add = function (addCart) {
             if (data === undefined)
                 return;
             cart = data;
-            cartService.updateNotify(data.items);
+            cartService.updateNotify(data.items);            
         }
     });
 }
@@ -71,7 +72,7 @@ cartService.removeItem = function (productId) {
                 return;
             cart = data;
             cartService.updateNotify(data.items);
-            cartService.updateCartHeader(data.items);
+            cartService.updateCartHeader(data.items);            
             if (location.pathname.startsWith("/Cart"))
                 cartService.updateCart(data.items);
         }
@@ -133,7 +134,7 @@ cartService.cartInit = function () {
         });
 
 }
-cartService.changeItem=function(productId,quantity) {
+cartService.changeItem = function (productId, quantity) {
     $.ajax({
         url: `https://localhost:44322/api/Cart/ChangeItem?productId=${productId}&quantity=${quantity}`,
         method: "GET",
@@ -147,17 +148,19 @@ cartService.changeItem=function(productId,quantity) {
             cartService.updateNotify(data.items);
             cartService.updateCartHeader(data.items);
             cartService.updateCart(data.items);
+            cartService.totalCart(data.items);
         }
     });
 
 }
-
+var total = 0;
 cartService.cartInit();
 cartService.updateCart = function (items) {
     var subTotal = 0;
     $(".table-shopping-cart").empty();
     $.each(items, function (index, cartItem) {
         subTotal += cartItem.quantity * cartItem.price;
+        total = subTotal;
         $(".table-shopping-cart").append(
             `<tr class="table_row">
                             <td class="column-1">
@@ -181,30 +184,32 @@ cartService.updateCart = function (items) {
                                 </div>
                             </td>
                             <td class="column-5">$ ${cartItem.price * cartItem.quantity}</td>
-                        </tr>`
+            </tr>`
         )
+
+
+
     });
     $(".size-209, .p-t-1").children().text(`$${subTotal}`)
     /*==================================================================
     [ +/- num product ]*/
     $('.btn-num-product-down').on('click', function () {
         var numProduct = Number($(this).next().val());
-        if (numProduct > 0)
-        { 
-            numProduct -=1;
+        if (numProduct > 0) {
+            numProduct -= 1;
             $(this).next().val(numProduct);
             let productId = $(this).attr('data-item');
-            cartService.changeItem(productId,numProduct);
+            cartService.changeItem(productId, numProduct);
 
         }
     });
 
     $('.btn-num-product-up').on('click', function () {
         var numProduct = Number($(this).prev().val());
-        numProduct+=1;
+        numProduct += 1;
         $(this).prev().val(numProduct);
         let productId = $(this).attr('data-item');
-        cartService.changeItem(productId,numProduct);
+        cartService.changeItem(productId, numProduct);
     });
 
     $(".how-itemcart1").on('click', function (e) {
@@ -214,3 +219,44 @@ cartService.updateCart = function (items) {
     });
 }
 
+
+
+
+/*check out*/
+$("#clickPayment").on("click", function () {
+    cartService.checkout(Id);
+})
+
+cartService.checkout = function (id) {
+
+
+    let firstName = $('input[name="FirstName"]').val();
+    let lastName = $('input[name="LastName"]').val();
+    let mobile = $('input[name="Mobile"]').val();
+    let email = $('input[name="Email"]').val();
+    let line1 = $('input[name="Line1"]').val();
+    let city = $('input[name="City"]').val();
+   let province = $('input[name="Province"]').val();
+
+    $.ajax({
+        url: location.origin + `/Checkout?firstName=${firstName}&lastName=${lastName}&mobile=${mobile}&email=${email}&line1=${line1}&city=${city}&province=${province}`,
+        method: "POST",
+        success: function (data) {}
+    });
+}
+
+
+//$("#clickProcess").on("click", function () {
+//    cartService.totalCart();
+//})
+//cartService.totalCart = function (items) {    
+   
+//    $("#showCart").append(
+//        `
+//                        <li class="list-group-item d-flex justify-content-between bg-light">
+//                        <small class="text-muted">${total} (VND)</small>
+//                        <strong class="text-info">tổng tiền</strong>
+//                    </li>
+//            `
+//    )   
+//}

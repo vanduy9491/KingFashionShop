@@ -83,7 +83,7 @@ namespace KingFashionShop.Service.CartService
                 };
                 newCartItem = await cartItemService.CreateCartItem(newCartItem);
                 newCartItem.Product = pAdd;
-                cart.CartItems = new List<CartItem>() { newCartItem };
+                newCart.CartItems = new List<CartItem>() { newCartItem };
                 cart = newCart;
             }
             else
@@ -205,9 +205,34 @@ namespace KingFashionShop.Service.CartService
             return cart;
         }
 
-        public Task<Cart> UpdateCart(Cart cart)
+        public async Task<Cart> UpdateCart(Cart cart)
         {
-            throw new NotImplementedException();
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@Id", cart.Id);
+                parameters.Add("@UserId", cart.UserId);
+                parameters.Add("@SessionId", cart.SessionId);
+                parameters.Add("@token", cart.Token);
+                parameters.Add("@status", cart.Status);
+                parameters.Add("@firstName", cart.FirstName);
+                parameters.Add("@middleName", cart.MiddleName);
+                parameters.Add("@lastName", cart.LastName);
+                parameters.Add("@mobile", cart.Mobile);
+                parameters.Add("@email", cart.Email);
+                parameters.Add("@line1", cart.Line1);
+                parameters.Add("@line2", cart.Line2);
+                parameters.Add("@city", cart.City);
+                parameters.Add("@province", cart.Province);
+                parameters.Add("@country", cart.Country);
+                parameters.Add("@createdAt", DateTime.Now);
+                parameters.Add("@content", cart.Content);
+                parameters.Add("@sessionId", cart.SessionId);
+
+            return await SqlMapper.QueryFirstOrDefaultAsync<Domain.Models.Cart>(
+                cnn: connection,
+                param: parameters,
+                sql: "sp_UpdateCartBySessionId",
+                commandType: CommandType.StoredProcedure
+                );
         }
     }
 }
