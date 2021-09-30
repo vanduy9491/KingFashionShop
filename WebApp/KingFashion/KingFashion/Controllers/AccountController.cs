@@ -26,18 +26,22 @@ namespace KingFashion.Controllers
             if (ModelState.IsValid)
             {
                 var result = await userService.Login(login);
-                if (result.Success && result.Roles.Length > 0)
+                if (login.IsDeleted != true)
                 {
-                    if (result.Roles.Contains("SystemAdmin"))
+                    if (result.Success && result.Roles.Length > 0)
                     {
-                        return RedirectToAction("Index", "DashBoard");
+                        if (result.Roles.Contains("SystemAdmin"))
+                        {
+                            return RedirectToAction("Index", "DashBoard");
+                        }
+                        else
+                        {
+                            return RedirectToAction("Index", "Shop");
+                        }
                     }
-                    else
-                    {
-                        return RedirectToAction("Index", "Shop");
-                    }
+                    ViewBag.Error = result.Message;
+                    return View();
                 }
-                ViewBag.Error = result.Message;
                 return View();
             }
             return View();
@@ -67,5 +71,6 @@ namespace KingFashion.Controllers
             userService.Sighout();
             return RedirectToAction("Login", "Account");
         }
+
     }
 }

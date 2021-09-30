@@ -29,5 +29,9 @@ namespace KingFashionShop.Commons.Messages
         {
             public static string Create = "Email đã gửi thành công";
         }
+        public static class User
+        {
+            public static string ChangeIsDeleted = "Thành đã được thay đổi trạng thái thành công!";
+        }
     }
 }

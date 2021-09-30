@@ -141,13 +141,13 @@
                     <nav class="pcoded-navbar">
                         <div class="sidebar_toggle"><a href="#"><i class="icon-close icons"></i></a></div>
                         <div class="pcoded-inner-navbar main-menu">
-                            <div class="">
+                            @*<div class="">
                                 <div class="main-menu-header">
                                     <div class="user-details">
                                         <span id="more-details">@User.Identity.Name</span>
                                     </div>
                                 </div>
-                            </div>
+                            </div>*@
                             <div class="pcoded-navigatio-lavel" data-i18n="nav.category.navigation">Home</div>
                             <ul class="pcoded-item pcoded-left-item">
                                 <li class="active">
@@ -167,8 +167,13 @@
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                     <a asp-controller="Contact" asp-action="Index">
-                                        <span class="pcoded-micon"><i class="ti-layers"></i><b>FC</b></span>
+                                        <span class="pcoded-micon" style="background-color: #FC6180"><i class="ti-email"></i><b>FC</b></span>
                                         <span class="pcoded-mtext" data-i18n="nav.form-components.main">Liên hệ</span>
+                                        <span class="pcoded-mcaret"></span>
+                                    </a>
+                                    <a asp-controller="User" asp-action="Index">
+                                        <span class="pcoded-micon" style="background-color: black"><i class="ti-user"></i><b>FC</b></span>
+                                        <span class="pcoded-mtext" data-i18n="nav.form-components.main">Thành Viên</span>
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                 </li>

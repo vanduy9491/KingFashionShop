@@ -36,10 +36,10 @@ namespace KingFashion.Models.Products
         public bool Shop { get; set; }
         [Required]
         public DateTime CreatedAt { get; set; }
-        public DateTime? UpdateAt { get; set; }
-        public DateTime? PublishedAt { get; set; }
-        public DateTime? StartsAt { get; set; }
-        public DateTime? EndsAt { get; set; }
+        public DateTime UpdateAt { get; set; }
+        public DateTime PublishedAt { get; set; }
+        public DateTime StartsAt { get; set; }
+        public DateTime EndsAt { get; set; }
         public string Content { get; set; }
         public int CategoryId { get; set; }
         public List<IFormFile> Photo { get; set; }

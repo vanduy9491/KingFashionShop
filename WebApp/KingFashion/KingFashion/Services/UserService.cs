@@ -12,7 +12,6 @@ namespace KingFashion.Services
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
         private readonly RoleManager<IdentityRole> roleManager;
-
         public UserService(UserManager<User> userManager,
                             SignInManager<User> signInManager,
                             RoleManager<IdentityRole> roleManager)
@@ -33,7 +32,7 @@ namespace KingFashion.Services
                     Message = "Người dùng không tồn tại."
                 };
             }
-            var signInResult = await signInManager.PasswordSignInAsync(user, LoginUser.Password, LoginUser.RememberMe, false);
+            var signInResult = await signInManager.PasswordSignInAsync(user, LoginUser.Password, LoginUser.IsDeleted, false);
             if (signInResult.Succeeded)
             {
                 var roles = await userManager.GetRolesAsync(user);
@@ -44,13 +43,14 @@ namespace KingFashion.Services
                     Message = "Đăng nhập thành công",
                     Roles = roles.ToArray()
                 };
-            }
+            }   
             return new LoginResult()
             {
                 Id = string.Empty,
                 Email = string.Empty,
                 Message = "Đã xảy ra lỗi, vui lòng thử lại sau."
             };
+
         }
         public async Task<RegisterResult> Register(Register register)
         {
