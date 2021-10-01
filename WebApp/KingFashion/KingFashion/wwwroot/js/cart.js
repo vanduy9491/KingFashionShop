@@ -17,7 +17,7 @@ $('.js-addcart-detail').each(function () {
 
 cartService.cartPanel = function () {
     if (cart !== undefined && cart.items !== undefined && cart.items.length > 0) {
-        cartService.updateCartHeader(cart.items);       
+        cartService.updateCartHeader(cart.items);
         $('.js-panel-cart').addClass('show-header-cart');
     } else
         location.reload();
@@ -35,7 +35,7 @@ cartService.homeCartInit = function () {
                 if (data === undefined)
                     return;
                 cart = data;
-                cartService.updateNotify(data.items);                
+                cartService.updateNotify(data.items);
             }
         });
 }
@@ -55,7 +55,7 @@ cartService.add = function (addCart) {
             if (data === undefined)
                 return;
             cart = data;
-            cartService.updateNotify(data.items);            
+            cartService.updateNotify(data.items);
         }
     });
 }
@@ -72,7 +72,7 @@ cartService.removeItem = function (productId) {
                 return;
             cart = data;
             cartService.updateNotify(data.items);
-            cartService.updateCartHeader(data.items);            
+            cartService.updateCartHeader(data.items);
             if (location.pathname.startsWith("/Cart"))
                 cartService.updateCart(data.items);
         }
@@ -175,9 +175,7 @@ cartService.updateCart = function (items) {
                                     <div data-item="${cartItem.product.id}" class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
                                         <i class="fs-16 zmdi zmdi-minus"></i>
                                     </div>
-
                                     <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product1" value="${cartItem.quantity}">
-
                                     <div data-item="${cartItem.product.id}" class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
                                         <i class="fs-16 zmdi zmdi-plus"></i>
                                     </div>
@@ -236,7 +234,7 @@ cartService.checkout = function (id) {
     let email = $('input[name="Email"]').val();
     let line1 = $('input[name="Line1"]').val();
     let city = $('input[name="City"]').val();
-   let province = $('input[name="Province"]').val();
+    let province = $('input[name="Province"]').val();
 
     $.ajax({
         url: location.origin + `/Checkout?firstName=${firstName}&lastName=${lastName}&mobile=${mobile}&email=${email}&line1=${line1}&city=${city}&province=${province}`,
@@ -247,7 +245,7 @@ cartService.checkout = function (id) {
             swal("Checkout successful", "", "success");
             setTimeout(function () {
                 location = "/";
-            },3000)
+            }, 3000)
         }
     });
 }
@@ -257,7 +255,7 @@ cartService.checkout = function (id) {
 //    cartService.totalCart();
 //})
 //cartService.totalCart = function (items) {    
-   
+
 //    $("#showCart").append(
 //        `
 //                        <li class="list-group-item d-flex justify-content-between bg-light">
