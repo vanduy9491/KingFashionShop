@@ -187,11 +187,7 @@ namespace KingFashionShop.Service.ProductService
                 parameters.Add("@discount", update.Discount);
                 parameters.Add("@quantity", update.Quantity);
                 parameters.Add("@shop", update.Shop);
-                parameters.Add("@createdAt", update.CreatedAt);
-                parameters.Add("@updatedAt", update.UpdateAt);
-                parameters.Add("@publishedAt", update.PublishedAt);
-                parameters.Add("@startsAt", update.StartsAt);
-                parameters.Add("@endsAt", update.EndsAt);
+                parameters.Add("@updateAt", DateTime.Now);
                 parameters.Add("@content", update.Content);
                 parameters.Add("@photo", update.Photo);
                 parameters.Add("@categoryId", update.CategoryId);
