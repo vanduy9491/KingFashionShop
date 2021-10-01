@@ -4,7 +4,6 @@ using KingFashionShop.Service.Order;
 using KingFashionShop.Service.ProductService;
 using KingFashionShop.Service.TransactionService;
 using KingFashionShop.Service.ContactService;
-using KingFashionShop.Service.ProductService;
 using KingFashionShop.Service.Users;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

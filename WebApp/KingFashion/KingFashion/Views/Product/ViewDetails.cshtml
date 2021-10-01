@@ -90,7 +90,9 @@
             <label asp-for="Photo" class="control-label"></label><br />
 
             @foreach (var img in Model.Photo.Split(" ").Skip(1))
-            {
+                    {
+                        if (img == "")
+                            break;
                     <img width="300px" class="img-fluid img-thumbnail img-lg" src="~/images/@img"><br />
 
             }

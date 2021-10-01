@@ -1,4 +1,4 @@
-﻿@model KingFashion.Models.Products.Product
+﻿@model KingFashion.Models.Products.UpdateProduct
 
 @{
     ViewData["Title"] = "Update";
@@ -64,24 +64,8 @@
                 </label>
             </div>
             <div class="form-group">
-                <label asp-for="CreatedAt" class="control-label"></label>
-                <input asp-for="CreatedAt" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label asp-for="UpdateAt" class="control-label"></label>
-                <input asp-for="UpdateAt" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label asp-for="PublishedAt" class="control-label"></label>
-                <input asp-for="PublishedAt" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label asp-for="StartsAt" class="control-label"></label>
-                <input asp-for="StartsAt" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label asp-for="EndsAt" class="control-label"></label>
-                <input asp-for="EndsAt" class="form-control" />
+                <label asp-for="UpdateAt" class="control-label" hidden></label>
+                <input asp-for="UpdateAt" class="form-control" hidden />
             </div>
             <div class="form-group">
                 <label asp-for="Content" class="control-label"></label>
@@ -91,16 +75,23 @@
         </div>
         <div class="col-md-5>
             <div class="form-group">
-                <label asp-for="Photo" class="control-label"></label><br />
-                <input asp-for="Photo" class="form-control" />
+                <label asp-for="ExistPhoto" class="control-label"></label><br />
 
-                <img width="400px" class="img-fluid img-thumbnail img-lg ml-3" src="~/images/@Model.Photo.Split(" ")[1]"><br />
+                <img width="400px" class="img-fluid img-thumbnail img-lg ml-3" src="~/images/@Model.ExistPhoto.Split(" ")[1]"><br />
                 <div class="row ml-4">
-                    @foreach (var img in Model.Photo.Split(" ").Skip(1))
+                    @foreach (var img in Model.ExistPhoto.Split(" ").Skip(1))
                     {
                         <img width="100px" class="img-fluid img-thumbnail img-lg" src="~/images/@img"><br />
                     }
                 </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <img class="img-thumbnail no-photo" src="~/images/no-img.jpg" alt="no photo" />
+            <label asp-for="Photo" class="col-sm-2 col-form-label"></label>
+            <div class="custom-file col-sm-10">
+                <input multiple asp-for="Photo" class="custom-file-input form-control" />
+                <label class="custom-file-label mx-sm-3" for="customFile">Choose file</label>
             </div>
         </div>
         <div class="form-group">
@@ -109,69 +100,64 @@
     </div>
 </form>
 
-    <div>
-        <a asp-action="Index">Back to List</a>
-    </div>
-    <div class="modal fade" id="imageModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Thay đổi ảnh</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="frmImage">
-                        <div class="form-group">
-                            <img class="img-thumbnail no-photo" src="~/images/no-img.jpg" alt="no photo" />
-                            <label asp-for="Photo" class="col-sm-2 col-form-label"></label>
-                            <div class="custom-file col-sm-10">
-                                <input asp-for="Photo" class="custom-file-input" />
-                                <label class="custom-file-label mx-sm-3" for="customFile">Choose file</label>
-                            </div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+<div class="modal fade" id="imageModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thay đổi ảnh</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="frmImage">
+                    <div class="form-group">
+                        <img class="img-thumbnail no-photo" src="~/images/no-img.jpg" alt="no photo" />
+                        <label asp-for="Photo" class="col-sm-2 col-form-label"></label>
+                        <div class="custom-file col-sm-10">
+                            <input asp-for="Photo" class="custom-file-input" />
+                            <label class="custom-file-label mx-sm-3" for="customFile">Choose file</label>
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                        <i class="ti-close"></i> Đóng
-                    </button>
-                    <button type="button" class="btn btn-primary" id="btnSave">
-                        <i class="ti-check"></i> Lưu
-                    </button>
-                </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    <i class="ti-close"></i> Đóng
+                </button>
+                <button type="button" class="btn btn-primary" id="btnSave">
+                    <i class="ti-check"></i> Lưu
+                </button>
             </div>
         </div>
     </div>
-    @section scripts{
-        <script asp-append-version="true">
-            var img = {};
+</div>
+@section scripts{
+    <script asp-append-version="true">
+        var img = {};
+        img.openModel = function () {
+            $('#imageModel').modal('show');
+        };
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $('.no-photo').attr('src', window.URL.createObjectURL($(this)[0].files[0]));
+            $(".custom-file-label").addClass("selected").html(fileName);
+        });
+        $(document).ready(function () {
             $(".custom-file-input").on("change", function () {
-                var fileName = $(this).val().split("\\").pop();
-                $('.no-photo').attr('src', window.URL.createObjectURL($(this)[0].files[0]));
-                $(".custom-file-label").addClass("selected").html(fileName);
+                var fileLabel = $(this).next('.custom-file-label');
+                var files = $(this)[0].files;
+                if (files.length > 1) {
+                    fileLabel.html(files.length + " files selected");
+                }
+                else if (files.length == 1) {
+                    fileLabel.html(files[0].fileName);
+                }
             });
-            img.openModel = function () {
-                $('#imageModel').modal('show');
-            };
-            $(".custom-file-input").on("change", function () {
-                var fileName = $(this).val().split("\\").pop();
-                $('.no-photo').attr('src', window.URL.createObjectURL($(this)[0].files[0]));
-                $(".custom-file-label").addClass("selected").html(fileName);
-            });
-            $(document).ready(function () {
-                $(".custom-file-input").on("change", function () {
-                    var fileLabel = $(this).next('.custom-file-label');
-                    var files = $(this)[0].files;
-                    if (files.length > 1) {
-                        fileLabel.html(files.length + " files selected");
-                    }
-                    else if (files.length == 1) {
-                        fileLabel.html(files[0].fileName);
-                    }
-                });
-            });
-        </script>
-    }
+        });
+    </script>
+}
 

@@ -20,15 +20,11 @@ namespace KingFashion.Models.Products
         public float Discount { get; set; }
         public int Quantity { get; set; }
         public bool Shop { get; set; }
-        public DateTime CreatedAt { get; set; }
         public DateTime UpdateAt { get; set; }
-        public DateTime PublishedAt { get; set; }
-        public DateTime StartsAt { get; set; }
-        public DateTime EndsAt { get; set; }
         public string Content { get; set; }
         public int CategoryId { get; set; }
-        public string Photo { get; set; }
-        //public string ExistPhoto { get; set; }
+        public List<IFormFile> Photo { get; set; }
+        public string ExistPhoto { get; set; }
 
     }
 }
