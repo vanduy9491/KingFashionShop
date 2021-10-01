@@ -3,10 +3,7 @@
 @{
     ViewData["Title"] = "ViewDetails";
 }
-
-<h1>ViewDetails</h1>
-
-<h4>Product</h4>
+<h3 style="font-family: 'Bonheur Royale', cursive;">Sản Phẩm</h3>
 <hr />
 <div class="row">
     <div class="col-md-5 ml-5">
@@ -94,14 +91,14 @@
 
             @foreach (var img in Model.Photo.Split(" ").Skip(1))
             {
-                <img width="300px" class="img-fluid img-thumbnail img-lg" src="~/images/@img"><br />
+                    <img width="300px" class="img-fluid img-thumbnail img-lg" src="~/images/@img"><br />
+
             }
         </div>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
+    @*<div>
+            <a class="btn btn-inverse btn-square" href="Index/@ViewBag.CatId"><i class="ti-back-left"></i> Back to List</a>
+        </div>*@
 </div>
 
 @section scripts{

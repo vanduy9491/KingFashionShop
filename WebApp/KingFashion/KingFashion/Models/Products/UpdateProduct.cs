@@ -26,10 +26,8 @@ namespace KingFashion.Models.Products
         public DateTime StartsAt { get; set; }
         public DateTime EndsAt { get; set; }
         public string Content { get; set; }
-        public int CategoryId { get; set; }
-
-        public List<IFormFile> Photo { get; set; }
-        public string ExistPhoto { get; set; }
+        public string Photo { get; set; }
+        //public string ExistPhoto { get; set; }
 
     }
 }

@@ -28,7 +28,7 @@ namespace KingFashion.Controllers
         {
             categoryId = catId;
 
-            var data = await ApiHelper.HttpGet<List<Product>>(@$"{Common.ApiUrl}Product/{catId}");
+            var data = await ApiHelper.HttpGet<List<Product>>(@$"{Common.ApiUrl}Product/catId?catId={catId}");
             return View(data);
         }
         [HttpGet]
@@ -113,58 +113,35 @@ namespace KingFashion.Controllers
 
             return View();
         }
+        [HttpGet("/Product/Update/{proId}")]
+        public async Task<IActionResult> Update(int proId)
+        {
+            return View(await ApiHelper.HttpGet<Product>(@$"{Common.ApiUrl}Product/GetProduct/{proId}"));
+        }
         [HttpPost]
         public async Task<IActionResult> Update(UpdateProduct update)
         {
             if (ModelState.IsValid)
             {
-                string filename = "no-img.jpg";
-                string fileAllName = "";
-                if (update.Photo != null && update.Photo.Count > 0)
+                if (update != null)
                 {
-
-                    fileAllName = String.Empty;
-                    foreach (IFormFile images in update.Photo)
-                    {
-                        //filename = String.Empty;
-                        string uploadFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
-                        fileAllName += $"{DateTime.Now.ToString("ddMMyyyyhhmmss")}_{images.FileName} ";
-                        filename = $"{DateTime.Now.ToString("ddMMyyyyhhmmss")}_{images.FileName} ";
-                        var filePath = Path.Combine(uploadFolder, filename);
-                        var fileAllPath = Path.Combine(uploadFolder, fileAllName);
-                        if (fileAllName.Split(" ").Length > 2)
-                        {
-                            images.CopyTo(new FileStream(fileAllPath, FileMode.Create));
-                        }
-                        images.CopyTo(new FileStream(filePath, FileMode.Create));
-
-                    }
-                }
-                var newProduct = new Product()
-                {
-                    Photo = fileAllName,
-                    Title = update.Title,
-                    Price = update.Price,
-                    Summary = update.Summary,
-                    Quantity = update.Quantity,
-                    MetaTitle = update.MetaTitle,
-                    Slug = update.Slug,
-                    Type = update.Type,
-                    Discount = update.Discount,
-                    Shop = update.Shop,
-                    CreatedAt = update.CreatedAt,
-                    UpdateAt = update.UpdateAt,
-                    PublishedAt = update.PublishedAt,
-                    StartsAt = update.StartsAt,
-                    EndsAt = update.EndsAt,
-                    Content = update.Content,
-                    CategoryId = categoryId,
+                    await ApiHelper.HttpPost<UpdateProductResult>(@$"{Common.ApiUrl}Product", "PUT", update);
+                    return RedirectToAction("Index", "Product", new { catId = categoryId });
                 };
-                await ApiHelper.HttpPost<UpdateProduct>(@$"{Common.ApiUrl}Product", "PUT", newProduct);
-                return RedirectToAction("Index", "Product", new { catId = categoryId });
             }
-
-            return View();
-        }
+            return View(update);
     }
+    [HttpPut]
+    [Route("/Product/ChangeShop")]
+    public async Task<IActionResult> ChangeStatus([FromBody] ChangeShop model)
+    {
+        return Ok(await ApiHelper.HttpPost<ChangeShopResult>(@$"{Common.ApiUrl}Product/ChangeShop", "PUT", model));
+    }
+    [HttpGet]
+    [Route("/Product/View/{proId}")]
+    public async Task<IActionResult> ViewDetails(int proId)
+    {
+        return View(await ApiHelper.HttpGet<Product>(@$"{Common.ApiUrl}Product/GetProduct/{proId}"));
+    }
+}
 }

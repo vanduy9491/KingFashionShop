@@ -15,10 +15,11 @@ namespace KingFashionShop.Service.ProductService
         Task<IEnumerable<ProductRespone>> Get(int catId);
         Task<CreateProductResult> Create(CreateProduct create);
         Task<Product> GetProduct(int proId);
-        Task<IEnumerable<ProductResult>> GetProductsTopCategory(int topCategoryId, int limit, int boundary);
+        Task<IEnumerable<ProductResult>> GetProductsTopCategory(int limit);
         Task<IEnumerable<ProductRespone>> GetAllProduct();
         Task<IEnumerable<ProductRespone>> GetProductById(int productId);
-        Task<BoundaryList<Product>> GetProductByCategoryId(int categoryId, bool isCategoryParent, int boundary, int limit);
+        Task<BoundaryList<Product>> GetProductByCategoryId(int categoryId, bool? isCategoryParent, int boundary, int limit);
         Task<UpdateProductResult> Update(UpdateProduct update);
+        Task<ChangeShopResult> ChangeShop(ChangeShop changeShop);
     }
 }
