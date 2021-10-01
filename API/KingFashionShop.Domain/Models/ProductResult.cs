@@ -28,7 +28,7 @@ namespace KingFashion.Models.Products
             get
             {
                 List<string> images = new List<string>();
-                if (!String.IsNullOrEmpty(Photo.Trim()))
+                if (Photo != null && !String.IsNullOrEmpty(Photo.Trim()))
                 {
                     var items = Photo.Split(" ");
                     foreach (var item in items)
@@ -49,7 +49,7 @@ namespace KingFashion.Models.Products
         {
             get
             {
-                if (!String.IsNullOrEmpty(Photo.Trim()))
+                if (Photo != null && !String.IsNullOrEmpty(Photo.Trim()))
                 {
                     var images = Photo.Split(" ");
                     if (images.Length > 0)
