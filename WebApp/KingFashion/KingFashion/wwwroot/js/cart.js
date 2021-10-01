@@ -100,12 +100,12 @@ cartService.updateCartHeader = function (items) {
                                 ${cartItem.product.title}
                             </a>
                             <span class="header-cart-item-info">
-                            ${cartItem.quantity} x $${cartItem.price}.00
+                            ${cartItem.quantity} x ${cartItem.price} VND
                             </span>
                         </div>
                     </li>`);
     });
-    $(".header-cart-total").text(`Total: $${subTotal}`);
+    $(".header-cart-total").text(`Total: ${subTotal} VND`);
     $(".header-cart-item-img").on('click', function (e) {
         let productId = $(this).attr('data-item');
         cartService.removeItem(productId);
@@ -169,7 +169,7 @@ cartService.updateCart = function (items) {
                                 </div>
                             </td>
                             <td class="column-2">${cartItem.product.title}</td>
-                            <td class="column-3">$ ${cartItem.price}.00</td>
+                            <td class="column-3"> ${cartItem.price} VND</td>
                             <td class="column-4">
                                 <div  class="wrap-num-product flex-w m-l-auto m-r-0">
                                     <div data-item="${cartItem.product.id}" class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
@@ -181,14 +181,14 @@ cartService.updateCart = function (items) {
                                     </div>
                                 </div>
                             </td>
-                            <td class="column-5">$ ${cartItem.price * cartItem.quantity}</td>
+                            <td class="column-5"> ${cartItem.price * cartItem.quantity} VND</td> 
             </tr>`
         )
 
 
 
     });
-    $(".size-209, .p-t-1").children().text(`$${subTotal}`)
+    $(".size-209, .p-t-1").children().text(`${subTotal} VND`)
     /*==================================================================
     [ +/- num product ]*/
     $('.btn-num-product-down').on('click', function () {
