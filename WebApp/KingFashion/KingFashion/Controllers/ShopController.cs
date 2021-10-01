@@ -4,6 +4,8 @@ using KingFashion.Models;
 using KingFashion.Models.Categorys;
 using KingFashion.Models.Contacts;
 using KingFashion.Models.Products;
+using KingFashionShop.Domain.Response;
+using KingFashionShop.Domain.Response.CheckOut;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -18,6 +20,8 @@ namespace KingFashionWeb.Controllers
 {
     public class ShopController : Controller
     {
+        private static int categoryId;
+        private static int productId;
         private readonly ILogger<ShopController> _logger;
         public ShopController(ILogger<ShopController> logger)
         {
@@ -76,13 +80,13 @@ namespace KingFashionWeb.Controllers
             return View();
 
         }
-        public async Task<IActionResult> ProductDetails()
+        [HttpPost]
+        [Route("/Shop/GetProduct/{proId:int}")]
+        public async Task<IActionResult> ProductDetails(int proId)
         {
-            ShopAll shopAll = new ShopAll();
-            shopAll.Categories = await ApiHelper.HttpGet<List<CategoryResult>>(@$"{Common.ApiUrl}Category");
-            shopAll.Products = await ApiHelper.HttpGet<List<ProductResult>>(@$"{Common.ApiUrl}Product");
-            return View(shopAll);
-
+            productId = proId;
+            var data = await ApiHelper.HttpGet<List<Product>>(@$"{Common.ApiUrl}Product/GetProduct/{proId}");
+            return View(data);
         }
         [Route("/CheckOut")]
         public async Task<IActionResult> CheckOut()
@@ -91,10 +95,26 @@ namespace KingFashionWeb.Controllers
             shopAll.Categories = await ApiHelper.HttpGet<List<CategoryResult>>(@$"{Common.ApiUrl}Category");
             shopAll.Products = await ApiHelper.HttpGet<List<ProductResult>>(@$"{Common.ApiUrl}Product");
             return View(shopAll);
-
         }
 
         [HttpPost]
+        [Route("/CheckOut")]
+        public async Task<OrderResult> CheckOut([FromQuery] string? firstName , [FromQuery] string? lastName, [FromQuery] string? mobile, [FromQuery] string? email, [FromQuery] string? line1, [FromQuery] string? city, [FromQuery] string? province)
+         {
+            CheckoutOrder checkoutOrder = new CheckoutOrder() {
+                FirstName = firstName,
+                LastName = lastName,
+                Mobile = mobile,
+                Email = email,
+                Line1 = line1,
+                City = city
+            };
+            checkoutOrder.SessionId = Request.Cookies["sessionId"];
+            var order = await ApiHelper.HttpPost<OrderResult>(@$"{Common.ApiUrl}Order/Checkout", "POST", checkoutOrder);
+            Response.Cookies.Delete("sessionId");
+            return order;
+         }
+             [HttpPost]
         [Route("/Shop/Contact")]
         public async Task<IActionResult> Contact(Contact model)
         {

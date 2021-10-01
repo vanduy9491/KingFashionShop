@@ -17,20 +17,19 @@ namespace KingFashionShop.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OrderController : ControllerBase
+    public class TransactionController : ControllerBase
     {
-        private readonly IOrderService orderService;
-       
+        private readonly ITransactionService transactionService;
 
-        public OrderController(IOrderService orderService)
-        { 
-            this.orderService = orderService;
-        }
+        public TransactionController(ITransactionService transactionService)
 
-        [HttpPost("Checkout")]
-        public async Task<Order> CreateCart(CheckoutOrder checkoutOrder)
         {
-            return await orderService.Checkout(checkoutOrder);
+            this.transactionService = transactionService;
+        }
+        [HttpPost]
+        public async Task<CreateTransaction> CreateTransaction(CreateTransaction create)
+        {
+            return await transactionService.CreateTransaction(create);
         }
     }
 }

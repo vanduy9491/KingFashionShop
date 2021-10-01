@@ -7,7 +7,7 @@ namespace KingFashionShop.Domain.Models
     public class Order
     {
         public int Id { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public string SessionId { get; set; }
         public string Token { get; set; }
         public OrderStatus Status { get; set; }
