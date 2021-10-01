@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "ViewDetails";
+    var newListImage = Model.Photo.Split(" ");
 }
 <h3 style="font-family: 'Bonheur Royale', cursive;">Sản Phẩm</h3>
 <hr />
@@ -88,12 +89,15 @@
     <div class="col-md-5 ml-5>
         <div class="form-group">
             <label asp-for="Photo" class="control-label"></label><br />
+            <img width="400px" class="img-fluid img-thumbnail img-lg ml-3" src="~/images/@Model.Photo.Split(" ")[0]"><br />
+            <div class="row ml-4 mt-4">
+                @foreach (var img in newListImage)
+                {
+                    if (img == "") break;
+                    <img width="100px" class="img-fluid img-thumbnail img-lg mr-2" src="~/images/@img" ><br />
 
-            @foreach (var img in Model.Photo.Split(" ").Skip(1))
-            {
-                    <img width="300px" class="img-fluid img-thumbnail img-lg" src="~/images/@img"><br />
-
-            }
+                }
+            </div>
         </div>
     </div>
     @*<div>

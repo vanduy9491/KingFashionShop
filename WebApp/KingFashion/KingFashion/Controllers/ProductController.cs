@@ -72,17 +72,18 @@ namespace KingFashion.Controllers
                     fileAllName = String.Empty;
                     foreach (IFormFile images in model.Photo)
                     {
-                        //filename = String.Empty;
+                        filename = String.Empty;
                         string uploadFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
                         fileAllName += $"{DateTime.Now.ToString("ddMMyyyyhhmmss")}_{images.FileName} ";
                         filename = $"{DateTime.Now.ToString("ddMMyyyyhhmmss")}_{images.FileName} ";
                         var filePath = Path.Combine(uploadFolder, filename);
                         var fileAllPath = Path.Combine(uploadFolder, fileAllName);
-                        if (fileAllName.Split(" ").Length > 2)
-                        {
-                            images.CopyTo(new FileStream(fileAllPath, FileMode.Create));
-                        }
                         images.CopyTo(new FileStream(filePath, FileMode.Create));
+                        //if (fileAllName.Split(" ").Length > 2)
+                        //{
+                        //    images.CopyTo(new FileStream(fileAllPath, FileMode.Create));
+                        //}
+                        
                     }
                 }
                 var newProduct = new Product()
