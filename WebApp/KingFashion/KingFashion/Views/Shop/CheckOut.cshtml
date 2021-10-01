@@ -15,14 +15,14 @@
                     </h4>
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                    <label class="stext-101">First Name</label>
+                    <label class="stext-101">Tên</label>
                     <div class="bor8 m-b-20 how-pos4-parent">
-                        <input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" name="FirstName" >
+                        <input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" name="FirstName">
                         <i class="how-pos4 pointer-none zmdi zmdi-account"></i>
                     </div>
-                   
+
                     <span class="text-danger"></span>
-                    <label class="stext-101"> Last Name </label>
+                    <label class="stext-101"> Họ </label>
                     <div class="bor8 m-b-20 how-pos4-parent">
                         <input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" name="LastName">
                         <i class="how-pos4 pointer-none zmdi zmdi-account"></i>
@@ -36,29 +36,33 @@
                     </div>
                     <span class="text-danger"></span>
 
-                    <label class="stext-101">StreetAddress</label>
+                    <label class="stext-101">Địa Chỉ</label>
                     <div class="bor8 m-b-20 how-pos4-parent">
                         <input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" name="Line1">
                         <i class="how-pos4 pointer-none zmdi zmdi-home"></i>
                     </div>
                     <span class="text-danger"></span>
 
-                    <label class="stext-101">City</label>
+                    <label class="stext-101">Thành Phố</label>
                     <div class="bor8 m-b-20 how-pos4-parent">
                         <input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" name="City">
                         <i class="how-pos4 pointer-none zmdi zmdi-city"></i>
                     </div>
                     <span class="text-danger"></span>
-                    <label class="stext-101">PhoneNumber</label>
+                    <label class="stext-101">Số Điện Thoại</label>
                     <div class="bor8 m-b-20 how-pos4-parent">
                         <input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="number" name="Mobile">
                         <i class="how-pos4 pointer-none zmdi zmdi-phone"></i>
                     </div>
                     <span class="text-danger"></span>
                 </div>
+                <div>
+                    <script src="https://checkout.flutterwave.com/v3.js"></script>
+                    <button id="clickPayment" type="button" class="flex-c-m stext-101 cl0 text-white size-116 bg3 bor14 hov-btn3 p-lr-15 m-t-15 trans-04 pointer">Thanh Toán</button>
+                </div>
             </div>
 
-            <div class="size-210 bor10 flex-w p-lr-93 p-tb-90 p-lr-15-lg w-full-md" style="flex-direction: column;">
+            @*<div class="size-210 bor10 flex-w p-lr-93 p-tb-90 p-lr-15-lg w-full-md" style="flex-direction: column;">
                 <h4 class="d-flex justify-content-between align-items-center mb-3">
                     <span class="text-info">Order Summary:</span>
                 </h4>
@@ -74,7 +78,7 @@
                     <script src="https://checkout.flutterwave.com/v3.js"></script>
                     <button id="clickPayment" type="button" class="flex-c-m stext-101 cl0 text-white size-116 bg3 bor14 hov-btn3 p-lr-15 m-t-15 trans-04 pointer">Make Payment</button>
                 </div>
-            </div>
+            </div>*@
         </div>
     </div>
 </form>

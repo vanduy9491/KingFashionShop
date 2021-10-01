@@ -35,6 +35,6 @@ namespace KingFashion.Models.Orders
         public DateTime UpdatedAt { get; set; }
         public string Content { get; set; }
         public IEnumerable<OrderItem> OrderItems { get; set; }
-        public IEnumerable<Transaction> Transactions { get; set; }
+        public IEnumerable<Transactions.Transaction> Transactions { get; set; }
     }
 }
