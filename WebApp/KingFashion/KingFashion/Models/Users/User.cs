@@ -1,5 +1,4 @@
 ﻿using KingFashion.Models.Orders;
-using KingFashion.Models.Transactions;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -20,8 +19,8 @@ namespace KingFashion.Models.Users
         public DateTime LastLogin { get; set; }
         public string Intro { get; set; }
         public string Profile { get; set; }
-        public ICollection<Transaction> Transaction { get; set; }
+        public ICollection<Transactions.Transaction> Transaction { get; set; }
         public ICollection<Order> Order { get; set; }
-        public ICollection<Models.Carts.Cart> Carts { get; set; }
+        public ICollection<Carts.Cart> Carts { get; set; }
     }
 }
