@@ -3,6 +3,9 @@ using KingFashionShop.Service.CategoryService;
 using KingFashionShop.Service.Order;
 using KingFashionShop.Service.ProductService;
 using KingFashionShop.Service.TransactionService;
+using KingFashionShop.Service.ContactService;
+using KingFashionShop.Service.ProductService;
+using KingFashionShop.Service.Users;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -45,6 +48,8 @@ namespace KingFashionShop.API
             services.AddScoped<ITransactionService, TransactionService>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IOrderItemService, OrderItemService>();
+            services.AddScoped<IContactService, ContactService>();
+            services.AddScoped<IUserService, UserService>();
 
 
         }

@@ -1,18 +1,20 @@
 ﻿@model IEnumerable<Category>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Danh mục sản phẩm";
 }
-<span id="createPage"></span>
-<p id="Ccreate">
-    <a id="create" href="javascript:;" class="btn btn-out-dashed btn-success btn-square" onclick="category.openModel()"><i class="ti-plus"></i>Thêm Mới</a>
-</p>
-<p id="pCreate">
-    <a id="back" href="javascript:;" class="btn btn-inverse btn-square" onclick="category.showData()"><i class="ti-back-left"></i>Quay lại</a>
-</p>
+@*<span id="createPage">*@
+    <p id="Ccreate" class="hidden">
+        <a id="create" href="javascript:;" class="btn btn-out-dashed btn-success btn-square" onclick="category.openModel()"><i class="ti-plus"></i>Thêm Mới</a>
+    </p>
+    <p id="pCreate" class="hidden">
+        <a id="back" href="javascript:;" class="btn btn-inverse btn-square" onclick="category.showData()"><i class="ti-back-left"></i>Quay lại</a>
+    </p>
+@*</span>*@
+
 <div class="card-block table-border-style">
     <div class="table-responsive">
-        <table class="table table-hover" id="tbCategory">
+        <table class="table table-hover table-bordered" id="tbCategory">
             <thead style="background:black;color:white">
             </thead>
             <tbody>

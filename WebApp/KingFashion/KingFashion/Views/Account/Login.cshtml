@@ -1,0 +1,54 @@
+﻿@model Login
+@{
+    ViewData["Title"] = "Đăng nhập";
+}
+<div class="auth-box">
+    <div class="row m-b-20">
+        <div class="col-md-12">
+            <h3 class="text-left txt-primary">Đăng nhập</h3>
+        </div>
+    </div>
+    <hr />
+    <!--Alert-->
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @ViewBag.Error
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>   
+        </div>
+    }
+    <form asp-controller="Account" asp-action="Login" method="post">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Nhập Email" asp-for="Email">
+            <span class="md-line"></span>
+        </div>
+        <div class="input-group">
+            <input type="password" class="form-control" placeholder="Mật khẩu" asp-for="Password">
+            <span class="md-line"></span>
+        </div>
+        <div class="row m-t-25 text-left">
+            <div class="col-sm-7 col-xs-12">
+                <div class="checkbox-fade fade-in-primary">
+                    <label>
+                        <input type="checkbox" asp-for="RememberMe">
+                        <span class="cr"><i class="cr-icon icofont icofont-ui-check txt-primary"></i></span>
+                        <span class="text-inverse">Remember me</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row m-t-30">
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">Đăng nhập</button>
+            </div>
+        </div>
+    </form>
+    <hr />
+    <div class="text-center text-muted">
+        Bạn chưa có tài khoản?
+        <a asp-controller="Account" asp-action="Register">Đăng ký</a>
+    </div>
+
+</div>

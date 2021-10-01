@@ -1,0 +1,173 @@
+﻿@model KingFashion.Models.Contacts.Contact
+
+@{
+    ViewData["Title"] = "ViewContact";
+    Layout = "~/Views/Shared/_DashBoardLayout.cshtml";
+}
+
+<<<<<<< HEAD
+<div class="page-body">
+    <div class="row">
+        <div class="col-sm-12">
+            <!-- Basic Form Inputs card start -->
+            <div class="card">
+                <div class="card-block">
+                    <h3 class="sub-title"><strong>Phản Hồi</strong></h3>
+                    <div>
+                        <label class="col-sm-2 col-form-label" hidden> @Html.DisplayNameFor(model => model.Id)</label>
+                    </div>
+                    <div>
+                        <label class="col-sm-2 col-form-label" hidden> @Html.DisplayFor(model => model.Id)r</label>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label"><strong> @Html.DisplayNameFor(model => model.Email)</strong></label>
+                        <div class="col-sm-10">
+                            @Html.DisplayFor(model => model.Email)
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label"><strong>Nội dung</strong></label>
+                        <div class="col-sm-10">
+                            @Html.DisplayFor(model => model.Content)
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label"><strong>Trạng thái</strong></label>
+                        <div class="col-sm-10">
+                            @if (Model.Status)
+                            {
+                                <input style="width:25%" value="Đã phản hồi" class="form-control" disabled />
+                            }
+                            else
+                            {
+                                <input style="width:25%" value="Chưa phản hồi" class="form-control" disabled />
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <a href="javascript:;" class="btn hor-grd btn-grd-success" style="background-image: linear-gradient(to top, #7bfcb0 0%, #12f972 51%, #05d85c 100%);" onclick="contact.get(@ViewBag.ContactId)"><i class="ti-email"></i>Trả lời</a>
+    <a class="btn btn-inverse btn-square" asp-action="Index"><i class="ti-back-left"></i>Trở Về</a>
+</div>
+=======
+<h1>ViewContact</h1>
+
+<div>
+    <h4>Contact</h4>
+    <hr />
+    <dl class="row">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Chi tiết phản hồi của khách hàng</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="frmCategory">
+                    <div class="form-group">
+                        <label asp-for="Email"></label>
+                        <input asp-for="Email" class="form-control" readonly />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Content"> Nội dung</label>
+                        <textarea asp-for="Content" class="form-control" readonly></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Status">Trạng thái</label>
+                        @if (Model.Status)
+                        {
+                            <input value=" Đã phản hồi" class="form-control" readonly />
+                        }
+                        else
+                        {
+                            <input value="Chưa phản hồi" class="form-control" readonly />
+                        }
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    <i class="ti-close"></i> Đóng
+                </button>
+                <button type="button" class="btn btn-primary" onclick="contact.get(@ViewBag.ContactId)">
+                    <i class="ti-check"></i> Phản hồi
+                </button>
+            </div>
+        </div>
+       
+    </dl>
+</div>
+
+>>>>>>> d65981caf45f3fb0f1390e75d4327e2108415c58
+<div class="modal fade" id="replyModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Xem Nội dung</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="frmContact">
+                    <div class="form-group">
+                        <label>Đến</label>
+                        <input type="text" name="EmailTo" class="form-control" data-rule-required="true" value="@ViewBag.To" disabled />
+                        <input type="hidden" name="Id" class="form-control" data-rule-required="true" value="@ViewBag.ContactId" />
+                    </div>
+                    <div class="form-group">
+                        <label>Tiêu đề</label>
+                        <input type="text" name="Subject" class="form-control" data-rule-required="true" />
+                    </div>
+                    <div class="form-group">
+                        <label>Nội dung Trả lời</label>
+                        <textarea type="text" name="ContentReply" class="form-control"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    <i class="ti-close"></i> Đóng
+                </button>
+<<<<<<< HEAD
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="contact.save(@ViewBag.ContactId);">
+                    <i class="ti-check"></i> Phản hồi
+=======
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="contact.save(@ViewBag.ContactId);" data-target="#myModal">
+                    <i class="ti-close"></i> Phản hồi
+>>>>>>> d65981caf45f3fb0f1390e75d4327e2108415c58
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="myModal" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="icon-box">
+                    <i class="fa fa-check"></i>
+                </div>
+                <h4 class="modal-title">Thank you!</h4>
+            </div>
+            <div class="modal-body">
+                <p class="text-center">Cảm ơn quý khách đã góp ý.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success btn-block" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<span style="color: green"> @ViewBag.Message</span>
+@section scripts {
+
+    <script src="~/js/Contact.js" asp-append-version="true"></script>
+
+}
