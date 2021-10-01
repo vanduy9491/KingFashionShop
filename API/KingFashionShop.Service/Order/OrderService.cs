@@ -28,82 +28,97 @@ namespace KingFashionShop.Service.Order
         }
         public async Task<Domain.Models.Order> Checkout(CheckoutOrder checkoutOrder)
         {
-            var cart = await cartService.GetBySessionId(checkoutOrder.SessionId);
-            checkoutOrder.TransferFields(cart);
-            await cartService.UpdateCart(cart);
-            cart = await cartService.GetBySessionId(checkoutOrder.SessionId);
-            float tax = 0;
-            float shipping = 0;
-            float discount = 0;
-            float itemDiscount = 0;
-            float subTotal = 0;
-            float total = 0;
-            float grandTotal = 0;
-            foreach (var cartItem in cart.CartItems)
+            try
             {
-                subTotal += (cartItem.Price * cartItem.Quantity);
-                itemDiscount += cartItem.Discount;
-            }
-            total = subTotal + tax + shipping;
-            grandTotal = total;
-            var order = new Domain.Models.Order()
-            {
-                FirstName = cart.FirstName,
-                MiddleName = cart.MiddleName,
-                LastName = cart.LastName,
-                Mobile = cart.Mobile,
-                Email = cart.Email,
-                Line1 = cart.Line1,
-                Line2 = cart.Line2,
-                Province = cart.Province,
-                City = cart.City,
-                Country = cart.Country,
-                SubTotal = subTotal,
-                Total = total,
-                GrandTotal = grandTotal,
-                Token = Guid.NewGuid().ToString(),
-                SessionId = cart.SessionId,
-                Tax = tax,
-                Discount = discount,
-                ItemDiscount = itemDiscount,
-                Shipping = shipping,
-                Content = cart.Content,
-                Status = Domain.Models.OrderStatus.New
-            };
-            order = await CreateOrder(order);
-            foreach (var cartItem in cart.CartItems)
-            {
-                await orderItemService.CreateOrderItem(new Domain.Models.OrderItem()
-                {
-                    OrderId = order.Id,
-                    ProductId = cartItem.ProductId,
-                    Price = cartItem.Price,
-                    Quantity = cartItem.Quantity,
-                    Discount = cartItem.Discount,
-                    SKU = cartItem.SKU,
-                    Content = cartItem.Content
 
-                });
-            }
-            if(order.UserId != null)
-            {
-                await transactionService.CreateTransaction(new Domain.Models.CreateTransaction()
-                {
-                    UserId = order.UserId,
-                    CreatedAt = order.CreatedAt,
-                    OrderId = order.Id,
-                    Content = order.Content
-                });
-            }
-           
-            return order;
 
+                var cart = await cartService.GetBySessionId(checkoutOrder.SessionId);
+                checkoutOrder.TransferFields(cart);
+                await cartService.UpdateCart(cart);
+                cart = await cartService.GetBySessionId(checkoutOrder.SessionId);
+                float tax = 0;
+                float shipping = 0;
+                float discount = 0;
+                float itemDiscount = 0;
+                float subTotal = 0;
+                float total = 0;
+                float grandTotal = 0;
+                foreach (var cartItem in cart.CartItems)
+                {
+                    subTotal += (cartItem.Price * cartItem.Quantity);
+                    itemDiscount += cartItem.Discount;
+                }
+                total = subTotal + tax + shipping;
+                grandTotal = total;
+                var orderParam = new Domain.Models.Order()
+                {
+                    FirstName = cart.FirstName,
+                    MiddleName = cart.MiddleName,
+                    LastName = cart.LastName,
+                    Mobile = cart.Mobile,
+                    Email = cart.Email,
+                    Line1 = cart.Line1,
+                    Line2 = cart.Line2,
+                    Province = cart.Province,
+                    City = cart.City,
+                    Country = cart.Country,
+                    SubTotal = subTotal,
+                    Total = total,
+                    GrandTotal = grandTotal,
+                    Token = Guid.NewGuid().ToString(),
+                    SessionId = cart.SessionId,
+                    Tax = tax,
+                    Discount = discount,
+                    ItemDiscount = itemDiscount,
+                    Shipping = shipping,
+                    Content = cart.Content,
+                    Status = Domain.Models.OrderStatus.New
+                };
+                var order = await GetOrderBySessionId(checkoutOrder.SessionId);
+                if (order != null)
+                    return null;
+                order = await CreateOrder(orderParam);
+
+                foreach (var cartItem in cart.CartItems)
+                {
+                    await orderItemService.CreateOrderItem(new Domain.Models.OrderItem()
+                    {
+                        OrderId = order.Id,
+                        ProductId = cartItem.ProductId,
+                        Price = cartItem.Price,
+                        Quantity = cartItem.Quantity,
+                        Discount = cartItem.Discount,
+                        SKU = cartItem.SKU,
+                        Content = cartItem.Content,
+                        CreatedAt = DateTime.Now
+
+                    });
+                }
+                if (order.UserId != null)
+                {
+                    await transactionService.CreateTransaction(new Domain.Models.CreateTransaction()
+                    {
+                        UserId = order.UserId,
+                        CreatedAt = order.CreatedAt,
+                        OrderId = order.Id,
+                        Content = order.Content
+                    });
+                }
+
+                return order;
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+            return null;
         }
         public async Task<Domain.Models.Order> CreateOrder(Domain.Models.Order order)
         {
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@userId", order.UserId);
-            parameters.Add("@sessionId", Guid.NewGuid().ToString());
+            parameters.Add("@sessionId", order.SessionId);
             parameters.Add("@token", order.Token);
             parameters.Add("@status", order.Status);
             parameters.Add("@subTotal", order.SubTotal);
@@ -133,13 +148,19 @@ namespace KingFashionShop.Service.Order
                    sql: "sp_CreateOrderr",
                    commandType: CommandType.StoredProcedure
                    );
-
         }
 
-        //public async Task<Domain.Models.Order> UpdateOrder(Domain.Models.Order order)
-        //{
+        public async Task<Domain.Models.Order> GetOrderBySessionId(string sessionId)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@sessionId", sessionId);
+            return await SqlMapper.QueryFirstOrDefaultAsync<Domain.Models.Order>(
+                   cnn: connection,
+                   param: parameters,
+                   sql: "sp_GetOrderBySessionId",
+                   commandType: CommandType.StoredProcedure
+                   );
+        }
 
-        //    return null;
-        //}
     }
 }

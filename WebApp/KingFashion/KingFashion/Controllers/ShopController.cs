@@ -111,6 +111,7 @@ namespace KingFashionWeb.Controllers
             };
             checkoutOrder.SessionId = Request.Cookies["sessionId"];
             var order = await ApiHelper.HttpPost<OrderResult>(@$"{Common.ApiUrl}Order/Checkout", "POST", checkoutOrder);
+            Response.Cookies.Delete("sessionId");
             return order;
         }
     }

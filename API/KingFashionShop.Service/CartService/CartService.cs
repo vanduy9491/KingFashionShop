@@ -208,9 +208,8 @@ namespace KingFashionShop.Service.CartService
         public async Task<Cart> UpdateCart(Cart cart)
         {
                 DynamicParameters parameters = new DynamicParameters();
-                parameters.Add("@Id", cart.Id);
-                parameters.Add("@UserId", cart.UserId);
-                parameters.Add("@SessionId", cart.SessionId);
+                parameters.Add("@id", cart.Id);
+                parameters.Add("@userId", cart.UserId);
                 parameters.Add("@token", cart.Token);
                 parameters.Add("@status", cart.Status);
                 parameters.Add("@firstName", cart.FirstName);
@@ -223,9 +222,9 @@ namespace KingFashionShop.Service.CartService
                 parameters.Add("@city", cart.City);
                 parameters.Add("@province", cart.Province);
                 parameters.Add("@country", cart.Country);
-                parameters.Add("@createdAt", DateTime.Now);
-                parameters.Add("@content", cart.Content);
-                parameters.Add("@sessionId", cart.SessionId);
+
+                
+              
 
             return await SqlMapper.QueryFirstOrDefaultAsync<Domain.Models.Cart>(
                 cnn: connection,

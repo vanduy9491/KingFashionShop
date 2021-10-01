@@ -6,7 +6,7 @@ namespace KingFashionShop.Domain.Models
 {
     public class CreateTransaction
     {
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public int OrderId { get; set; }
         public string Code { get; set; }
         public int Type { get; set; }

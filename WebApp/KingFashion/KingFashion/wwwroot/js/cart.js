@@ -241,7 +241,14 @@ cartService.checkout = function (id) {
     $.ajax({
         url: location.origin + `/Checkout?firstName=${firstName}&lastName=${lastName}&mobile=${mobile}&email=${email}&line1=${line1}&city=${city}&province=${province}`,
         method: "POST",
-        success: function (data) {}
+        success: function (data) {
+            if (data !== undefined || data !== null)
+                return;
+            swal("Checkout successful", "", "success");
+            setTimeout(function () {
+                location = "/";
+            },3000)
+        }
     });
 }
 
