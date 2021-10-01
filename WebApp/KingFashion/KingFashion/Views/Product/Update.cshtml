@@ -77,11 +77,11 @@
             <div class="form-group">
                 <label asp-for="ExistPhoto" class="control-label"></label><br />
 
-                <img width="400px" class="img-fluid img-thumbnail img-lg ml-3" src="~/images/@Model.ExistPhoto.Split(" ")[1]"><br />
+                <img width="400px" class="img-fluid img-thumbnail img-lg ml-3" src="~/images/@Model.ExistPhoto.Split(" ")[0]"><br />
                 <div class="row ml-4">
-                    @foreach (var img in Model.ExistPhoto.Split(" ").Skip(1))
+                    @foreach (var img in Model.ExistPhoto.Split(" "))
                     {
-                        <img width="100px" class="img-fluid img-thumbnail img-lg" src="~/images/@img"><br />
+                        <img width="100px" class="img-fluid img-thumbnail img-lg mr-2" src="~/images/@img"><br />
                     }
                 </div>
             </div>
