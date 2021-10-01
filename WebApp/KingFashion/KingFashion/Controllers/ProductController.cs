@@ -36,7 +36,7 @@ namespace KingFashion.Controllers
         public async Task<IActionResult> productById(int proId)
         {
             productId = proId;
-
+            ViewBag.proId = proId;
             var data = await ApiHelper.HttpGet<List<Product>>(@$"{Common.ApiUrl}Product/GetProduct/{proId}");
             return View(data);
         }

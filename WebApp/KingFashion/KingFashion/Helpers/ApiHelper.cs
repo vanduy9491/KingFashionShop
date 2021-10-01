@@ -45,4 +45,5 @@ namespace KingFashion.Helpers
             return JsonConvert.DeserializeObject<T>(responseFromServer);
         }
     }
+
 }
