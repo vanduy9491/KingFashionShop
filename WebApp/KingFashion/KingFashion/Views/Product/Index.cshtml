@@ -30,7 +30,6 @@
             <th>
                 Nội Dung
             </th>
-            <th>Ngày được tạo</th>
             <th>
                 @Html.DisplayNameFor(model => model.Photo)
             </th>
@@ -76,9 +75,8 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Content)
                 </td>
-                <td>@item.CreatedAt</td>
                 <td>
-                    <img class="img-fluid img-thumbnail img-lg" src="~/images/@item.Photo.Split(" ")[1]">
+                    <img class="img-fluid img-thumbnail img-lg" style="width:100px;object-fit:cover;" src="~/images/@item.Photo.Split(" ")[1]">
                 </td>
                 <td>
                     <a class='btn btn-sm btn-secondary btn-sm' href="/Product/Update/@item.Id" title="Sửa sản phẩm"><i class="ti-pencil"></i></a> 
@@ -95,7 +93,7 @@
     <script>
         $('#tbProduct').DataTable({
             columnDefs: [
-                { orderable: false, targets: [2,3,4,5,6,7,8,9] }
+                { orderable: false, targets: [2,3,4,5,6,7,8] }
             ],
             order: [[0, 'desc']]
         });

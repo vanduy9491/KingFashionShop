@@ -96,8 +96,18 @@
                     if (img == "") break;
                     <img width="100px" class="img-fluid img-thumbnail img-lg mr-2" src="~/images/@img" ><br />
 
+<<<<<<< HEAD
                 }
             </div>
+=======
+            @foreach (var img in Model.Photo.Split(" ").Skip(1))
+                    {
+                        if (img == "")
+                            break;
+                    <img width="300px" class="img-fluid img-thumbnail img-lg" src="~/images/@img"><br />
+
+            }
+>>>>>>> 802db6df042bfcfe3fa49f1af9b1caa5beabd2ea
         </div>
     </div>
     @*<div>

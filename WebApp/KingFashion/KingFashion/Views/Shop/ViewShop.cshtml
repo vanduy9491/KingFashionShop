@@ -43,11 +43,11 @@
 
                     <div class="header-cart-item-txt p-t-8">
                         <a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-                            White Shirt Pleat
+                           
                         </a>
 
                         <span class="header-cart-item-info">
-                            1 x $19.00
+                             VND
                         </span>
                     </div>
                 </li>
@@ -346,7 +346,7 @@
 
         <div class="row isotope-grid">
 
-            @*@foreach (var product in Model.Products)
+            @foreach (var product in Model.Products)
             {
                 <div class="col-sm-6 col-md-4 col-lg-3 p-b-35  isotope-item  @Html.DisplayFor(modelItem => product.CategorySlug)">
                     <div class="block2">
@@ -354,10 +354,9 @@
                             <img src="../images/@product.MainPhoto" alt="IMG-PRODUCT">
 
                             <a href="#" data-item="@product.Id" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-                                Quick View
+                                Chi tiết
                             </a>
                         </div>
-
                         <div class="block2-txt flex-w flex-t p-t-14">
                             <div class="block2-txt-child1 flex-col-l ">
                                 <a asp-controller="Shop" asp-action="ProductDetails" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
@@ -379,14 +378,14 @@
                     </div>
                 </div>
 
-            }*@
+            }
 
         </div>
 
         <!-- Load more -->
         <div id="loadmore" class="flex-c-m flex-w w-full p-t-45">
             <a href="#" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
-                Load More
+                Xem Thêm
             </a>
         </div>
 
@@ -460,12 +459,10 @@
                             </h4>
 
                             <span class="mtext-106 cl2">
-                                $58.79
+                                58.79 VND
                             </span>
 
-                            <p class="stext-102 cl3 p-t-23">
-                                Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus ligula. Mauris consequat ornare feugiat.
-                            </p>
+                        
 
                             <!--  -->
                             <div class="p-t-33">
@@ -522,7 +519,7 @@
                                         </div>
 
                                         <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
-                                            Add to cart
+                                            Thêm Vào Giỏ Hàng
                                         </button>
                                     </div>
                                 </div>

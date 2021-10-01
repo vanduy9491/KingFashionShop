@@ -67,7 +67,7 @@ namespace KingFashionWeb.Controllers
         {
             ShopAll shopAll = new ShopAll();
             shopAll.Categories = await ApiHelper.HttpGet<List<CategoryResult>>(@$"{Common.ApiUrl}Category");
-            //shopAll.Products = await ApiHelper.HttpGet<List<ProductResult>>(@$"{Common.ApiUrl}Product/GetProductsTopCategory?limit=16");
+            shopAll.Products = await ApiHelper.HttpGet<List<ProductResult>>(@$"{Common.ApiUrl}Product/GetProductsTopCategory?limit=16");
 
             return View(shopAll);
 

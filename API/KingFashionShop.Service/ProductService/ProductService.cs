@@ -134,10 +134,12 @@ namespace KingFashionShop.Service.ProductService
             return product;
         }
 
-        public async Task<IEnumerable<ProductResult>> GetProductsTopCategory(int limit)
+        public async Task<IEnumerable<ProductResult>> GetProductsTopCategory(int topCategoryId, int limit, int boundary)
         {
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@limit", limit);
+            parameters.Add("@boundary", boundary);
+            parameters.Add("@topCategoryId", topCategoryId);
             var products = await SqlMapper.QueryAsync<ProductResult>(
                 cnn: connection, param: parameters, sql: "sp_GetProductsTopCategory", commandType: CommandType.StoredProcedure
                 );
